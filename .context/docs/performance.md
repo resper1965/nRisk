@@ -38,6 +38,12 @@ scaffoldVersion: "2.0.0"
 - **Lookup O(n):** `FindByTechnicalFinding` e `FindByTemplateID` fazem scan linear; OK para dezenas de mapeamentos
 - **Escala futura:** Se `mapping_logic` crescer muito, considerar mapas indexados (O(1))
 
+### Assessments
+
+- **Logic Engine (MarkInconsistentAnswers):** O(findings × answers); linear e leve; OK para centenas de answers
+- **Cloud SQL:** Connection pooling recomendado; `set_tenant_context` por sessão
+- **Evidence upload:** Stream para GCS; calcular SHA-256 durante upload sem carregar arquivo inteiro em memória
+
 ## Benchmarks (Sugeridos)
 
 ```bash

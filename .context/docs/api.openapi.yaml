@@ -131,6 +131,93 @@ paths:
         '500':
           description: Erro interno
 
+  /api/v1/assessments:
+    get:
+      summary: Listar assessments do tenant
+      operationId: listAssessments
+      tags: [Assessments]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: framework_id
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [draft, submitted]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  assessments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Assessment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /api/v1/assessments/{id}:
+    patch:
+      summary: Atualizar respostas do assessment
+      operationId: updateAssessment
+      tags: [Assessments]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                answers:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      question_id:
+                        type: string
+                      answer_status:
+                        type: string
+                        enum: [sim, nao, na]
+                      evidence_storage_path:
+                        type: string
+                        nullable: true
+                scan_id:
+                  type: string
+                  format: uuid
+                  description: Opcional; aplica Cross-Check
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Assessment'
+        '400':
+          description: Request inválido
+        '404':
+          description: Assessment não encontrado
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
 components:
   securitySchemes:
     bearerAuth:
@@ -167,6 +254,33 @@ components:
           type: string
           format: date-time
           nullable: true
+
+    Assessment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenant_id:
+          type: string
+        framework_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [draft, submitted]
+        progress:
+          type: object
+          properties:
+            total:
+              type: integer
+            answered:
+              type: integer
+            inconsistent:
+              type: integer
+        created_at:
+          type: string
+          format: date-time
 
     Error:
       type: object

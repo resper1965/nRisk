@@ -56,17 +56,20 @@ backend/
 │   ├── api/          # Entrypoint API REST (Cloud Run Service)
 │   └── scan-job/     # Entrypoint Core Engine (Cloud Run Job)
 ├── internal/
-│   ├── domain/       # AuditFinding, ScanResult, models
+│   ├── domain/       # AuditFinding, ScanResult, Answer, models
 │   ├── engine/       # Orquestração Nuclei, Nmap, Subfinder
 │   ├── parser/       # Tradução GRC (mapping_logic.json)
-│   ├── controller/   # Handlers HTTP (ScanController)
+│   ├── assessment/   # Loader, scoring, crosscheck (Logic Engine)
+│   ├── controller/   # ScanController, AssessmentController
 │   ├── middleware/   # Auth JWT (tenant_id)
-│   └── repository/   # Firestore (scan, finding, score)
+│   ├── repository/   # Firestore (scan, finding, score, answer); Cloud SQL (assessment)
+│   └── storage/      # EvidenceStore (GCS upload)
 ├── pkg/
 │   ├── logger/       # Logs JSON para Cloud Logging
 │   └── validator/    # Validação (domain/hostname RFC 1123)
-├── migrations/       # Schema Cloud SQL (001_grc_schema.sql)
-└── mapping_logic.json  # Fonte de verdade ISO 27001
+├── migrations/       # 001_grc_schema.sql, 002_assessment_questions_answers.sql
+├── mapping_logic.json
+└── assessment_questions.json  # Catálogo de perguntas (framework ISO27001)
 ```
 
 ## Entry Points
@@ -87,9 +90,11 @@ backend/
 
 ## Multi-tenancy
 
-- **Path Firestore:** `tenants/{tenantId}/scans/{scanId}/findings/{findingId}`
+- **Path Firestore:** `tenants/{tenantId}/scans/{scanId}/findings/{findingId}`; `tenants/{tid}/answers/` (Firestore MVP)
+- **Path GCS:** `tenants/{tenantId}/assessments/{assessmentId}/evidence/{filename}`
+- **Cloud SQL:** RLS em `assessments` e `assessment_answers`; `set_tenant_context(tenant_id)` antes das queries
 - **JWT:** Custom claim `tenant_id` obrigatório
-- **Isolamento:** Queries e regras Firestore filtradas por tenant; controller usa tenant do token
+- **Isolamento:** Todas as queries e chamadas Storage usam `tenant_id` extraído do middleware
 
 ## Persistência (Detalhe)
 
@@ -102,11 +107,23 @@ Ver [database.md](./database.md) para esquemas Firestore e Cloud SQL, índices e
 
 Containers, deploy, env vars e CI/CD: [devops.md](./devops.md)
 
+## Módulo de Assessments Híbridos
+
+O módulo combina **declarações do usuário** (questionários) com **validação técnica** (findings do scan). O **Logic Engine (Cross-Check)** compara respostas positivas com achados técnicos: se um finding contradiz uma resposta "Sim", marca como **Inconsistent**.
+
+| Componente | Responsabilidade |
+|------------|------------------|
+| **assessment_questions** | Catálogo no Cloud SQL; vinculado a control_id do mapping_logic |
+| **assessment_answers** | Respostas por tenant; answer_status (sim/nao/na/Inconsistent) |
+| **Evidence Vault** | GCS path: `tenants/{tid}/assessments/{aid}/evidence/{file}`; SHA-256 por arquivo para verificação de integridade |
+| **MarkInconsistentAnswers** | Função Go em `internal/assessment/crosscheck.go` |
+
 ## Boundaries Internos
 
 | Camada | Responsabilidade |
 |--------|------------------|
 | **controller** | Validação de entrada (validator), orquestração de repositórios |
-| **repository** | Persistência Firestore; isolamento por tenant |
+| **repository** | Persistência Firestore e Cloud SQL; isolamento por tenant |
 | **engine** | Execução de ferramentas externas; timeout, logs |
 | **parser** | Tradução output → RawFinding; mapping_logic → AuditFinding |
+| **assessment** | Loader de perguntas; scoring; crosscheck (Logic Engine) |

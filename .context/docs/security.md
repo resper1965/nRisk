@@ -17,6 +17,7 @@ scaffoldVersion: "2.0.0"
 | domain (POST /scans) | `IsValidHostname` (RFC 1123) | Command injection em nmap/nuclei |
 | scan_id (GET /scans/:id) | `IsValidUUID` | Path traversal em Firestore |
 | TENANT_ID, SCAN_ID (Scan Job) | `IsSafePathSegment`, `IsValidUUID` | Path traversal em Firestore |
+| question_id, control_id, assessment_id | `IsSafePathSegment` | Path traversal em Cloud SQL e GCS |
 | JWT | Firebase VerifyIDToken | Token inválido/expirado |
 
 ## Security Headers
@@ -32,20 +33,27 @@ Checklist completo: [security-audit-checklist.md](./security-audit-checklist.md)
 ## Autenticação
 
 - **Identity Platform (Firebase Auth):** MFA obrigatório
-- **JWT:** Custom claim `tenant_id` para isolamento
+- **JWT:** Custom claim `tenant_id` para isolamento; `role` (operator | ciso) para RBAC de assessments
 - **Middleware:** Validação de token em rotas protegidas
+
+## RBAC (Assessments)
+
+- **Operador:** Responde perguntas do questionário; não submete assessment final
+- **CISO/Admin:** Pode submeter o assessment final para a seguradora; bloqueia edições posteriores até nova rodada
 
 ## Criptografia
 
 - **Trânsito:** TLS 1.3
 - **Repouso:** AES-256; CMEK no Cloud Storage (Evidence Vault)
+- **Evidence Vault:** SHA-256 de cada arquivo para verificação de integridade pós-upload
 
 ## Segregação Multi-tenant
 
 - Path Firestore: `tenants/{tenantId}/...`
-- Queries filtradas por `tenant_id`
+- Path GCS (Evidence Vault): `tenants/{tenantId}/assessments/{assessmentId}/evidence/` — validar tenant_id do JWT
+- Queries filtradas por `tenant_id`; nunca confiar em tenant_id do body ou query
 - Regras Firestore: `isTenantMember(tenantId)`; validação de score e domain em writes
-- Cloud SQL: RLS em `assessments` via `set_tenant_context(tenant_id)` — ver [database.md](./database.md)
+- Cloud SQL: RLS em `assessments` e `assessment_answers` via `set_tenant_context(tenant_id)` — ver [database.md](./database.md)
 
 ## Secrets e API Keys
 

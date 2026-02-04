@@ -43,6 +43,11 @@ NEXT_PUBLIC_API_URL=https://nrisk-api-xxx.run.app
 |------|--------|----------|
 | Iniciar scan | POST | /api/v1/scans |
 | Obter scan | GET | /api/v1/scans/:id |
+| Listar assessments | GET | /api/v1/assessments |
+| Atualizar assessment | PATCH | /api/v1/assessments/:id |
+| Listar perguntas | GET | /api/v1/assessment?framework=ISO27001 |
+| Submeter resposta | POST | /api/v1/assessment/answer (multipart) |
+| Score híbrido | GET | /api/v1/assessment/score?scan_id=... |
 | Health | GET | /health |
 
 ### Validação Client-Side
@@ -75,7 +80,7 @@ app/
 |---------|------------------|
 | **Subscritor** | Dashboard score, busca domínio, propostas, spider chart |
 | **GRC** | Fornecedores, convites, Trust Centers |
-| **CISO** | Painel postura, questionário, Evidence Vault, inconsistências |
+| **CISO** | Painel postura, **questionários (Assessments Híbridos)**, Evidence Vault, **inconsistências (Cross-Check)** |
 | **Trust Center** | Página pública, selos, NDA, documentos |
 
 ## Componentes Críticos
@@ -87,7 +92,7 @@ app/
 | Formulário scan | Form + Input | Campo domain, validação |
 | Categorias A–F | Badge | Cor por categoria |
 | Spider chart ISO | Chart (Radar) | Domínios A.10, A.12, A.13 |
-| Questionário | Tabs + Form | Multi-step assessment |
+| Questionário / Assessments | Tabs + Form | Multi-step assessment; GET/PATCH assessments; exibir status Inconsistent |
 
 ## Setup (Quando Integrar)
 

@@ -4,6 +4,7 @@ go 1.22
 
 require (
 	cloud.google.com/go/firestore v1.15.0
+	cloud.google.com/go/storage v1.40.0
 	firebase.google.com/go/v4 v4.14.0
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/uuid v1.6.0

@@ -14,6 +14,7 @@ generatedAt: 2026-02-04T18:53:51.041Z
 - **GCP Project** com Firestore e Identity Platform
 - **Variáveis:** `GCP_PROJECT_ID`, `GOOGLE_APPLICATION_CREDENTIALS`
 - (Opcional) **Ferramentas de scan:** nmap, nuclei, subfinder (para testes locais do scan-job)
+- (Opcional) **Assessments:** `GCS_EVIDENCE_BUCKET` (upload de evidências), `ASSESSMENT_QUESTIONS_PATH` (default: ./assessment_questions.json)
 
 ### Installation
 

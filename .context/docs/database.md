@@ -62,6 +62,14 @@ tenants/{tenantId}/
 
 **Regras Firestore:** `isTenantMember(tenantId)` para read/write.
 
+### Coleção Answers (Firestore — MVP)
+
+| Path | Uso | Status |
+|------|-----|--------|
+| tenants/{tid}/answers/{questionId} | Respostas declarativas (assessment_questions.json) | MVP em uso |
+
+**Migração:** Cloud SQL `assessment_answers` será a fonte canônica; Firestore answers podem coexistir para rollout gradual.
+
 ### Outras Coleções (Firestore)
 
 | Path | Uso | Status |
@@ -77,7 +85,7 @@ Consultas atuais são por ID (documento único). Listagens por `domain`, `status
 
 ## 2. Cloud SQL (PostgreSQL) — Mês 2
 
-### Tabelas (001_grc_schema.sql)
+### Tabelas (001_grc_schema.sql, 002_assessment_questions_answers.sql)
 
 | Tabela | Papel |
 |--------|-------|
@@ -85,13 +93,17 @@ Consultas atuais são por ID (documento único). Listagens por `domain`, `status
 | **frameworks** | ISO 27001, NIST, LGPD |
 | **controls** | Controles do framework (C-01, C-02, …) |
 | **mapping_logic** | Achado técnico → control_id, impact_on_score |
-| **assessments** | Respostas de questionário por tenant e controle |
+| **assessments** | Sessão/rodada de questionário; tenant_id, framework_id, status |
+| **assessment_questions** | Catálogo de perguntas; vinculado a control_id do mapping_logic |
+| **assessment_answers** | Respostas; tenant_id, assessment_id, question_id, answer_status (sim/nao/na/Inconsistent), evidence_storage_path |
 
 ### Relacionamentos
 
 ```
 frameworks ← controls ← mapping_logic
-tenants ← assessments → controls
+tenants ← assessments
+assessment_questions → controls
+tenants + assessments ← assessment_answers → assessment_questions, controls
 ```
 
 ### Índices Cloud SQL
@@ -105,12 +117,15 @@ tenants ← assessments → controls
 | mapping_logic | idx_mapping_logic_finding | Lookup por achado técnico |
 | mapping_logic | idx_mapping_logic_control_finding | Unique (control, finding) |
 | assessments | idx_assessments_tenant | Filtrar por tenant |
-| assessments | idx_assessments_control | Filtrar por controle |
-| assessments | idx_assessments_tenant_control | Unique (tenant, control) |
+| assessment_questions | idx_assessment_questions_control | Lookup por control_id |
+| assessment_answers | idx_assessment_answers_tenant | Filtrar por tenant |
+| assessment_answers | idx_assessment_answers_assessment | Filtrar por assessment |
+| assessment_answers | idx_assessment_answers_tenant_assessment_question | Unique (tenant, assessment, question) |
 
 ### RLS (Row Level Security)
 
-- **assessments:** isolamento por `tenant_id` via `current_setting('app.current_tenant_id')`
+- **assessments, assessment_answers:** isolamento por `tenant_id` via `current_setting('app.current_tenant_id')`
+- **assessment_questions:** dados globais (catálogo)
 - **tenants, frameworks, controls, mapping_logic:** dados globais (sem tenant_id)
 
 **Função:** `set_tenant_context(tenant_id TEXT)` — definir tenant na sessão antes das queries.
@@ -139,5 +154,5 @@ tenants ← assessments → controls
 ## 5. Migrações
 
 - **Firestore:** sem migrations formais; schema implícito no código e nas regras
-- **Cloud SQL:** `backend/migrations/001_grc_schema.sql`; aplicar manualmente ou via Cloud SQL Admin
+- **Cloud SQL:** `backend/migrations/001_grc_schema.sql`, `002_assessment_questions_answers.sql`; aplicar manualmente ou via Cloud SQL Admin
 - **Dados iniciais:** `frameworks`, `controls` e `mapping_logic` populados com ISO 27001 no script

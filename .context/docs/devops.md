@@ -24,7 +24,7 @@ cd backend
 docker build -t nrisk-api .
 ```
 
-**Variáveis de ambiente:** `PORT` (default 8080), `GCP_PROJECT_ID`, `ENV` (opcional para logs)
+**Variáveis de ambiente:** `PORT` (default 8080), `GCP_PROJECT_ID`, `ENV` (opcional para logs), `GCS_EVIDENCE_BUCKET` (upload de evidências; opcional), `ASSESSMENT_QUESTIONS_PATH` (path para assessment_questions.json; default: ./assessment_questions.json)
 
 ### Scan Job (Cloud Run Job)
 

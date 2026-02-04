@@ -29,6 +29,7 @@ scaffoldVersion: "2.0.0"
 | domain (POST /scans) | ✅ | IsValidHostname |
 | scan_id (GET /scans/:id) | ✅ | IsValidUUID |
 | TENANT_ID, SCAN_ID (Scan Job) | ✅ | IsSafePathSegment, IsValidUUID |
+| question_id, control_id (Assessments) | ⏳ | IsSafePathSegment; aplicar em PATCH /assessments/:id |
 | Erro genérico (sem leak) | ✅ | "invalid request body" |
 
 ## 3. Headers de Segurança
@@ -47,6 +48,8 @@ scaffoldVersion: "2.0.0"
 | Item | Status |
 |------|--------|
 | Path Firestore por tenant | ✅ |
+| Path GCS (Evidence) por tenant | ⏳ | tenants/{tid}/assessments/{aid}/evidence/ |
+| Cloud SQL RLS (assessments, assessment_answers) | ⏳ | set_tenant_context antes das queries |
 | Regras isTenantMember | ✅ |
 | Controller usa tenant do token | ✅ |
 

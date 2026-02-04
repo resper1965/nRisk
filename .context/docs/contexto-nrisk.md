@@ -13,6 +13,8 @@ nrisk-mvp (PRD, escopo 4 meses)
 ├── nrisk-arquitetura-gcp (infra GCP)
 ├── nrisk-scoring-metodologia (algoritmo S_f, taxonomia)
 │   └── nrisk-matriz-rastreabilidade-grc (controles ISO)
+├── nrisk-assessment-hibrido (trilhas, Question Bank, Cross-Check, RBAC)
+│   └── nrisk-assessments-hibridos-implementacao (Cloud SQL, Logic Engine, API)
 ├── nrisk-scan-engine-ai2pentest (wrapper ferramentas)
 │   └── nrisk-core-engine (implementação Go)
 ├── nrisk-dpcf-privacy-compliance (LGPD, Evidence Vault)
@@ -34,6 +36,8 @@ nrisk-mvp (PRD, escopo 4 meses)
 | [nrisk-matriz-rastreabilidade-grc](../plans/nrisk-matriz-rastreabilidade-grc.md) | Mapeamento técnico → ISO 27001 | Em progresso |
 | [nrisk-dpcf-privacy-compliance](../plans/nrisk-dpcf-privacy-compliance.md) | LGPD, classificação de dados, Evidence Vault | Em progresso |
 | [nrisk-backend-boilerplate](../plans/nrisk-backend-boilerplate.md) | API Go + Gin, Firestore, JWT | Implementado |
+| [nrisk-assessment-hibrido](../plans/nrisk-assessment-hibrido.md) | Trilhas Bronze/Prata/Ouro, Cross-Check, RBAC | Em progresso |
+| [nrisk-assessments-hibridos-implementacao](../plans/nrisk-assessments-hibridos-implementacao.md) | Cloud SQL, Logic Engine, API GET/PATCH assessments | Em progresso |
 
 ## Documentação
 
@@ -60,7 +64,8 @@ nrisk-mvp (PRD, escopo 4 meses)
 1. **Decisões arquiteturais:** Consultar `nrisk-arquitetura-gcp.md` e `nrisk-mvp.md`
 2. **Scoring e GRC:** Consultar `nrisk-scoring-metodologia.md` e `nrisk-matriz-rastreabilidade-grc.md`
 3. **Scan Engine:** Consultar `nrisk-core-engine.md`; `mapping_logic.json` é fonte de verdade
-4. **Privacidade:** Consultar `nrisk-dpcf-privacy-compliance.md` para Evidence Vault e PII
+4. **Assessments Híbridos:** Consultar `nrisk-assessment-hibrido.md` e `nrisk-assessments-hibridos-implementacao.md`; Logic Engine (Cross-Check), Cloud SQL, Evidence Vault
+5. **Privacidade:** Consultar `nrisk-dpcf-privacy-compliance.md` para Evidence Vault e PII
 
 ## Estrutura do Repositório
 

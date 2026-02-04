@@ -39,6 +39,8 @@ Todas as respostas de erro incluem:
 | INVALID_REQUEST | 400 | Body JSON inválido |
 | INVALID_DOMAIN | 400 | Formato de domain inválido (hostname) |
 | INVALID_SCAN_ID | 400 | Formato de scan_id inválido (UUID) |
+| INVALID_QUESTION_ID | 400 | question_id ou control_id inválido (path traversal) |
+| FRAMEWORK_NOT_FOUND | 404 | Framework de questionário não encontrado |
 
 Erros 404 e 500 não incluem `code` por padrão (opcional em versões futuras).
 

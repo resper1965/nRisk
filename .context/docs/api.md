@@ -116,6 +116,74 @@ Retorna um scan pelo ID, restrito ao tenant do token.
 
 ---
 
+### GET /api/v1/assessments
+
+Lista o progresso dos assessments do tenant.
+
+**Auth:** Obrigatório  
+**Query params (opcionais):** `framework_id`, `status`
+
+**Response:** `200 OK`
+
+```json
+{
+  "assessments": [
+    {
+      "id": "uuid",
+      "tenant_id": "...",
+      "framework_id": "...",
+      "status": "draft",
+      "progress": { "total": 20, "answered": 15, "inconsistent": 2 },
+      "created_at": "..."
+    }
+  ]
+}
+```
+
+**Multi-tenancy:** Retorna apenas assessments do `tenant_id` do JWT.
+
+---
+
+### PATCH /api/v1/assessments/:id
+
+Atualiza respostas de um assessment. Aplica Logic Engine (Cross-Check) quando `scan_id` fornecido: respostas positivas contraditas por findings são marcadas como `Inconsistent`.
+
+**Auth:** Obrigatório  
+**Params:** `id` — UUID do assessment  
+**Body:**
+
+```json
+{
+  "answers": [
+    { "question_id": "Q-01", "answer_status": "sim", "evidence_storage_path": null },
+    { "question_id": "Q-02", "answer_status": "nao" }
+  ],
+  "scan_id": "uuid-opcional"
+}
+```
+
+**Response:** `200 OK` — assessment atualizado com lista de answers (incluindo status Inconsistent quando aplicável)
+
+**Erros:**
+- `400` — INVALID_REQUEST, question_id/control_id inválido
+- `404` — assessment não encontrado ou de outro tenant
+
+---
+
+### GET /api/v1/assessment (legado / MVP Firestore)
+
+Lista perguntas do framework. **Query:** `?framework=ISO27001`
+
+### POST /api/v1/assessment/answer (legado / MVP Firestore)
+
+Salva uma resposta e opcionalmente faz upload de evidência (multipart). Path GCS: `tenants/{tid}/evidence/{questionId}_{filename}`
+
+### GET /api/v1/assessment/score
+
+Retorna score híbrido: `(T * 0.6) + (C * 0.4)`. **Query:** `?framework=ISO27001&scan_id=opcional`
+
+---
+
 ## Scan Job (Cloud Run Job)
 
 Não é API HTTP. Executado como job com variáveis de ambiente:

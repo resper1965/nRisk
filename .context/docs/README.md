@@ -2,6 +2,8 @@
 
 Base de conhecimento do n.Risk. Comece pelo documento mestre de contexto.
 
+**Feature em destaque:** [Assessments Híbridos](../plans/nrisk-assessment-hibrido.md) — Questionários vinculados ao mapping_logic, Logic Engine (Cross-Check), Evidence Vault, API GET/PATCH assessments.
+
 ## Documento Mestre
 
 - **[Contexto n.Risk](./contexto-nrisk.md)** — Consolidação de planos e referências para agentes

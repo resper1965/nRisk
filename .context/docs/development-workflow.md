@@ -26,6 +26,8 @@ scaffoldVersion: "2.0.0"
 - Go 1.22+
 - `GCP_PROJECT_ID`, `GOOGLE_APPLICATION_CREDENTIALS`
 - Ferramentas de scan (nmap, nuclei, subfinder) para testes locais do scan-job
+- Para assessments com upload de evidência: `GCS_EVIDENCE_BUCKET` (opcional)
+- Para questionários: `ASSESSMENT_QUESTIONS_PATH` (default: ./assessment_questions.json)
 
 ## Testes
 

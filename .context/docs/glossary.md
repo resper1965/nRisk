@@ -17,8 +17,14 @@ scaffoldVersion: "2.0.0"
 | **Tenant** | Organização isolada (seguradora, empresa ou fornecedor). Identificado por `tenant_id`. |
 | **Scan** | Execução de varredura em um domínio. Status: pending, running, completed, completed_with_errors. |
 | **AuditFinding** | Achado técnico traduzido para controle ISO 27001 (control_id, score_deduction, recommendation). |
+| **Assessment** | Sessão/rodada de questionário; agrupa respostas (assessment_answers) por tenant. |
+| **Assessment Question** | Pergunta do catálogo; vinculada a control_id do mapping_logic (ISO 27001). |
+| **Assessment Answer** | Resposta do usuário; answer_status: sim, nao, na, **Inconsistent** (quando scan contradiz). |
+| **Logic Engine (Cross-Check)** | Função que compara findings do scan com respostas positivas; marca Inconsistent se contraditadas. |
 | **Trust Center** | Página pública com selos, documentos e resumo de postura de segurança. |
-| **Evidence Vault** | Armazenamento de documentos de evidência (PDFs, imagens) vinculados a respostas de questionário. |
+| **Evidence Vault** | Armazenamento GCS de evidências (PDFs, imagens) em `tenants/{tid}/assessments/{aid}/evidence/`; hash SHA-256 por arquivo para integridade. |
+| **Trilha (Track)** | Nível de maturidade do questionário: Bronze (auto-declaração), Prata (evidência obrigatória), Ouro (framework completo). |
+| **RBAC** | Operador responde perguntas; CISO/Admin submete assessment final para a seguradora. |
 
 ## Termos Técnicos
 
@@ -30,7 +36,7 @@ scaffoldVersion: "2.0.0"
 | **validator.IsValidUUID** | Validação de UUID; evita path traversal em scan_id. |
 | **validator.IsSafePathSegment** | Validação de segmento de path; evita "/" e chars de controle em tenant_id. |
 | **Score Técnico (T)** | Base 1000; dedução por achados conforme severidade. |
-| **Score de Compliance (C)** | Percentual de aderência aos questionários (ISO, NIST, LGPD). |
+| **Score de Compliance (C)** | Percentual de aderência aos questionários; aditivo (respostas positivas somam pontos) ou base em percentual. Penalidade -10% por inconsistências. |
 | **Penalidade Crítica** | Se houver achado Crítico, score final máximo = 500. |
 
 ## Severidades
@@ -47,7 +53,7 @@ scaffoldVersion: "2.0.0"
 | Termo | Definição |
 |-------|-----------|
 | **Firestore** | NoSQL; hierarquia `tenants/{tid}/scans/{sid}/findings/{fid}`; scans e findings do MVP |
-| **Cloud SQL** | PostgreSQL; GRC, controles, frameworks, assessments (Mês 2) |
+| **Cloud SQL** | PostgreSQL; GRC, controles, frameworks, assessments, assessment_questions, assessment_answers |
 | **RLS** | Row Level Security; isolamento por `tenant_id` em `assessments` |
 | **Score Category** | A–F; mapeamento A≥900, B≥750, C≥600, D≥400, E≥250, F<250 |
 | **mapping_logic (Cloud SQL)** | Tabela que vincula achado técnico a control_id e impact_on_score; equivalente lógico do JSON |

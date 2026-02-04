@@ -24,10 +24,10 @@ Plataforma de avaliação de postura cibernética voltada para **Cyber Insurance
 
 | Componente | Descrição |
 |------------|-----------|
-| **API Backend (Go)** | Lógica de negócio, gestão de scans e questionários, multi-tenant |
+| **API Backend (Go)** | Lógica de negócio, scans, **Assessments Híbridos** (questionários + Logic Engine), multi-tenant |
 | **Scan Engine (Cloud Run Jobs)** | Execução de Nuclei, Nmap, Subfinder; mapeamento para ISO 27001 via `mapping_logic.json` |
 | **Trust Center** | URL pública com selos de segurança e documentos |
-| **Painel de Postura** | Score dinâmico (0–1000), achados técnicos e compliance |
+| **Painel de Postura** | Score dinâmico (0–1000), achados técnicos, **questionários** (Trilhas Bronze/Prata/Ouro), Evidence Vault, inconsistências (Cross-Check) |
 
 ## Stack Técnica
 
@@ -42,7 +42,7 @@ Plataforma de avaliação de postura cibernética voltada para **Cyber Insurance
 $$S_f = (T \times 0.6) + (C \times 0.4)$$
 
 - **T** = Score técnico (base 1000, dedução por achados)
-- **C** = Score de compliance (questionários)
+- **C** = Score de compliance (questionários; aditivo; penalidade -10% por inconsistências)
 
 **Penalidade crítica:** Se houver achado de severidade Crítica, $S_f$ não pode ultrapassar 500.
 

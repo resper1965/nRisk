@@ -41,17 +41,26 @@ scaffoldVersion: "2.0.0"
 8. Score calculado (base 1000 - deduções) e atualizado no documento scan
 ```
 
-## 2. Fontes de Dados
+## 2. Fluxo de Assessments Híbridos
+
+1. **API:** Cliente chama `GET /api/v1/assessments` para listar progresso; `PATCH /api/v1/assessments/:id` para atualizar respostas
+2. **Cloud SQL:** `assessments` (sessão), `assessment_answers` (respostas com answer_status, evidence_storage_path), `assessment_questions` (catálogo vinculado a control_id)
+3. **Logic Engine:** `MarkInconsistentAnswers(findings, answers, mapping)` — compara respostas "Sim" com findings do scan; marca como "Inconsistent" quando contraditadas
+4. **Storage:** Upload de evidência → GCS path `tenants/{tid}/assessments/{aid}/evidence/{file}`
+5. **Multi-tenancy:** `tenant_id` do JWT em todas as queries e paths
+
+## 3. Fontes de Dados
 
 | Fonte | Tipo | Destino |
 |-------|------|---------|
 | Scans (Nuclei, Nmap, Subfinder) | JSON/TXT | Parser → AuditFinding → Firestore `tenants/{tid}/scans/{sid}/findings/{fid}` |
-| Questionários (ISO, NIST, LGPD) | Formulário | Cloud SQL `assessments` (Mês 2) |
-| Evidence Vault | PDF/imagens | Cloud Storage (CMEK) |
+| Questionários (assessment_questions) | Cloud SQL | Catálogo vinculado a mapping_logic (control_id) |
+| Respostas (assessment_answers) | API PATCH | Cloud SQL `assessment_answers`; RLS por tenant |
+| Evidence Vault | PDF/imagens | Cloud Storage `tenants/{tid}/assessments/{aid}/evidence/` (CMEK) |
 
 Detalhes de esquemas e hierarquias em [database.md](./database.md).
 
-## 3. Integrações Externas (Planejadas)
+## 4. Integrações Externas (Planejadas)
 
 - **Threat Intel:** Shodan, Censys, HaveIBeenPwned (Secret Manager)
 - **Assinatura Digital:** Provedor externo para NDA

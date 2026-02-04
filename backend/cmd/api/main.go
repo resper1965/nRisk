@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"path/filepath"
 	"syscall"
 	"time"
 
@@ -12,9 +13,11 @@ import (
 	"github.com/nrisk/backend/internal/controller"
 	"github.com/nrisk/backend/internal/middleware"
 	firestore "github.com/nrisk/backend/internal/repository/firestore"
+	"github.com/nrisk/backend/internal/storage"
 	"github.com/nrisk/backend/pkg/logger"
 
 	gcpfirestore "cloud.google.com/go/firestore"
+	gcpstorage "cloud.google.com/go/storage"
 )
 
 func main() {
@@ -39,6 +42,23 @@ func main() {
 	scanRepo := firestore.NewScanRepository(fsClient)
 	scanCtrl := controller.NewScanController(scanRepo)
 
+	answerRepo := firestore.NewAnswerRepository(fsClient)
+	var evidenceStore *storage.EvidenceStore
+	if bucket := os.Getenv("GCS_EVIDENCE_BUCKET"); bucket != "" {
+		sc, err := gcpstorage.NewClient(ctx)
+		if err != nil {
+			logger.Warn("GCS client init failed, evidence upload disabled", map[string]interface{}{"error": err.Error()})
+		} else {
+			defer sc.Close()
+			evidenceStore = storage.NewEvidenceStore(sc, bucket)
+		}
+	}
+	questionsPath := os.Getenv("ASSESSMENT_QUESTIONS_PATH")
+	if questionsPath == "" {
+		questionsPath = filepath.Join(".", "assessment_questions.json")
+	}
+	assessmentCtrl := controller.NewAssessmentController(answerRepo, scanRepo, evidenceStore, questionsPath)
+
 	router := gin.New()
 	router.Use(gin.Recovery())
 	router.Use(middleware.SecurityHeaders())
@@ -55,6 +75,10 @@ func main() {
 	{
 		v1.POST("/scans", scanCtrl.StartScan)
 		v1.GET("/scans/:id", scanCtrl.GetScan)
+
+		v1.GET("/assessment", assessmentCtrl.ListQuestions)
+		v1.POST("/assessment/answer", assessmentCtrl.SubmitAnswer)
+		v1.GET("/assessment/score", assessmentCtrl.GetHybridScore)
 	}
 
 	srv := &http.Server{

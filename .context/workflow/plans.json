@@ -7,6 +7,22 @@
       "summary": "Plataforma de avaliação de postura cibernética voltada para Cyber Insurance e gestão de riscos de terceiros. Foco em observabilidade passiva externa e conformidade declaratória.",
       "linkedAt": "2026-02-04T20:41:25.846Z",
       "status": "active"
+    },
+    {
+      "slug": "nrisk-assessment-hibrido",
+      "path": "plans/nrisk-assessment-hibrido.md",
+      "title": "Módulo de Assessment Híbrido",
+      "summary": "Transforma o n.Risk de um scanner em plataforma de governança: combina declarações sobre processos internos (RH, backups, gestão de chaves) com validação técnica do motor de scan.",
+      "linkedAt": "2026-02-04T22:09:21.021Z",
+      "status": "active"
+    },
+    {
+      "slug": "nrisk-assessments-hibridos-implementacao",
+      "path": "plans/nrisk-assessments-hibridos-implementacao.md",
+      "title": "Implementação Módulo Assessments Híbridos",
+      "summary": "Plano de implementação para Cloud SQL, Logic Engine de inconsistência (findings vs answers), Storage GCS, API GET/PATCH assessments e multi-tenancy rigoroso.",
+      "linkedAt": "2026-02-04T22:10:36.310Z",
+      "status": "active"
     }
   ],
   "completed": [],

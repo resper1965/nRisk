@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "frameworks": [
+    {
+      "id": "ISO27001",
+      "name": "ISO 27001:2022",
+      "questions": [
+        {
+          "id": "Q-01",
+          "control_id": "C-01",
+          "iso_domain": "A.13.1.1",
+          "text": "Existe controle de acesso para portas críticas (RDP 3389, SMB 445)?",
+          "severity": "critical",
+          "score_deduction_if_no": 500
+        },
+        {
+          "id": "Q-02",
+          "control_id": "C-02",
+          "iso_domain": "A.10.1.1",
+          "text": "Há gestão de certificados digitais (renovação, validade)?",
+          "severity": "high",
+          "score_deduction_if_no": 200
+        },
+        {
+          "id": "Q-03",
+          "control_id": "C-03",
+          "iso_domain": "A.12.6.1",
+          "text": "Existe processo de patch management para vulnerabilidades?",
+          "severity": "medium",
+          "score_deduction_if_no": 80
+        },
+        {
+          "id": "Q-04",
+          "control_id": "C-04",
+          "iso_domain": "A.13.2.1",
+          "text": "Possui proteção anti-phishing (DMARC/SPF) configurada?",
+          "severity": "high",
+          "score_deduction_if_no": 200
+        },
+        {
+          "id": "Q-05",
+          "control_id": "C-02",
+          "iso_domain": "A.10.1.1",
+          "text": "MFA (autenticação multifator) está habilitado para acessos críticos?",
+          "severity": "critical",
+          "score_deduction_if_no": 300
+        }
+      ]
+    }
+  ]
+}
