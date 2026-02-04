@@ -1,0 +1,38 @@
+---
+description: Usar resper1965/clone como inspiração ao criar páginas e layouts
+globs: frontend/**/*.tsx, frontend/**/*.ts, app/**/*.tsx, app/**/*.ts, components/**/*.tsx
+alwaysApply: false
+---
+
+# Frontend — Inspiração UI
+
+Ao criar **novas páginas, layouts ou componentes** do frontend n.Risk, use o repositório [resper1965/clone](https://github.com/resper1965/clone) como **fonte de inspiração** para:
+
+## O que consultar no clone
+
+- **Estrutura de páginas:** `app/dashboard/(auth)/` — project-management, ecommerce, crm, default
+- **Páginas reutilizáveis:** `pages/orders`, `pages/users`, `pages/products`, `pages/onboarding-flow`, `pages/profile`, `pages/settings`, `pages/pricing`
+- **Componentes:** `components/ui/` (Shadcn), `components/layout/` (sidebar, header)
+- **Auth:** `(guest)/login`, `(guest)/register`, `(guest)/forgot-password`
+
+## Como aplicar
+
+1. **Layout e grid:** Replicar a estrutura de Cards, Tabs e Sidebar do clone
+2. **DataTables:** Usar o padrão de `pages/orders` ou `pages/users` para listas
+3. **Forms multi-step:** Inspirar-se em `onboarding-flow` para questionários
+4. **Charts:** Usar `components/ui/chart` (Recharts) — Radar para spider chart ISO
+
+## Mapeamento n.Risk (referência)
+
+| Necessidade | Base no clone |
+|-------------|---------------|
+| Dashboard score | `default/` ou `profile/` |
+| Lista com ações | `pages/orders/` |
+| Formulário multi-step | `pages/onboarding-flow/` |
+| Configurações | `pages/settings/` |
+| Trust Center / selos | `pages/pricing/` |
+
+## Referência técnica
+
+- Stack do clone: Next.js 15, React 19, Shadcn UI
+- Plano detalhado: `.context/plans/nrisk-frontend-clone-integracao.md`

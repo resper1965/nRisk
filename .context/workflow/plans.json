@@ -23,6 +23,14 @@
       "summary": "Plano de implementação para Cloud SQL, Logic Engine de inconsistência (findings vs answers), Storage GCS, API GET/PATCH assessments e multi-tenancy rigoroso.",
       "linkedAt": "2026-02-04T22:10:36.310Z",
       "status": "active"
+    },
+    {
+      "slug": "nrisk-frontend-clone-integracao",
+      "path": "plans/nrisk-frontend-clone-integracao.md",
+      "title": "Integração Frontend n.Risk com Clone (resper1965/clone)",
+      "summary": "Trazer o layout do [resper1965/clone](https://github.com/resper1965/clone) e adequar as funcionalidades do n.Risk às estruturas e componentes disponíveis.",
+      "linkedAt": "2026-02-04T23:53:02.460Z",
+      "status": "active"
     }
   ],
   "completed": [],

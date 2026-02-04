@@ -246,7 +246,11 @@ app/
 
 ---
 
-## 7. Evidence & Follow-up
+## 7. Plano de Execução
+
+O plano detalhado de implementação está em [nrisk-frontend-clone-integracao.md](./nrisk-frontend-clone-integracao.md), com mapeamento atualizado da estrutura real do clone (explorada via GitHub API) e fases de implementação.
+
+## 8. Evidence & Follow-up
 
 - [ ] Clone integrado ao monorepo ou pasta `frontend/` do n.Risk
 - [ ] Documento de componentes disponíveis no clone (após exploração)

@@ -12,6 +12,7 @@ Instruções para agentes e desenvolvedores do n.Risk.
 ## Regras para Decisões
 
 1. **Arquitetura:** Consultar `nrisk-arquitetura-gcp.md` e `nrisk-mvp.md`
+2. **Frontend / UI:** Usar [resper1965/clone](https://github.com/resper1965/clone) como inspiração ao criar páginas — ver regra `.cursor/rules/frontend-ui-inspiration.mdc`
 2. **Scoring e GRC:** Consultar `nrisk-scoring-metodologia.md` e `nrisk-matriz-rastreabilidade-grc.md`
 3. **Scan Engine:** `mapping_logic.json` é fonte de verdade para mapeamento ISO 27001
 4. **Privacidade/LGPD:** Consultar `nrisk-dpcf-privacy-compliance.md`

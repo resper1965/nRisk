@@ -28,11 +28,11 @@ phases:
 
 execution:
   history:
-    - timestamp: "2026-02-04T22:10:36.312Z"
+    - timestamp: "2026-02-04T23:53:02.465Z"
       phase: C
       action: plan_linked
-      plan: "nrisk-assessments-hibridos-implementacao"
-  last_activity: "2026-02-04T22:10:36.312Z"
+      plan: "nrisk-frontend-clone-integracao"
+  last_activity: "2026-02-04T23:53:02.465Z"
   resume_context: "Plano vinculado - aguardando revisão"
 
 approval:
