@@ -26,6 +26,7 @@ scaffoldVersion: "2.0.0"
 
 - **gcloud:** Deploy Cloud Run, Pub/Sub, Firestore
 - **Variáveis:** `GCP_PROJECT_ID`, `GOOGLE_APPLICATION_CREDENTIALS`
+- **Deploy:** Ver [devops.md](./devops.md) para comandos completos (API, Scan Job, Firestore rules)
 
 ## ai-context (MCP)
 

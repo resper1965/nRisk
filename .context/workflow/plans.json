@@ -1,0 +1,14 @@
+{
+  "active": [
+    {
+      "slug": "nrisk-mvp",
+      "path": "plans/nrisk-mvp.md",
+      "title": "n.Risk – Plataforma de Cyber Risk & Assessment",
+      "summary": "Plataforma de avaliação de postura cibernética voltada para Cyber Insurance e gestão de riscos de terceiros. Foco em observabilidade passiva externa e conformidade declaratória.",
+      "linkedAt": "2026-02-04T20:41:25.846Z",
+      "status": "active"
+    }
+  ],
+  "completed": [],
+  "primary": "nrisk-mvp"
+}

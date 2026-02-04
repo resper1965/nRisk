@@ -7,10 +7,12 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/nrisk/backend/internal/parser"
 	"github.com/nrisk/backend/pkg/logger"
+	"golang.org/x/sync/errgroup"
 )
 
 const defaultTimeout = 4 * time.Minute
@@ -86,17 +88,22 @@ func (r *Runner) Run(ctx context.Context, tool ToolConfig, domain string) (stdou
 	return stdout, stderr, nil
 }
 
-// RunAll executa todas as ferramentas e retorna outputs por tool.
+// RunAll executa todas as ferramentas em paralelo e retorna outputs por tool.
 func (r *Runner) RunAll(ctx context.Context, domain string) map[string]ToolOutput {
 	outputs := make(map[string]ToolOutput)
+	var mu sync.Mutex
+	g, gctx := errgroup.WithContext(ctx)
 	for _, tool := range r.tools {
-		stdout, stderr, err := r.Run(ctx, tool, domain)
-		outputs[tool.Name] = ToolOutput{
-			Stdout: stdout,
-			Stderr: stderr,
-			Error:  err,
-		}
+		tool := tool // capture loop variable
+		g.Go(func() error {
+			stdout, stderr, err := r.Run(gctx, tool, domain)
+			mu.Lock()
+			outputs[tool.Name] = ToolOutput{Stdout: stdout, Stderr: stderr, Error: err}
+			mu.Unlock()
+			return nil
+		})
 	}
+	_ = g.Wait()
 	return outputs
 }
 

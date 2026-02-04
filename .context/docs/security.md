@@ -10,6 +10,25 @@ scaffoldVersion: "2.0.0"
 
 # Segurança e Conformidade
 
+## Validação de Entrada
+
+| Input | Validação | Risco mitigado |
+|-------|-----------|----------------|
+| domain (POST /scans) | `IsValidHostname` (RFC 1123) | Command injection em nmap/nuclei |
+| scan_id (GET /scans/:id) | `IsValidUUID` | Path traversal em Firestore |
+| TENANT_ID, SCAN_ID (Scan Job) | `IsSafePathSegment`, `IsValidUUID` | Path traversal em Firestore |
+| JWT | Firebase VerifyIDToken | Token inválido/expirado |
+
+## Security Headers
+
+- **X-Content-Type-Options:** nosniff
+- **X-Frame-Options:** DENY
+- **X-XSS-Protection:** 1; mode=block
+- **Referrer-Policy:** strict-origin-when-cross-origin
+- **Permissions-Policy:** geolocation=(), microphone=(), camera=()
+
+Checklist completo: [security-audit-checklist.md](./security-audit-checklist.md)
+
 ## Autenticação
 
 - **Identity Platform (Firebase Auth):** MFA obrigatório
@@ -25,7 +44,8 @@ scaffoldVersion: "2.0.0"
 
 - Path Firestore: `tenants/{tenantId}/...`
 - Queries filtradas por `tenant_id`
-- Regras Firestore: `isTenantMember(tenantId)`
+- Regras Firestore: `isTenantMember(tenantId)`; validação de score e domain em writes
+- Cloud SQL: RLS em `assessments` via `set_tenant_context(tenant_id)` — ver [database.md](./database.md)
 
 ## Secrets e API Keys
 
@@ -35,6 +55,15 @@ scaffoldVersion: "2.0.0"
 ## WAF
 
 - **Cloud Armor:** Proteção do Dashboard (SQLi, XSS, rate limiting)
+
+## Recomendações Pendentes
+
+| Item | Prioridade | Descrição |
+|------|------------|-----------|
+| Rate limiting | Média | Proteger POST /scans contra DoS |
+| CORS | Média | Configurar ao integrar frontend — ver [frontend.md](./frontend.md) |
+| HSTS | Baixa | Header Strict-Transport-Security em produção |
+| Cloud Armor | Planejado | WAF para Dashboard |
 
 ## LGPD / DPCF
 

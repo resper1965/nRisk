@@ -12,6 +12,7 @@ import (
 	"github.com/nrisk/backend/internal/parser"
 	"github.com/nrisk/backend/internal/repository/firestore"
 	"github.com/nrisk/backend/pkg/logger"
+	"github.com/nrisk/backend/pkg/validator"
 )
 
 func main() {
@@ -27,6 +28,17 @@ func main() {
 		logger.Error("variáveis obrigatórias ausentes", map[string]interface{}{
 			"required": "TENANT_ID, SCAN_ID, DOMAIN",
 		})
+		os.Exit(1)
+	}
+	if !validator.IsSafePathSegment(tenantID) || !validator.IsValidUUID(scanID) {
+		logger.Error("TENANT_ID ou SCAN_ID inválido", map[string]interface{}{
+			"tenant_id": tenantID,
+			"scan_id":   scanID,
+		})
+		os.Exit(1)
+	}
+	if !validator.IsValidHostname(domain) {
+		logger.Error("domain inválido", map[string]interface{}{"domain": domain})
 		os.Exit(1)
 	}
 

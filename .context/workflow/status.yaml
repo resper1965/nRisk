@@ -1,0 +1,48 @@
+project:
+  name: "nrisk-mvp"
+  scale: LARGE
+  started: "2026-02-04T20:19:22.174Z"
+  current_phase: C
+
+phases:
+  P:
+    status: filled
+    started_at: "2026-02-04T20:19:22.174Z"
+    completed_at: "2026-02-04T20:41:29.659Z"
+  R:
+    status: filled
+    started_at: "2026-02-04T20:41:29.663Z"
+    completed_at: "2026-02-04T20:48:13.234Z"
+  E:
+    status: filled
+    started_at: "2026-02-04T20:48:13.235Z"
+    completed_at: "2026-02-04T21:28:05.616Z"
+  V:
+    status: filled
+    started_at: "2026-02-04T21:28:05.617Z"
+    completed_at: "2026-02-04T21:29:17.363Z"
+  C:
+    status: completed
+    started_at: "2026-02-04T21:29:17.364Z"
+    completed_at: "2026-02-04T21:29:33.239Z"
+    outputs:
+      - path: ".context/workflow/changelog-session.md"
+        status: filled
+      - path: "backend/README.md"
+        status: filled
+
+execution:
+  history:
+    - timestamp: "2026-02-04T21:29:33.239Z"
+      phase: C
+      action: completed
+  last_activity: "2026-02-04T21:29:33.239Z"
+  resume_context: "Fase C (Confirmação) concluída"
+
+approval:
+  plan_created: true
+  plan_approved: true
+  approved_by: "reviewer"
+  approved_at: "2026-02-04T20:48:10.923Z"
+  approval_notes: "Review concluído. Arquitetura alinhada, lacunas documentadas. Aprovado para Execute."
+

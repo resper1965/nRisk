@@ -1,0 +1,191 @@
+openapi: 3.0.3
+info:
+  title: n.Risk API
+  description: API REST para avaliação de postura cibernética — Cyber Insurance e GRC
+  version: 1.0.0
+
+servers:
+  - url: /
+    description: Cloud Run (base URL configurável)
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      operationId: getHealth
+      tags: [Health]
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+  /api/v1/scans:
+    post:
+      summary: Iniciar scan
+      operationId: createScan
+      tags: [Scans]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [domain]
+              properties:
+                domain:
+                  type: string
+                  example: example.com
+                  description: Hostname válido (RFC 1123)
+      responses:
+        '201':
+          description: Scan criado
+          headers:
+            Location:
+              description: URL do recurso
+              schema:
+                type: string
+                example: /api/v1/scans/550e8400-e29b-41d4-a716-446655440000
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  scan_id:
+                    type: string
+                    format: uuid
+                  domain:
+                    type: string
+                  status:
+                    type: string
+                    enum: [pending]
+                  tenant_id:
+                    type: string
+        '400':
+          description: Request inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                invalid_domain:
+                  value:
+                    error: invalid domain format
+                    code: INVALID_DOMAIN
+                invalid_request:
+                  value:
+                    error: invalid request body
+                    code: INVALID_REQUEST
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          description: Erro interno
+
+  /api/v1/scans/{id}:
+    get:
+      summary: Obter scan por ID
+      operationId: getScan
+      tags: [Scans]
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scan'
+        '400':
+          description: ID inválido
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: invalid scan id format
+                code: INVALID_SCAN_ID
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          description: Scan não encontrado
+        '500':
+          description: Erro interno
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Firebase ID Token com custom claim tenant_id
+
+  schemas:
+    Scan:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        tenant_id:
+          type: string
+        domain:
+          type: string
+        status:
+          type: string
+          enum: [pending, running, completed, completed_with_errors, failed]
+        score:
+          type: integer
+          minimum: 0
+          maximum: 1000
+        score_category:
+          type: string
+          enum: [A, B, C, D, E, F]
+        started_at:
+          type: string
+          format: date-time
+        finished_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        code:
+          type: string
+
+  responses:
+    Unauthorized:
+      description: Token ausente ou inválido
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: tenant_id ausente nas claims
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

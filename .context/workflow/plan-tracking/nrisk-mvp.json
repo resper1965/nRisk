@@ -1,0 +1,32 @@
+{
+  "decisions": [
+    {
+      "title": "Review aprovado - lacunas documentadas",
+      "description": "Arquitetura alinhada; Pub/Sub e Cloud SQL como TODOs; validação de domain recomendada",
+      "phase": "R",
+      "alternatives": [
+        "Implementar Pub/Sub agora",
+        "Adicionar validação domain agora"
+      ],
+      "status": "accepted",
+      "id": "dec-1770238084982",
+      "decidedAt": "2026-02-04T20:48:04.983Z"
+    },
+    {
+      "title": "Validação de domain e documentação de fluxo",
+      "description": "Implementada validação de hostname (pkg/validator) no controller e scan-job; data-flow.md atualizado com fluxo atual (manual) vs futuro (Pub/Sub)",
+      "phase": "E",
+      "status": "accepted",
+      "id": "dec-1770240485434",
+      "decidedAt": "2026-02-04T21:28:05.434Z"
+    },
+    {
+      "title": "Validação concluída",
+      "description": "Testes unitários para validator; testing-strategy atualizado; validação de security aprovada",
+      "phase": "V",
+      "status": "accepted",
+      "id": "dec-1770240556993",
+      "decidedAt": "2026-02-04T21:29:16.993Z"
+    }
+  ]
+}

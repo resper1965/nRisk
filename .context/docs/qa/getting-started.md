@@ -10,19 +10,37 @@ generatedAt: 2026-02-04T18:53:51.041Z
 
 ### Prerequisites
 
+- **Go 1.22+**
+- **GCP Project** com Firestore e Identity Platform
+- **Variáveis:** `GCP_PROJECT_ID`, `GOOGLE_APPLICATION_CREDENTIALS`
+- (Opcional) **Ferramentas de scan:** nmap, nuclei, subfinder (para testes locais do scan-job)
 
 ### Installation
 
 ```bash
-# Clone the repository
-git clone <repository-url>
-cd nRisk
-
+git clone https://github.com/resper1965/nRisk.git
+cd nRisk/backend
+go mod download
 ```
 
 ### Running
 
 ```bash
-# See package.json for available scripts
-npm run <script-name>
+# API REST
+export GCP_PROJECT_ID=seu-projeto
+export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account.json
+go run ./cmd/api
+
+# Scan Job (Cloud Run Job ou local)
+TENANT_ID=org-1 SCAN_ID=scan-1 DOMAIN=example.com go run ./cmd/scan-job
+```
+
+### Docker
+
+```bash
+# API
+docker build -t nrisk-api .
+
+# Scan Job
+docker build -f Dockerfile.scan-job -t nrisk-scan-job .
 ```

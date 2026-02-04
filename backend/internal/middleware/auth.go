@@ -3,14 +3,22 @@ package middleware
 import (
 	"context"
 	"net/http"
-	"strings"
 	"os"
+	"strings"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 	"github.com/nrisk/backend/pkg/logger"
 
 	firebase "firebase.google.com/go/v4"
+	"firebase.google.com/go/v4/auth"
 	"google.golang.org/api/option"
+)
+
+var (
+	authClient *auth.Client
+	authOnce   sync.Once
+	authErr    error
 )
 
 const (
@@ -26,13 +34,13 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.GetHeader("Authorization")
 		if authHeader == "" {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "missing Authorization header"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "missing Authorization header", "code": "MISSING_AUTH"})
 			return
 		}
 
 		parts := strings.SplitN(authHeader, " ", 2)
 		if len(parts) != 2 || strings.ToLower(parts[0]) != "bearer" {
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "invalid Authorization header format"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "invalid Authorization header format", "code": "INVALID_AUTH_FORMAT"})
 			return
 		}
 
@@ -42,14 +50,14 @@ func AuthMiddleware() gin.HandlerFunc {
 			logger.Warn("jwt verification failed", map[string]interface{}{
 				"error": err.Error(),
 			})
-			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "invalid or expired token"})
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "invalid or expired token", "code": "INVALID_TOKEN"})
 			return
 		}
 
 		// Extrai tenant_id das custom claims (definidas no Firebase Auth / Identity Platform).
 		tenantID, _ := claims["tenant_id"].(string)
 		if tenantID == "" {
-			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "tenant_id not found in token claims"})
+			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{"error": "tenant_id not found in token claims", "code": "MISSING_TENANT_ID"})
 			return
 		}
 
@@ -63,29 +71,34 @@ func AuthMiddleware() gin.HandlerFunc {
 	}
 }
 
+// initAuthClient inicializa o cliente Firebase Auth uma única vez (singleton).
+func initAuthClient(ctx context.Context) (*auth.Client, error) {
+	authOnce.Do(func() {
+		var app *firebase.App
+		credsPath := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
+		if credsPath != "" {
+			app, authErr = firebase.NewApp(ctx, nil, option.WithCredentialsFile(credsPath))
+		} else {
+			app, authErr = firebase.NewApp(ctx, nil) // ADC em Cloud Run
+		}
+		if authErr != nil {
+			return
+		}
+		authClient, authErr = app.Auth(ctx)
+	})
+	return authClient, authErr
+}
+
 // verifyIDToken verifica o ID token do Firebase e retorna as claims.
+// Reutiliza o cliente Auth (singleton) para evitar init por request.
 func verifyIDToken(ctx context.Context, tokenString string) (map[string]interface{}, error) {
-	var app *firebase.App
-	var err error
-	credsPath := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
-	if credsPath != "" {
-		app, err = firebase.NewApp(ctx, nil, option.WithCredentialsFile(credsPath))
-	} else {
-		app, err = firebase.NewApp(ctx, nil) // usa ADC em Cloud Run
-	}
+	client, err := initAuthClient(ctx)
 	if err != nil {
 		return nil, err
 	}
-
-	client, err := app.Auth(ctx)
-	if err != nil {
-		return nil, err
-	}
-
 	token, err := client.VerifyIDToken(ctx, tokenString)
 	if err != nil {
 		return nil, err
 	}
-
 	return token.Claims, nil
 }

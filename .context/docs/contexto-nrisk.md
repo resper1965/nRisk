@@ -40,10 +40,17 @@ nrisk-mvp (PRD, escopo 4 meses)
 | Doc | Conteúdo |
 |-----|----------|
 | [project-overview](./project-overview.md) | Visão geral, stack, scoring |
+| [api](./api.md) | Referência de endpoints REST |
+| [api-design](./api-design.md) | Princípios, formato de erro, versionamento |
 | [architecture](./architecture.md) | Componentes GCP, estrutura de código |
+| [database](./database.md) | Esquemas Firestore e Cloud SQL, índices, RLS |
+| [devops](./devops.md) | Deploy, containers, env vars, CI/CD planejado |
+| [performance](./performance.md) | Otimizações (Auth singleton, Scan paralelo, WriteBatch) |
+| [frontend](./frontend.md) | Stack, integração API, estrutura de rotas |
 | [data-flow](./data-flow.md) | Fluxo de scan, integrações |
 | [glossary](./glossary.md) | Terminologia, entidades, severidades |
 | [security](./security.md) | Auth, criptografia, LGPD |
+| [security-audit-checklist](./security-audit-checklist.md) | Checklist de auditoria de segurança |
 | [development-workflow](./development-workflow.md) | Branching, commits, deploy |
 | [testing-strategy](./testing-strategy.md) | Cobertura, casos críticos |
 | [tooling](./tooling.md) | Go, Docker, GCP, ai-context |

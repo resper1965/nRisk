@@ -7,5 +7,6 @@ require (
 	firebase.google.com/go/v4 v4.14.0
 	github.com/gin-gonic/gin v1.10.0
 	github.com/google/uuid v1.6.0
+	golang.org/x/sync v0.10.0
 	google.golang.org/api v0.177.0
 )

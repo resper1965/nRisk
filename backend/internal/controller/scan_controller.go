@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nrisk/backend/internal/domain"
 	"github.com/nrisk/backend/internal/middleware"
 	"github.com/nrisk/backend/internal/repository/firestore"
 	"github.com/nrisk/backend/pkg/logger"
+	"github.com/nrisk/backend/pkg/validator"
 )
 
 // ScanController trata requisições relacionadas a scans.
@@ -38,7 +38,11 @@ func (sc *ScanController) StartScan(c *gin.Context) {
 
 	var req StartScanRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "invalid request: " + err.Error()})
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "invalid request body", "code": "INVALID_REQUEST"})
+		return
+	}
+	if !validator.IsValidHostname(req.Domain) {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "invalid domain format", "code": "INVALID_DOMAIN"})
 		return
 	}
 
@@ -60,6 +64,7 @@ func (sc *ScanController) StartScan(c *gin.Context) {
 	})
 
 	// TODO: Publicar mensagem no Pub/Sub para o worker processar o scan.
+	c.Header("Location", "/api/v1/scans/"+scan.ID)
 	c.JSON(http.StatusCreated, gin.H{
 		"scan_id":   scan.ID,
 		"domain":    scan.Domain,
@@ -78,6 +83,10 @@ func (sc *ScanController) GetScan(c *gin.Context) {
 	}
 	tenantIDStr := tenantID.(string)
 	scanID := c.Param("id")
+	if !validator.IsValidUUID(scanID) {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "invalid scan id format", "code": "INVALID_SCAN_ID"})
+		return
+	}
 
 	scan, err := sc.scanRepo.GetByID(c.Request.Context(), tenantIDStr, scanID)
 	if err != nil {

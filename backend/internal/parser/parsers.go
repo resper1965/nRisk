@@ -9,6 +9,8 @@ import (
 	"github.com/nrisk/backend/internal/domain"
 )
 
+var portRe = regexp.MustCompile(`(\d+)/open/`)
+
 // RawFinding representa um achado bruto antes da tradução GRC.
 type RawFinding struct {
 	ToolName         string
@@ -24,7 +26,6 @@ type RawFinding struct {
 func ParseNmapOutput(output string) []RawFinding {
 	var findings []RawFinding
 	// Formato: Host: 1.2.3.4 ()	Ports: 3389/open/tcp//ms-wbt-server///
-	portRe := regexp.MustCompile(`(\d+)/open/`)
 	matches := portRe.FindAllStringSubmatch(output, -1)
 	for _, m := range matches {
 		if len(m) < 2 {

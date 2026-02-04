@@ -13,13 +13,17 @@ Boilerplate inicial da API n.Risk — avaliação de postura cibernética, **mul
 
 ```
 backend/
-├── cmd/api/           # Entrypoint
+├── cmd/api/           # Entrypoint API
+├── cmd/scan-job/      # Entrypoint Scan Engine
 ├── internal/
-│   ├── domain/        # Entidades (Company, ScanResult, AssessmentResponse)
+│   ├── domain/        # Entidades (AuditFinding, ScanResult)
+│   ├── engine/        # Orquestração Nuclei, Nmap, Subfinder
+│   ├── parser/        # Tradução GRC (mapping_logic.json)
 │   ├── middleware/    # Auth JWT + tenant_id
-│   ├── repository/    # Firestore, futuro Cloud SQL
+│   ├── repository/    # Firestore
 │   └── controller/    # Handlers HTTP
 ├── pkg/logger/        # Logs JSON para Cloud Logging
+├── pkg/validator/     # Validação (ex: domain/hostname)
 ├── go.mod
 └── Dockerfile
 ```
@@ -30,6 +34,12 @@ backend/
 - Projeto GCP com Firestore e Identity Platform
 - Variável `GCP_PROJECT_ID`
 - Token JWT com custom claim `tenant_id`
+
+## Testes
+
+```bash
+go test ./... -cover
+```
 
 ## Rodar localmente
 

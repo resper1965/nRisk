@@ -41,6 +41,7 @@ func main() {
 
 	router := gin.New()
 	router.Use(gin.Recovery())
+	router.Use(middleware.SecurityHeaders())
 	router.Use(requestLogger())
 
 	// Health check (sem auth)

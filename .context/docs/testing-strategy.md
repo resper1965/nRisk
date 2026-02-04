@@ -14,6 +14,7 @@ scaffoldVersion: "2.0.0"
 
 | Área | Prioridade | Tipo |
 |------|------------|------|
+| Validator (domain, uuid, path) | Alta | Unit |
 | Parser (mapping_logic) | Alta | Unit |
 | Motor de scoring | Alta | Unit + integração |
 | API (endpoints) | Média | Integração |
@@ -27,5 +28,19 @@ scaffoldVersion: "2.0.0"
 
 ## Ferramentas
 
-- **Go:** `testing` padrão, `testify` (assert)
-- **Coverage:** `go test -cover`
+- **Go:** `testing` padrão
+- **Coverage:** `go test -cover ./...`
+- **Executar:** `cd backend && go test ./... -v`
+
+## Arquivos de Teste
+
+| Pacote | Arquivo | Cobertura |
+|--------|---------|-----------|
+| pkg/validator | domain_test.go | IsValidHostname, IsValidUUID, IsSafePathSegment |
+| internal/parser | parsers_test.go | ParseNmapOutput, ParseNucleiOutput, ParseSubfinderOutput |
+| internal/parser | mapping_test.go | ToAuditFinding, TranslateToAuditFindings (requer mapping_logic.json) |
+| internal/repository/firestore | score_repository_test.go | scoreToCategory (A–F) |
+
+## Performance
+
+Otimizações e benchmarks: [performance.md](./performance.md)

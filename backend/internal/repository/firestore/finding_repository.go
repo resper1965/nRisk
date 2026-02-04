@@ -37,10 +37,26 @@ func (r *FindingRepository) Save(ctx context.Context, tenantID, scanID string, f
 	return err
 }
 
-// SaveBatch persiste múltiplos findings.
+// SaveBatch persiste múltiplos findings usando Firestore WriteBatch (até 500 por batch).
 func (r *FindingRepository) SaveBatch(ctx context.Context, tenantID, scanID string, findings []*domain.AuditFinding) error {
-	for _, f := range findings {
-		if err := r.Save(ctx, tenantID, scanID, f); err != nil {
+	const maxBatchSize = 500
+	for i := 0; i < len(findings); i += maxBatchSize {
+		end := i + maxBatchSize
+		if end > len(findings) {
+			end = len(findings)
+		}
+		batch := r.client.Batch()
+		for _, f := range findings[i:end] {
+			f.TenantID = tenantID
+			f.ScanID = scanID
+			if f.ID == "" {
+				f.ID = uuid.New().String()
+			}
+			f.CreatedAt = time.Now().UTC()
+			docPath := "tenants/" + tenantID + "/scans/" + scanID + "/" + findingsCollection + "/" + f.ID
+			batch.Set(r.client.Doc(docPath), f)
+		}
+		if _, err := batch.Commit(ctx); err != nil {
 			return err
 		}
 	}

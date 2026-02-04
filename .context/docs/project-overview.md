@@ -31,6 +31,7 @@ Plataforma de avaliação de postura cibernética voltada para **Cyber Insurance
 
 ## Stack Técnica
 
+- **Frontend:** Next.js 15, React 19, Shadcn UI (base: resper1965/clone)
 - **Backend:** Go + Gin
 - **Auth:** GCP Identity Platform (Firebase Auth) + JWT com `tenant_id`
 - **Persistência:** Firestore (scans, findings), Cloud SQL (GRC, questionários)
