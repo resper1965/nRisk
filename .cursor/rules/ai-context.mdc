@@ -1,0 +1,40 @@
+---
+description: Usar ai-context MCP e base contextual n.Risk
+alwaysApply: true
+---
+
+# ai-context e Base Contextual n.Risk
+
+## Base Contextual
+
+Para decisões e implementação, consulte a base contextual:
+- **Documento mestre:** `.context/docs/contexto-nrisk.md` — consolida planos e referências
+- **Planos:** `.context/plans/` — MVP, arquitetura, scoring, Core Engine, DPCF, etc.
+- **Documentação:** `.context/docs/` — architecture, data-flow, glossary, security
+
+## ai-context MCP
+
+Use automaticamente as ferramentas do MCP **user-ai-context** (ai-context) quando fizer:
+
+## Quando usar
+
+- **Geração de código, setup ou configuração**: Obter contexto semântico via `context` (buildSemantic) antes de escrever código
+- **Exploração do codebase**: Usar `explore` (read, list, analyze, search, getStructure) em vez de apenas ferramentas nativas
+- **Scaffolding de documentação/agentes**: Usar `context` (init, fill, fillSingle, listToFill) para manter .context/ atualizado
+- **Desenvolvimento estruturado (PREVC)**: Para mudanças não triviais, usar `workflow-init` e `workflow-advance` após scaffolding preenchido
+
+## Fluxo recomendado
+
+1. **Primeira chamada**: Sempre passar `repoPath: "/home/resper/nRisk"` na primeira chamada ao `context`
+2. **Antes de gerar código**: Chamar `context` com `action: "buildSemantic"` para obter contexto focado (documentation, playbook, plan ou compact)
+3. **Explorar arquivos**: Preferir `explore` para ler, listar, analisar símbolos ou buscar no código
+4. **Mudanças estruturais**: Se scaffolding existe, considerar `workflow-init` para fluxo PREVC (Plan → Review → Execute → Verify → Complete)
+
+## Ferramentas disponíveis
+
+- `context`: check, init, fill, fillSingle, listToFill, getMap, buildSemantic, scaffoldPlan
+- `explore`: read, list, analyze, search, getStructure
+- `workflow-init`, `workflow-advance`, `workflow-status`, `workflow-manage`
+- `sync`: exportRules, exportDocs, exportAgents, exportContext, reverseSync
+- `agent`: discover, getInfo, orchestrate, getSequence
+- `plan`: criar e gerenciar planos

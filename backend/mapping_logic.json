@@ -1,0 +1,135 @@
+{
+  "version": "1.0",
+  "description": "Única fonte de verdade para traduzir achados técnicos em controles ISO 27001",
+  "mappings": [
+    {
+      "technical_finding": "open_rdp_port",
+      "template_id": null,
+      "port": 3389,
+      "control_id": "C-01",
+      "iso_domain": "A.13.1.1",
+      "iso_title": "Redes - Controle de acesso",
+      "score_deduction": 500,
+      "severity": "critical",
+      "recommendation": "Restringir porta 3389 ou usar VPN"
+    },
+    {
+      "technical_finding": "open_smb_port",
+      "template_id": null,
+      "port": 445,
+      "control_id": "C-01",
+      "iso_domain": "A.13.1.1",
+      "iso_title": "Redes - Controle de acesso",
+      "score_deduction": 500,
+      "severity": "critical",
+      "recommendation": "Bloquear porta 445 para internet"
+    },
+    {
+      "technical_finding": "expired_ssl",
+      "template_id": "ssl-expired-cert",
+      "port": null,
+      "control_id": "C-02",
+      "iso_domain": "A.10.1.1",
+      "iso_title": "Criptografia - Certificados",
+      "score_deduction": 200,
+      "severity": "high",
+      "recommendation": "Renovar certificado SSL"
+    },
+    {
+      "technical_finding": "ssl_expires_soon",
+      "template_id": null,
+      "port": null,
+      "control_id": "C-02",
+      "iso_domain": "A.10.1.1",
+      "iso_title": "Criptografia - Certificados",
+      "score_deduction": 100,
+      "severity": "high",
+      "recommendation": "Planejar renovação do certificado"
+    },
+    {
+      "technical_finding": "weak_tls",
+      "template_id": "ssl-tls-version",
+      "port": null,
+      "control_id": "C-02",
+      "iso_domain": "A.10.1.1",
+      "iso_title": "Criptografia - TLS",
+      "score_deduction": 150,
+      "severity": "high",
+      "recommendation": "Desabilitar TLS 1.0/1.1"
+    },
+    {
+      "technical_finding": "missing_dmarc",
+      "template_id": null,
+      "port": null,
+      "control_id": "C-04",
+      "iso_domain": "A.13.2.1",
+      "iso_title": "Comunicações - Anti-phishing",
+      "score_deduction": 200,
+      "severity": "high",
+      "recommendation": "Implementar DMARC com política p=reject"
+    },
+    {
+      "technical_finding": "dmarc_none",
+      "template_id": null,
+      "port": null,
+      "control_id": "C-04",
+      "iso_domain": "A.13.2.1",
+      "iso_title": "Comunicações - Anti-phishing",
+      "score_deduction": 150,
+      "severity": "high",
+      "recommendation": "Alterar DMARC para p=quarantine ou p=reject"
+    },
+    {
+      "technical_finding": "missing_spf",
+      "template_id": null,
+      "port": null,
+      "control_id": "C-04",
+      "iso_domain": "A.13.2.1",
+      "iso_title": "Comunicações - Anti-phishing",
+      "score_deduction": 150,
+      "severity": "high",
+      "recommendation": "Implementar registro SPF"
+    },
+    {
+      "technical_finding": "outdated_software",
+      "template_id": null,
+      "port": null,
+      "control_id": "C-03",
+      "iso_domain": "A.12.6.1",
+      "iso_title": "Vulnerabilidades - Patch management",
+      "score_deduction": 80,
+      "severity": "medium",
+      "recommendation": "Aplicar patches de segurança"
+    },
+    {
+      "technical_finding": "subdomain_exposure",
+      "template_id": null,
+      "port": null,
+      "control_id": "C-03",
+      "iso_domain": "A.12.6.1",
+      "iso_title": "Descoberta de ativos",
+      "score_deduction": 20,
+      "severity": "low",
+      "recommendation": "Revisar subdomínios expostos"
+    },
+    {
+      "technical_finding": "nuclei_generic",
+      "template_id": "*",
+      "port": null,
+      "control_id": "C-03",
+      "iso_domain": "A.12.6.1",
+      "iso_title": "Vulnerabilidades - Patch management",
+      "score_deduction": 80,
+      "severity": "medium",
+      "recommendation": "Corrigir vulnerabilidade identificada"
+    }
+  ],
+  "port_map": {
+    "3389": "open_rdp_port",
+    "445": "open_smb_port"
+  },
+  "template_id_prefix_map": {
+    "ssl-": "C-02",
+    "cve-": "C-03"
+  }
+}

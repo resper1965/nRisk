@@ -1,0 +1,16 @@
+# n.Risk Scan Engine - Cloud Run Jobs
+# Base: instala nmap; nuclei/subfinder exigem imagem estendida ou pre-instalação
+FROM golang:1.22-alpine AS builder
+WORKDIR /app
+COPY go.mod ./
+RUN go mod download
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -o /scan-job ./cmd/scan-job
+
+FROM alpine:3.19
+RUN apk --no-cache add ca-certificates nmap
+WORKDIR /app
+COPY --from=builder /scan-job .
+COPY mapping_logic.json .
+ENV MAPPING_LOGIC_PATH=/app/mapping_logic.json
+CMD ["./scan-job"]
