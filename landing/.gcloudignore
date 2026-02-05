@@ -1,0 +1,11 @@
+# Evitar upload de node_modules (build é feito no container)
+node_modules/
+.next/
+out/
+dist/
+.git/
+*.log
+.env*.local
+COPY.md
+deploy-gcp.sh
+styles.css
