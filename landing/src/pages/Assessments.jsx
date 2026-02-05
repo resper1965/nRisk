@@ -5,7 +5,7 @@ const FRAMEWORKS = ["ISO 27001", "NIST CSF", "LGPD"];
 
 const FAQ_ITEMS = [
   { id: 1, question: "Quais frameworks estão disponíveis?", answer: "Questionários vinculados a frameworks como ISO 27001, NIST CSF e LGPD. Perguntas mapeadas a controles para conferência cruzada com achados técnicos." },
-  { id: 2, question: "Quem pode submeter o assessment?", answer: "Apenas Admin ou CISO. Respostas ficam congeladas após submissão até nova rodada. Resultados auditáveis para demandantes." },
+  { id: 2, question: "Quem pode submeter a avaliação?", answer: "Apenas Admin ou CISO. Respostas ficam congeladas após submissão até nova rodada. Resultados auditáveis para demandantes." },
   { id: 3, question: "O que é o Cofre de evidências?", answer: "Armazenamento seguro de evidências (upload, comentários, aprovação). Trilha de auditoria e integridade. Em trilhas Prata/Ouro, evidência pode ser obrigatória." },
   { id: 4, question: "O que terceiros veem no Trust Center?", answer: "Score, categoria, eixos, status de evidências e documentos liberados, conforme RBAC." },
 ];
@@ -16,8 +16,11 @@ export default function Assessments() {
       <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-3xl font-semibold leading-tight tracking-tight text-gray-100 sm:text-4xl lg:text-5xl">
-            Assessments padronizados, com evidências e governança.
+            Avaliações padronizadas com evidências e governança
           </h1>
+          <p className="mt-4 text-lg text-gray-400">
+            Questionários por framework, evidências centralizadas e Trust Center.
+          </p>
         </div>
       </section>
 
@@ -56,7 +59,7 @@ export default function Assessments() {
 
       <section className="border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
         <div className="mx-auto max-w-md">
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">Snapshot do assessment (exemplo)</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">Snapshot da avaliação (exemplo)</h2>
           <div className="mt-8 rounded-lg border border-gray-800 bg-gray-800 p-5 shadow-sm">
             <p className="text-xs font-medium uppercase text-gray-500">Progresso</p>
             <p className="mt-1 text-2xl font-semibold text-gray-100">72%</p>

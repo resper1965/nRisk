@@ -15,17 +15,17 @@ function Footer() {
               href="https://ness.com.br"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-gray-100 underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-[#00ade0] rounded"
+              className="text-gray-400 transition-smooth hover:text-gray-100 underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-accent rounded"
             >
               ness.
             </a>
           </p>
         </div>
         <nav className="flex gap-6">
-          <Link to="/nrisk" className="text-sm text-gray-400 hover:text-gray-100">
+          <Link to="/nrisk" className="text-sm text-gray-400 transition-smooth hover:text-gray-100">
             n.Risk
           </Link>
-          <Link to="/nrisk/contact" className="text-sm text-gray-400 hover:text-gray-100">
+          <Link to="/nrisk/contact" className="text-sm text-gray-400 transition-smooth hover:text-gray-100">
             Contato
           </Link>
         </nav>

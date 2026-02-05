@@ -6,7 +6,7 @@ const PRODUCTS = ["Score híbrido", "Penalidade crítica", "Scores por eixo", "H
 
 const FAQ_ITEMS = [
   { id: 1, question: "Como o score apoia a subscrição?", answer: "Score híbrido (técnico + declarativo) e categoria A-F permitem triagem e precificação. Scores por eixo e histórico apoiam decisão e renovação." },
-  { id: 2, question: "O que é penalidade crítica?", answer: "Se existir qualquer achado de severidade crítica, o score final é limitado (teto), independentemente do assessment. Garante visibilidade de risco extremo." },
+  { id: 2, question: "O que é penalidade crítica?", answer: "Se existir qualquer achado de severidade crítica, o score final é limitado (teto), independentemente da avaliação. Garante visibilidade de risco extremo." },
   { id: 3, question: "Quais relatórios estão disponíveis?", answer: "Relatórios para diretoria e subscritores estão em roadmap. Hoje: score, eixos, inconsistências e histórico via API e interface." },
 ];
 
@@ -16,8 +16,11 @@ export default function Insurance() {
       <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-3xl font-semibold leading-tight tracking-tight text-gray-100 sm:text-4xl lg:text-5xl">
-            Subscrição com sinais e evidências.
+            Subscrição com sinais e evidências
           </h1>
+          <p className="mt-4 text-lg text-gray-400">
+            Score híbrido e histórico para triagem, precificação e renovação.
+          </p>
         </div>
       </section>
 
@@ -26,7 +29,7 @@ export default function Insurance() {
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">Soluções</h2>
           <ul className="mt-8 space-y-2">
             {SOLUTIONS.map((s) => (
-              <li key={s} className="flex gap-2"><span className="text-[#00ade0]">•</span><span className="text-gray-300">{s}</span></li>
+              <li key={s} className="flex gap-2"><span className="text-accent">•</span><span className="text-gray-300">{s}</span></li>
             ))}
           </ul>
         </div>
@@ -47,7 +50,7 @@ export default function Insurance() {
         <div className="mx-auto max-w-3xl">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">Achados críticos e score</h2>
           <p className="mt-4 text-gray-400">
-            A existência de qualquer achado de severidade crítica limita o score final, independentemente do assessment. Subscrição e monitoramento ganham visibilidade explícita de risco extremo.
+            A existência de qualquer achado de severidade crítica limita o score final, independentemente da avaliação. Subscrição e monitoramento ganham visibilidade explícita de risco extremo.
           </p>
         </div>
       </section>

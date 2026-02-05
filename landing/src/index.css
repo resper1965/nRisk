@@ -10,3 +10,10 @@ body {
   font-family: "Montserrat", system-ui, sans-serif;
   @apply bg-gray-900 text-gray-100 antialiased;
 }
+
+/* Transições suaves para interativos */
+@layer utilities {
+  .transition-smooth {
+    @apply transition-all duration-200 ease-out;
+  }
+}

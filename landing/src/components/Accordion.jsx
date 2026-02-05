@@ -20,11 +20,11 @@ export default function Accordion({ items }) {
                   setOpenId(openId === id ? null : id);
                 }
               }}
-              className="flex w-full items-center justify-between py-4 text-left text-sm font-medium text-gray-100 hover:text-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#00ade0] rounded"
+              className="flex w-full items-center justify-between py-4 text-left text-sm font-medium text-gray-100 transition-smooth hover:text-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent rounded"
             >
               {question}
               <span
-                className={"ml-2 shrink-0 transition-transform " + (openId === id ? "rotate-180" : "")}
+                className={"ml-2 shrink-0 transition-transform duration-200 " + (openId === id ? "rotate-180" : "")}
                 aria-hidden
               >
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-gray-500">

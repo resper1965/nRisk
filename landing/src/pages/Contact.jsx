@@ -16,7 +16,7 @@ function Contact() {
             Contato
           </h1>
           <p className="mt-4 text-gray-400">
-            Preencha o formulário. Entraremos em contato.
+            Envie sua mensagem. Nossa equipe retorna em breve.
           </p>
           {!submitted ? (
             <form onSubmit={handleSubmit} className="mt-10 space-y-4">
@@ -29,7 +29,7 @@ function Contact() {
                   name="nome"
                   type="text"
                   required
-                  className="mt-1 block w-full rounded-md border border-gray-600 px-3 py-2 text-gray-100 shadow-sm focus:border-[#00ade0] focus:outline-none focus:ring-1 focus:ring-[#00ade0]"
+                  className="mt-1 block w-full rounded-md border border-gray-600 px-3 py-2 text-gray-100 shadow-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-smooth"
                 />
               </div>
               <div>
@@ -41,7 +41,7 @@ function Contact() {
                   name="email"
                   type="email"
                   required
-                  className="mt-1 block w-full rounded-md border border-gray-600 px-3 py-2 text-gray-100 shadow-sm focus:border-[#00ade0] focus:outline-none focus:ring-1 focus:ring-[#00ade0]"
+                  className="mt-1 block w-full rounded-md border border-gray-600 px-3 py-2 text-gray-100 shadow-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-smooth"
                 />
               </div>
               <div>
@@ -53,7 +53,7 @@ function Contact() {
                   name="empresa"
                   type="text"
                   required
-                  className="mt-1 block w-full rounded-md border border-gray-600 px-3 py-2 text-gray-100 shadow-sm focus:border-[#00ade0] focus:outline-none focus:ring-1 focus:ring-[#00ade0]"
+                  className="mt-1 block w-full rounded-md border border-gray-600 px-3 py-2 text-gray-100 shadow-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-smooth"
                 />
               </div>
               <div>
@@ -64,19 +64,19 @@ function Contact() {
                   id="contact-mensagem"
                   name="mensagem"
                   rows={4}
-                  className="mt-1 block w-full rounded-md border border-gray-600 px-3 py-2 text-gray-100 shadow-sm focus:border-[#00ade0] focus:outline-none focus:ring-1 focus:ring-[#00ade0]"
+                  className="mt-1 block w-full rounded-md border border-gray-600 px-3 py-2 text-gray-100 shadow-sm focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent transition-smooth"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full rounded-md bg-[#00ade0] px-4 py-2.5 text-sm font-medium text-gray-900 shadow-sm hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#00ade0]"
+                className="w-full rounded-md bg-accent px-4 py-2.5 text-sm font-medium text-gray-900 shadow-sm transition-smooth hover:opacity-90 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
               >
                 Enviar
               </button>
             </form>
           ) : (
             <p className="mt-10 rounded-md border border-gray-600 bg-gray-800 px-4 py-3 text-sm font-medium text-gray-200">
-              Recebido. Entraremos em contato.
+              Mensagem recebida. Retornaremos em breve.
             </p>
           )}
         </div>

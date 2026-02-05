@@ -1,13 +1,13 @@
 import Accordion from "../components/Accordion";
 import CtaSection from "../components/CtaSection";
 
-const PRODUCT_LINE = ["TPRM", "Detecção contínua", "Intelligence", "Assessments"];
+const PRODUCT_LINE = ["TPRM", "Detecção contínua", "Intelligence", "Avaliações"];
 const OUTCOMES = ["Priorização", "Redução de risco", "Relatórios executivos"];
 const FEATURES = ["Conferência cruzada", "Scores por eixo", "Alertas", "Trust Center", "Evidências"];
 const CAPABILITIES = ["RBAC", "Instantâneos", "Justificativas aprovadas", "APIs / Webhooks"];
 
 const FAQ_ITEMS = [
-  { id: 1, question: "Como a n.Risk qualifica fornecedores?", answer: "Combina scan outside-in com assessments por framework. O score híbrido e os scores por eixo permitem priorizar e acompanhar a evolução." },
+  { id: 1, question: "Como a n.Risk qualifica fornecedores?", answer: "Combina scan outside-in com avaliações por framework. O score híbrido e os scores por eixo permitem priorizar e acompanhar a evolução." },
   { id: 2, question: "O que terceiros veem no Trust Center?", answer: "Score, categoria, eixos (A–F), status de evidências e histórico conforme permissões (RBAC)." },
   { id: 3, question: "Como funcionam os alertas?", answer: "Alertas configuráveis para finding crítico, queda de score e inconsistências. Integração por webhook e e-mail em roadmap." },
 ];
@@ -18,8 +18,11 @@ export default function SupplyChain() {
       <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-24">
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-3xl font-semibold leading-tight tracking-tight text-gray-100 sm:text-4xl lg:text-5xl">
-            Risco de terceiros, com visibilidade contínua.
+            Risco de terceiros com visibilidade contínua
           </h1>
+          <p className="mt-4 text-lg text-gray-400">
+            Visibilidade contínua sobre fornecedores e parceiros.
+          </p>
         </div>
       </section>
 
@@ -40,7 +43,7 @@ export default function SupplyChain() {
           <p className="mt-4 text-gray-400">Orientados a decisão.</p>
           <ul className="mt-6 space-y-2">
             {OUTCOMES.map((o) => (
-              <li key={o} className="flex gap-2"><span className="text-[#00ade0]">•</span><span className="text-gray-300">{o}</span></li>
+              <li key={o} className="flex gap-2"><span className="text-accent">•</span><span className="text-gray-300">{o}</span></li>
             ))}
           </ul>
         </div>
@@ -62,7 +65,7 @@ export default function SupplyChain() {
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">Capacidades críticas</h2>
           <ul className="mt-8 space-y-2">
             {CAPABILITIES.map((c) => (
-              <li key={c} className="flex gap-2"><span className="text-[#00ade0]">•</span><span className="text-gray-300">{c}</span></li>
+              <li key={c} className="flex gap-2"><span className="text-accent">•</span><span className="text-gray-300">{c}</span></li>
             ))}
           </ul>
         </div>

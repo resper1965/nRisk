@@ -16,7 +16,7 @@ const USE_CASES = [
   },
   {
     title: "TPRM / GRC",
-    bullets: ["Qualificação contínua de fornecedores", "Evidências centralizadas", "Alertas e centro de confiança"],
+    bullets: ["Qualificação contínua de fornecedores", "Evidências centralizadas", "Alertas e Trust Center"],
     result: "Qualificação contínua e evidências centralizadas.",
   },
   {
@@ -28,7 +28,7 @@ const USE_CASES = [
 
 const RESOURCES = [
   "Scan técnico",
-  "Assessments",
+  "Avaliações",
   "Cofre de evidências",
   "Cross-Check",
   "Scores por eixo",
@@ -48,25 +48,24 @@ function NriskOverview() {
       <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-24">
         <div className="mx-auto max-w-4xl text-center">
           <p className="text-sm font-medium uppercase tracking-wider text-gray-500">
-            Risco cibernético, com evidência.
+            Risco cibernético com evidência
           </p>
           <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-gray-100 sm:text-4xl lg:text-5xl">
-            Risco mensurável. Confiança para decidir.
+            Risco <span className="text-accent">mensurável</span>. Confiança para <span className="text-accent">decidir</span>.
           </h1>
           <p className="mt-6 mx-auto max-w-2xl text-lg text-gray-400">
-            A n.Risk consolida sinais técnicos e assessments por questionários para entregar score
-            híbrido, consistência medida e histórico auditável.
+            Sinais técnicos e avaliações em um só lugar: score híbrido, consistência medida e histórico auditável.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link
               to="/nrisk/contact"
-              className="inline-flex items-center justify-center rounded-md bg-[#00ade0] px-5 py-2.5 text-sm font-medium text-gray-900 shadow-sm hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#00ade0]"
+              className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-medium text-gray-900 shadow-sm transition-smooth hover:opacity-90 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
             >
               Falar com especialista
             </Link>
             <Link
               to="/nrisk/methodology"
-              className="inline-flex items-center justify-center rounded-md border border-gray-600 bg-gray-800 px-5 py-2.5 text-sm font-medium text-gray-300 shadow-sm hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#00ade0]"
+              className="inline-flex items-center justify-center rounded-md border border-gray-600 bg-gray-800 px-5 py-2.5 text-sm font-medium text-gray-300 shadow-sm transition-smooth hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
             >
               Ver como funciona
             </Link>
@@ -78,14 +77,14 @@ function NriskOverview() {
       </section>
 
       <section className="scroll-mt-20 border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
             Por que importa
           </h2>
-          <ul className="mt-8 space-y-4">
+          <ul className="mt-8 mx-auto max-w-2xl space-y-4 text-left">
             {WHY_BULLETS.map((text, i) => (
               <li key={i} className="flex gap-3">
-                <span className="shrink-0 text-[#00ade0]">•</span>
+                <span className="shrink-0 text-accent">•</span>
                 <span className="text-gray-300">{text}</span>
               </li>
             ))}
@@ -94,13 +93,13 @@ function NriskOverview() {
       </section>
 
       <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-20">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
             Casos de uso típicos
           </h2>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-12 grid gap-6 md:grid-cols-3 justify-items-center">
             {USE_CASES.map((uc) => (
-              <div key={uc.title} className="rounded-lg border border-gray-800 p-5 shadow-sm">
+              <div key={uc.title} className="rounded-lg border border-gray-800 p-5 shadow-sm w-full max-w-sm transition-smooth hover:border-accent/30 hover:shadow-md">
                 <p className="font-medium text-gray-100">{uc.title}</p>
                 <ul className="mt-3 list-inside list-disc space-y-1 text-sm text-gray-400">
                   {uc.bullets.map((b, i) => (
@@ -115,15 +114,15 @@ function NriskOverview() {
       </section>
 
       <section className="border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
             Recursos principais
           </h2>
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             {RESOURCES.map((r) => (
               <span
                 key={r}
-                className="rounded-md border border-gray-800 bg-gray-800 px-3 py-1.5 text-sm text-gray-300 shadow-sm"
+                className="rounded-md border border-gray-800 bg-gray-800 px-3 py-1.5 text-sm text-gray-300 shadow-sm transition-smooth hover:border-accent/30"
               >
                 {r}
               </span>
@@ -133,7 +132,7 @@ function NriskOverview() {
       </section>
 
       <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-20">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
             O que acompanhamos
           </h2>
@@ -145,11 +144,11 @@ function NriskOverview() {
       </section>
 
       <section className="border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
             Onboarding típico
           </h2>
-          <ol className="mt-8 list-decimal list-inside space-y-3 text-gray-300">
+          <ol className="mt-8 list-decimal list-inside space-y-3 text-left text-gray-300">
             {ONBOARDING.map((step, i) => (
               <li key={i}>{step}</li>
             ))}

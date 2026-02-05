@@ -2,8 +2,8 @@ import { NavLink, Link } from "react-router-dom";
 
 function Logo() {
   return (
-    <Link to="/nrisk" className="text-[1.625rem] font-semibold tracking-tight hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#00ade0] rounded">
-      n<span className="text-[#00ade0]">.</span>Risk
+    <Link to="/nrisk" className="text-[1.625rem] font-semibold tracking-tight transition-smooth hover:opacity-90 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent rounded">
+      n<span className="text-accent">.</span>Risk
     </Link>
   );
 }
@@ -28,7 +28,7 @@ function Header() {
               key={to}
               to={to}
               className={({ isActive }) =>
-                "text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#00ade0] rounded " +
+                "text-sm transition-smooth focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent rounded " +
                 (isActive ? "text-gray-100 font-medium" : "text-gray-400 hover:text-gray-100")
               }
             >
@@ -38,7 +38,7 @@ function Header() {
         </nav>
         <Link
           to="/nrisk/contact"
-          className="inline-flex items-center justify-center rounded-md border border-gray-600 bg-gray-800 px-4 py-2 text-sm font-medium text-gray-100 shadow-sm hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#00ade0]"
+          className="inline-flex items-center justify-center rounded-md border border-gray-600 bg-gray-800 px-4 py-2 text-sm font-medium text-gray-100 shadow-sm transition-smooth hover:bg-gray-700 hover:border-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
         >
           Falar com especialista
         </Link>
