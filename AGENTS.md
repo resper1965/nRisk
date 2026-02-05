@@ -11,15 +11,15 @@ Instruções para agentes e desenvolvedores do n.Risk.
 
 ## Regras para Decisões
 
-1. **Arquitetura:** Consultar `nrisk-arquitetura-gcp.md` e `nrisk-mvp.md`
+1. **Arquitetura:** Consultar `nrisk-arquitetura-gcp.md` e `nrisk-mvp.md`; **stack alvo:** [ADR-001](.context/docs/adr-001-stack-api-typescript-scan-go.md) — Go só para Scan Engine; API + assessment + frontend em Next.js (TypeScript).
 2. **Frontend / UI:** Usar [resper1965/clone](https://github.com/resper1965/clone) como inspiração ao criar páginas — ver regra `.cursor/rules/frontend-ui-inspiration.mdc`
-2. **Scoring e GRC:** Consultar `nrisk-scoring-metodologia.md` e `nrisk-matriz-rastreabilidade-grc.md`
-3. **Scan Engine:** `mapping_logic.json` é fonte de verdade para mapeamento ISO 27001
-4. **Privacidade/LGPD:** Consultar `nrisk-dpcf-privacy-compliance.md`
+3. **Scoring e GRC:** Consultar `nrisk-scoring-metodologia.md` e `nrisk-matriz-rastreabilidade-grc.md`
+4. **Scan Engine:** `mapping_logic.json` é fonte de verdade para mapeamento ISO 27001
+5. **Privacidade/LGPD:** Consultar `nrisk-dpcf-privacy-compliance.md`
 
 ## Stack
 
-- **Backend:** Go 1.22+, Gin
+- **Hoje:** API + Scan Job em Go (Gin). **Alvo (ADR-001):** API + assessment + UI em Next.js (TypeScript); Scan Engine permanece em Go (Cloud Run Job).
 - **Infra:** GCP (Cloud Run, Firestore, Pub/Sub)
 - **Auth:** Identity Platform, JWT com `tenant_id`
 

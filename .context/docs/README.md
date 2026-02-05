@@ -8,6 +8,15 @@ Base de conhecimento do n.Risk. Comece pelo documento mestre de contexto.
 
 - **[Contexto n.Risk](./contexto-nrisk.md)** — Consolidação de planos e referências para agentes
 
+## Decisões de Arquitetura
+- **[ADR-001: Stack API TypeScript / Scan Go](./adr-001-stack-api-typescript-scan-go.md)** — Go só para Scan Engine; API + assessment + frontend em Next.js (TypeScript)
+
+## Regras de Negócio
+- **[Regras de Negócio — Assessment e Scoring](./regras-de-negocio-assessment.md)** — Evidência, F, NA, escopo (SecurityScorecard), persistência, RBAC, submissão CISO, justificativa de vulnerabilidade
+
+## Concorrente e Posicionamento
+- **[Correlação SecurityScorecard ↔ n.Risk](./correlacao-securityscorecard-nrisk.md)** — Mapeamento concorrente (SCDR, TPRM, Cyber Insurance, ratings, questionários); dores, personas; diferenciação e oportunidades
+
 ## Core Guides
 - [Project Overview](./project-overview.md)
 - [API Reference](./api.md) · [Design](./api-design.md) · [OpenAPI](./api.openapi.yaml)

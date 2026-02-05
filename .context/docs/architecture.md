@@ -12,16 +12,19 @@ scaffoldVersion: "2.0.0"
 
 ## Visão Geral
 
-Arquitetura serverless no Google Cloud Platform com workers efêmeros, mensageria assíncrona e persistência híbrida. O backend é um BFF em Go (Gin) que expõe a API REST e orquestra scans via Cloud Run Jobs.
+Arquitetura serverless no Google Cloud Platform com workers efêmeros, mensageria assíncrona e persistência híbrida.
+
+**Decisão de stack (ADR-001):** O Scan Engine permanece em **Go** (Cloud Run Job). A **API REST + assessment + frontend** migram para **TypeScript (Next.js)** quando for construir o produto — um único serviço Next.js (API Routes + UI) no Cloud Run; scoring/cross-check compartilhável com o frontend para preview em tempo real.
+
+**Estado atual:** API e Scan Job em Go (`backend/`). **Estado alvo:** Next.js (API + Dashboard + assessment); Go apenas para o Scan Engine (job batch).
 
 ## Componentes GCP
 
 | Componente | Serviço GCP | Papel |
 |------------|-------------|-------|
-| **Frontend** | Firebase Hosting | Dashboard Next.js (base: resper1965/clone) |
-| **API Backend** | Cloud Run (Go) | BFF: lógica de negócio, scans, questionários |
-| **Scan Engine** | Cloud Run Jobs | Execução de Nuclei, Nmap, Subfinder |
-| **Mensageria** | Pub/Sub | Desacoplamento scan request → execução (futuro) |
+| **Frontend + API** | Cloud Run (Next.js) | API Routes (REST), assessment/CRUD/RBAC, Dashboard, spider chart, scoring engine (shared) |
+| **Scan Engine** | Cloud Run Jobs (Go) | Execução de Nuclei, Nmap, Subfinder; parser + mapping_logic; escreve findings no Firestore |
+| **Mensageria** | Pub/Sub | Scan request (Next.js → Job Go) → execução do scan |
 | **Persistência** | Cloud SQL (PostgreSQL) | GRC, controles ISO, questionários (Mês 2) |
 | **Persistência** | Firestore | Scans, findings, resultados variáveis |
 | **Evidence Vault** | Cloud Storage | Documentos com CMEK |
@@ -41,35 +44,38 @@ Disparo manual (gcloud/scheduler) → Cloud Run Job (TENANT_ID, SCAN_ID, DOMAIN)
 Scan Job → Nuclei, Nmap, Subfinder → Parser → Firestore (findings + score)
 ```
 
-### Fluxo futuro (com Pub/Sub)
+### Fluxo alvo (ADR-001)
 
 ```
-API → Pub/Sub (scan-requests) → Cloud Run Job → Firestore (findings)
-                                          → Cloud SQL (score, controles)
+Next.js (API Routes) → POST /scans → Firestore (pending) + Pub/Sub (scan-request)
+                                                         ↓
+Cloud Run Job (Go) ← mensagem ← Pub/Sub
+     ↓
+Nuclei, Nmap, Subfinder → Parser → Firestore (findings + score)
+     ↓
+Next.js consome Firestore (e Cloud SQL) para API + Dashboard
 ```
 
-## Estrutura de Código (Backend)
+O Scan Engine em Go permanece como job batch isolado; a API e o frontend passam a ser o mesmo deploy Next.js.
+
+## Estrutura de Código
+
+**Hoje (backend Go):** API + Scan Job no mesmo repositório `backend/`.
+
+**Alvo (ADR-001):** `backend/` contém apenas o Scan Engine (Go). API + assessment + UI em app Next.js (TypeScript); `mapping_logic.json` e `assessment_questions.json` compartilhados (repo ou artefato).
 
 ```
-backend/
+backend/                    # Alvo: só Scan Engine (Go)
 ├── cmd/
-│   ├── api/          # Entrypoint API REST (Cloud Run Service)
-│   └── scan-job/     # Entrypoint Core Engine (Cloud Run Job)
+│   ├── api/                # (transição) até migração para Next.js
+│   └── scan-job/           # Entrypoint Core Engine (Cloud Run Job) — permanece
 ├── internal/
-│   ├── domain/       # AuditFinding, ScanResult, Answer, models
-│   ├── engine/       # Orquestração Nuclei, Nmap, Subfinder
-│   ├── parser/       # Tradução GRC (mapping_logic.json)
-│   ├── assessment/   # Loader, scoring, crosscheck (Logic Engine)
-│   ├── controller/   # ScanController, AssessmentController
-│   ├── middleware/   # Auth JWT (tenant_id)
-│   ├── repository/   # Firestore (scan, finding, score, answer); Cloud SQL (assessment)
-│   └── storage/      # EvidenceStore (GCS upload)
-├── pkg/
-│   ├── logger/       # Logs JSON para Cloud Logging
-│   └── validator/    # Validação (domain/hostname RFC 1123)
-├── migrations/       # 001_grc_schema.sql, 002_assessment_questions_answers.sql
+│   ├── domain/             # AuditFinding, ScanResult (uso do job)
+│   ├── engine/             # Nuclei, Nmap, Subfinder
+│   ├── parser/             # Tradução GRC (mapping_logic.json)
+│   ├── ...
 ├── mapping_logic.json
-└── assessment_questions.json  # Catálogo de perguntas (framework ISO27001)
+└── assessment_questions.json  # Compartilhado com Next.js
 ```
 
 ## Entry Points

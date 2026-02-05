@@ -11,13 +11,15 @@ This directory contains plans for coordinating work across documentation and pla
 6. [Nrisk Core Engine](./nrisk-core-engine.md)
 7. [Nrisk Dpcf Privacy Compliance](./nrisk-dpcf-privacy-compliance.md)
 8. [Nrisk Frontend Clone Integracao](./nrisk-frontend-clone-integracao.md)
-9. [Nrisk Governanca Dados Apis](./nrisk-governanca-dados-apis.md)
-10. [Nrisk Matriz Rastreabilidade Grc](./nrisk-matriz-rastreabilidade-grc.md)
-11. [Nrisk Mvp](./nrisk-mvp.md)
-12. [Nrisk Roadmap Implementacao](./nrisk-roadmap-implementacao.md)
-13. [Nrisk Scan Engine Ai2pentest](./nrisk-scan-engine-ai2pentest.md)
-14. [Nrisk Scoring Metodologia](./nrisk-scoring-metodologia.md)
-15. [Nrisk Ui Base Clone](./nrisk-ui-base-clone.md)
+9. [Nrisk Gaps Concorrencia](./nrisk-gaps-concorrencia.md)
+10. [Nrisk Governanca Dados Apis](./nrisk-governanca-dados-apis.md)
+11. [Nrisk Matriz Rastreabilidade Grc](./nrisk-matriz-rastreabilidade-grc.md)
+12. [Nrisk Mvp](./nrisk-mvp.md)
+13. [Nrisk Roadmap Implementacao](./nrisk-roadmap-implementacao.md)
+14. [Nrisk Scan Engine Ai2pentest](./nrisk-scan-engine-ai2pentest.md)
+15. [Nrisk Scoring Metodologia](./nrisk-scoring-metodologia.md)
+16. [Nrisk Ui Base Clone](./nrisk-ui-base-clone.md)
+17. [Solve P1 Gaps](./solve-p1-gaps.md)
 
 ## How To Create Or Update Plans
 - Run "ai-context plan <name>" to scaffold a new plan template.

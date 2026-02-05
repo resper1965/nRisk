@@ -19,7 +19,7 @@ scaffoldVersion: "2.0.0"
 | **AuditFinding** | Achado técnico traduzido para controle ISO 27001 (control_id, score_deduction, recommendation). |
 | **Assessment** | Sessão/rodada de questionário; agrupa respostas (assessment_answers) por tenant. |
 | **Assessment Question** | Pergunta do catálogo; vinculada a control_id do mapping_logic (ISO 27001). |
-| **Assessment Answer** | Resposta do usuário; answer_status: sim, nao, na, **Inconsistent** (quando scan contradiz). |
+| **Assessment Answer** | Resposta do usuário; answer_status: sim, nao, na, **Inconsistent** (quando scan contradiz). Regras: [regras-de-negocio-assessment.md](./regras-de-negocio-assessment.md). |
 | **Logic Engine (Cross-Check)** | Função que compara findings do scan com respostas positivas; marca Inconsistent se contraditadas. |
 | **Trust Center** | Página pública com selos, documentos e resumo de postura de segurança. |
 | **Evidence Vault** | Armazenamento GCS de evidências (PDFs, imagens) em `tenants/{tid}/assessments/{aid}/evidence/`; hash SHA-256 por arquivo para integridade. |
@@ -59,6 +59,12 @@ scaffoldVersion: "2.0.0"
 | **mapping_logic (Cloud SQL)** | Tabela que vincula achado técnico a control_id e impact_on_score; equivalente lógico do JSON |
 | **Cloud Run Service** | API REST; escala automática; PORT injetado pelo GCP |
 | **Cloud Run Job** | Scan Engine; execução batch; env vars TENANT_ID, SCAN_ID, DOMAIN |
+
+## Referência de Mercado (Concorrente)
+
+| Termo | Definição |
+|-------|------------|
+| **SecurityScorecard** | [Concorrente](https://securityscorecard.com/). **Produto comparável:** [Security Ratings](https://securityscorecard.com/why-securityscorecard/security-ratings/) — rating A–F, 10 risk factors (Network Security, DNS Health, Patching Cadence, Endpoint Security, IP Reputation, Application Security, Cubit Score, Hacker Chatter, Social Engineering, Information Leak), use cases (own org, supply chain, cyber insurance), metodologia ML/AI (“best predictor of breach”). Referência para escopo de score (rating por organização/domínio), questionários e visibilidade para seguradoras/corretores. **Não** confundir com Microsoft Secure Score. |
 
 ## Controles ISO (exemplos)
 

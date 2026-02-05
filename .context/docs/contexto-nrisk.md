@@ -6,6 +6,8 @@
 
 O **n.Risk** é uma plataforma de avaliação de postura cibernética para Cyber Insurance e gestão de riscos de terceiros. Combina scans passivos (Nuclei, Nmap, Subfinder), questionários de conformidade e mapeamento para ISO 27001.
 
+**Stack alvo (decisão ADR-001):** Scan Engine em **Go** (Cloud Run Job, batch isolado); API REST + assessment + frontend em **TypeScript (Next.js)** quando for construir o produto. Ver [adr-001-stack-api-typescript-scan-go.md](./adr-001-stack-api-typescript-scan-go.md).
+
 ## Hierarquia de Planos
 
 ```
@@ -38,11 +40,15 @@ nrisk-mvp (PRD, escopo 4 meses)
 | [nrisk-backend-boilerplate](../plans/nrisk-backend-boilerplate.md) | API Go + Gin, Firestore, JWT | Implementado |
 | [nrisk-assessment-hibrido](../plans/nrisk-assessment-hibrido.md) | Trilhas Bronze/Prata/Ouro, Cross-Check, RBAC | Em progresso |
 | [nrisk-assessments-hibridos-implementacao](../plans/nrisk-assessments-hibridos-implementacao.md) | Cloud SQL, Logic Engine, API GET/PATCH assessments | Em progresso |
+| [nrisk-gaps-concorrencia](../plans/nrisk-gaps-concorrencia.md) | Gaps vs SecurityScorecard (Security Ratings); priorização P1/P2 | Em progresso |
 
 ## Documentação
 
 | Doc | Conteúdo |
 |-----|----------|
+| [adr-001-stack-api-typescript-scan-go](./adr-001-stack-api-typescript-scan-go.md) | Decisão: Go só Scan Engine; API + assessment em Next.js (TypeScript) |
+| [regras-de-negocio-assessment](./regras-de-negocio-assessment.md) | Regras de negócio: evidência, F, NA, persistência, RBAC, justificativa de finding |
+| [correlacao-securityscorecard-nrisk](./correlacao-securityscorecard-nrisk.md) | Correlação SecurityScorecard (concorrente) ↔ n.Risk: produtos, dores, personas, diferenciação |
 | [project-overview](./project-overview.md) | Visão geral, stack, scoring |
 | [api](./api.md) | Referência de endpoints REST |
 | [api-design](./api-design.md) | Princípios, formato de erro, versionamento |
@@ -69,12 +75,14 @@ nrisk-mvp (PRD, escopo 4 meses)
 
 ## Estrutura do Repositório
 
+**Atual:** API + Scan Job em Go (`backend/`). **Alvo (ADR-001):** API + frontend em Next.js (TypeScript); apenas Scan Engine permanece em Go.
+
 ```
 nRisk/
 ├── .context/           # Base contextual (docs, plans, agents, skills)
-├── backend/            # API Go + Scan Job
-│   ├── cmd/api/        # Entrypoint API
-│   ├── cmd/scan-job/   # Entrypoint Core Engine
+├── backend/            # Hoje: API Go + Scan Job. Alvo: só Scan Job (Go)
+│   ├── cmd/api/        # (transição) Entrypoint API → migrar para Next.js
+│   ├── cmd/scan-job/   # Entrypoint Scan Engine (permanece Go)
 │   ├── internal/       # engine, parser, repository, domain
 │   └── mapping_logic.json
 ├── AGENTS.md           # Instruções para agentes
