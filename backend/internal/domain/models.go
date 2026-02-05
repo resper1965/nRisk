@@ -60,6 +60,14 @@ type Finding struct {
 	Detail    string `json:"detail,omitempty"`
 }
 
+// DomainScore representa o score e a nota (A–F) por eixo/domínio ISO (P1.1 rating por eixo).
+type DomainScore struct {
+	DomainID string `json:"domain_id"` // ex.: A.10.1.1
+	Label    string `json:"label"`     // ex.: Criptografia - Certificados
+	Score    int    `json:"score"`     // 0–1000
+	Grade    string `json:"grade"`     // A–F
+}
+
 // AssessmentResponse representa a resposta a uma pergunta do questionário.
 type AssessmentResponse struct {
 	ID             string    `json:"id"`

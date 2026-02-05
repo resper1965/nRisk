@@ -88,7 +88,7 @@ Inicia um novo scan para o domínio informado.
 
 ### GET /api/v1/scans/:id
 
-Retorna um scan pelo ID, restrito ao tenant do token.
+Retorna um scan pelo ID, restrito ao tenant do token. Inclui **domain_scores** (nota A–F por eixo ISO) quando o scan possui findings — P1.1 rating por eixo (spider/relatório).
 
 **Auth:** Obrigatório  
 **Params:** `id` — UUID do scan
@@ -102,10 +102,28 @@ Retorna um scan pelo ID, restrito ao tenant do token.
   "domain": "example.com",
   "status": "completed",
   "score": 850,
+  "score_category": "B",
+  "findings": [],
   "started_at": "2026-02-04T...",
-  "finished_at": "2026-02-04T..."
+  "finished_at": "2026-02-04T...",
+  "domain_scores": [
+    {
+      "domain_id": "A.10.1.1",
+      "label": "Criptografia - Certificados",
+      "score": 850,
+      "grade": "B"
+    },
+    {
+      "domain_id": "A.13.2.1",
+      "label": "Comunicações - Anti-phishing",
+      "score": 800,
+      "grade": "B"
+    }
+  ]
 }
 ```
+
+- **domain_scores** (opcional): agregado por `iso_domain` a partir dos findings do scan; `score` 0–1000, `grade` A–F (900+ A, 750+ B, 600+ C, 400+ D, 250+ E, &lt;250 F). Ausente se não houver findings ou se a listagem falhar.
 
 **Erros:**
 - `400` — INVALID_SCAN_ID

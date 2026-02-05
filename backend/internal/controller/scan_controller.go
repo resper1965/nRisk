@@ -4,6 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/nrisk/backend/internal/assessment"
+	"github.com/nrisk/backend/internal/domain"
 	"github.com/nrisk/backend/internal/middleware"
 	"github.com/nrisk/backend/internal/repository/firestore"
 	"github.com/nrisk/backend/pkg/logger"
@@ -12,12 +14,13 @@ import (
 
 // ScanController trata requisições relacionadas a scans.
 type ScanController struct {
-	scanRepo *firestore.ScanRepository
+	scanRepo    *firestore.ScanRepository
+	findingRepo *firestore.FindingRepository
 }
 
 // NewScanController cria um novo ScanController.
-func NewScanController(scanRepo *firestore.ScanRepository) *ScanController {
-	return &ScanController{scanRepo: scanRepo}
+func NewScanController(scanRepo *firestore.ScanRepository, findingRepo *firestore.FindingRepository) *ScanController {
+	return &ScanController{scanRepo: scanRepo, findingRepo: findingRepo}
 }
 
 // StartScanRequest representa o body da requisição para iniciar um scan.
@@ -73,7 +76,13 @@ func (sc *ScanController) StartScan(c *gin.Context) {
 	})
 }
 
-// GetScan retorna um scan pelo ID.
+// ScanWithDomainScores é a resposta de GET /scans/:id com rating por eixo (P1.1).
+type ScanWithDomainScores struct {
+	domain.ScanResult
+	DomainScores []domain.DomainScore `json:"domain_scores,omitempty"`
+}
+
+// GetScan retorna um scan pelo ID e domain_scores (nota A–F por eixo) quando houver findings (P1.1).
 // GET /api/v1/scans/:id
 func (sc *ScanController) GetScan(c *gin.Context) {
 	tenantID, exists := c.Get(middleware.TenantIDKey)
@@ -98,5 +107,18 @@ func (sc *ScanController) GetScan(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, scan)
+	resp := ScanWithDomainScores{ScanResult: *scan}
+	if sc.findingRepo != nil {
+		findings, err := sc.findingRepo.ListByScan(c.Request.Context(), tenantIDStr, scanID)
+		if err != nil {
+			logger.Warn("failed to list findings for domain_scores", map[string]interface{}{
+				"scan_id": scanID,
+				"error":   err.Error(),
+			})
+		} else {
+			resp.DomainScores = assessment.ComputeDomainScores(findings)
+		}
+	}
+
+	c.JSON(http.StatusOK, resp)
 }

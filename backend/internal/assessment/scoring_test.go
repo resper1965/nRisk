@@ -431,7 +431,7 @@ func TestComputeConfidenceFactor_MinimumIs05(t *testing.T) {
 	}
 }
 
-// --- ScoreCategory Tests ---
+// --- ScoreCategory Tests (float64 para ComputeFullScore) ---
 
 func TestScoreCategory(t *testing.T) {
 	tests := []struct {
@@ -451,11 +451,37 @@ func TestScoreCategory(t *testing.T) {
 		{249, "F"},
 		{0, "F"},
 	}
-
 	for _, tc := range tests {
 		got := ScoreCategory(tc.score)
 		if got != tc.expected {
 			t.Errorf("ScoreCategory(%f) = %s, want %s", tc.score, got, tc.expected)
+		}
+	}
+}
+
+// --- ScoreToCategory Tests (int para P1.1 domain_scores / score_repository) ---
+
+func TestScoreToCategory(t *testing.T) {
+	tests := []struct {
+		score int
+		want  string
+	}{
+		{1000, "A"},
+		{900, "A"},
+		{899, "B"},
+		{750, "B"},
+		{749, "C"},
+		{600, "C"},
+		{599, "D"},
+		{400, "D"},
+		{399, "E"},
+		{250, "E"},
+		{249, "F"},
+		{0, "F"},
+	}
+	for _, tt := range tests {
+		if got := ScoreToCategory(tt.score); got != tt.want {
+			t.Errorf("ScoreToCategory(%d) = %q, want %q", tt.score, got, tt.want)
 		}
 	}
 }
@@ -649,5 +675,46 @@ func TestComputeFullScore_NoCriticalPenaltyWhenBelowCap(t *testing.T) {
 	// Score already below 500, so penalty should not be applied
 	if result.CriticalPenalty {
 		t.Error("critical penalty should not apply when score is already below cap")
+	}
+}
+
+// --- ComputeDomainScores (P1.1 rating por eixo a partir de AuditFindings) ---
+
+func TestComputeDomainScores(t *testing.T) {
+	findings := []*domain.AuditFinding{
+		{ISODomain: "A.10.1.1", ISOTitle: "Criptografia", ScoreDeduction: 100},
+		{ISODomain: "A.10.1.1", ISOTitle: "Criptografia", ScoreDeduction: 50},
+		{ISODomain: "A.13.2.1", ISOTitle: "Comunicações", ScoreDeduction: 200},
+	}
+	got := ComputeDomainScores(findings)
+	if len(got) != 2 {
+		t.Fatalf("ComputeDomainScores: got %d domains, want 2", len(got))
+	}
+	byDomain := make(map[string]domain.DomainScore)
+	for _, d := range got {
+		byDomain[d.DomainID] = d
+	}
+	// A.10.1.1: 1000 - 150 = 850 -> B
+	if d, ok := byDomain["A.10.1.1"]; !ok {
+		t.Error("missing domain A.10.1.1")
+	} else if d.Score != 850 || d.Grade != "B" {
+		t.Errorf("A.10.1.1: score=%d grade=%s, want 850 B", d.Score, d.Grade)
+	}
+	// A.13.2.1: 1000 - 200 = 800 -> B
+	if d, ok := byDomain["A.13.2.1"]; !ok {
+		t.Error("missing domain A.13.2.1")
+	} else if d.Score != 800 || d.Grade != "B" {
+		t.Errorf("A.13.2.1: score=%d grade=%s, want 800 B", d.Score, d.Grade)
+	}
+}
+
+func TestComputeDomainScores_Empty(t *testing.T) {
+	got := ComputeDomainScores(nil)
+	if len(got) != 0 {
+		t.Errorf("ComputeDomainScores(nil): got %d, want 0", len(got))
+	}
+	got = ComputeDomainScores([]*domain.AuditFinding{})
+	if len(got) != 0 {
+		t.Errorf("ComputeDomainScores([]): got %d, want 0", len(got))
 	}
 }

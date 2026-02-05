@@ -39,6 +39,8 @@ scaffoldVersion: "2.0.0"
 7. Findings salvos em tenants/{tid}/scans/{sid}/findings/{fid}
    ↓
 8. Score calculado (base 1000 - deduções) e atualizado no documento scan
+   ↓
+9. GET /api/v1/scans/:id: carrega findings do scan, agrega por iso_domain (ComputeDomainScores), retorna domain_scores (score + grade A–F por eixo) — P1.1 rating por eixo
 ```
 
 ## 2. Fluxo de Assessments Híbridos

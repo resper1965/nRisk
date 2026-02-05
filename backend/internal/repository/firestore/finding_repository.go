@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
+	"cloud.google.com/go/firestore"
 	"github.com/google/uuid"
 	"github.com/nrisk/backend/internal/domain"
-
-	"cloud.google.com/go/firestore"
+	"google.golang.org/api/iterator"
 )
 
 const findingsCollection = "findings"
@@ -61,4 +61,29 @@ func (r *FindingRepository) SaveBatch(ctx context.Context, tenantID, scanID stri
 		}
 	}
 	return nil
+}
+
+// ListByScan retorna todos os AuditFindings de um scan (para cálculo de domain_scores, P1.1).
+func (r *FindingRepository) ListByScan(ctx context.Context, tenantID, scanID string) ([]*domain.AuditFinding, error) {
+	colPath := "tenants/" + tenantID + "/scans/" + scanID + "/" + findingsCollection
+	iter := r.client.Collection(colPath).Documents(ctx)
+	defer iter.Stop()
+
+	var out []*domain.AuditFinding
+	for {
+		doc, err := iter.Next()
+		if err != nil {
+			if err == iterator.Done {
+				break
+			}
+			return nil, err
+		}
+		var f domain.AuditFinding
+		if err := doc.DataTo(&f); err != nil {
+			return nil, err
+		}
+		f.ID = doc.Ref.ID
+		out = append(out, &f)
+	}
+	return out, nil
 }

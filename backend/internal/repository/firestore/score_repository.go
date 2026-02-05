@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/nrisk/backend/internal/assessment"
+
 	"cloud.google.com/go/firestore"
 )
 
@@ -26,7 +28,7 @@ func (r *ScoreRepository) UpdateScanScore(ctx context.Context, tenantID, scanID 
 	if score < 0 {
 		score = 0
 	}
-	category := scoreToCategory(score)
+	category := assessment.ScoreToCategory(score)
 	now := time.Now().UTC()
 
 	docPath := "tenants/" + tenantID + "/scans/" + scanID
@@ -40,19 +42,3 @@ func (r *ScoreRepository) UpdateScanScore(ctx context.Context, tenantID, scanID 
 	return err
 }
 
-func scoreToCategory(score int) string {
-	switch {
-	case score >= 900:
-		return "A"
-	case score >= 750:
-		return "B"
-	case score >= 600:
-		return "C"
-	case score >= 400:
-		return "D"
-	case score >= 250:
-		return "E"
-	default:
-		return "F"
-	}
-}

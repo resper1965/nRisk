@@ -7,12 +7,64 @@ import (
 )
 
 const (
-	baseScore         = 1000
-	technicalWeight   = 0.6
-	declarativeWeight = 0.4
-	criticalCap       = 500 // penalidade crítica: teto de 500
-	pointsPerWeight   = 15  // pontos por unidade de risk_weight (calibrado para 20 perguntas)
+	baseScore           = 1000
+	technicalWeight     = 0.6
+	declarativeWeight   = 0.4
+	criticalCap         = 500 // penalidade crítica: teto de 500
+	pointsPerWeight     = 15  // pontos por unidade de risk_weight (calibrado para 20 perguntas)
 )
+
+// ScoreToCategory mapeia score 0–1000 para letra A–F (P1.1 rating por eixo).
+func ScoreToCategory(score int) string {
+	switch {
+	case score >= 900:
+		return "A"
+	case score >= 750:
+		return "B"
+	case score >= 600:
+		return "C"
+	case score >= 400:
+		return "D"
+	case score >= 250:
+		return "E"
+	default:
+		return "F"
+	}
+}
+
+// ComputeDomainScores agrega findings por iso_domain e retorna score + grade por eixo (P1.1).
+func ComputeDomainScores(findings []*domain.AuditFinding) []domain.DomainScore {
+	deductionByDomain := make(map[string]struct {
+		deduction int
+		label     string
+	})
+	for _, f := range findings {
+		k := f.ISODomain
+		if k == "" {
+			continue
+		}
+		v := deductionByDomain[k]
+		v.deduction += f.ScoreDeduction
+		if f.ISOTitle != "" {
+			v.label = f.ISOTitle
+		}
+		deductionByDomain[k] = v
+	}
+	out := make([]domain.DomainScore, 0, len(deductionByDomain))
+	for domainID, v := range deductionByDomain {
+		score := baseScore - v.deduction
+		if score < 0 {
+			score = 0
+		}
+		out = append(out, domain.DomainScore{
+			DomainID: domainID,
+			Label:    v.label,
+			Score:    score,
+			Grade:    ScoreToCategory(score),
+		})
+	}
+	return out
+}
 
 // ComputeDeclarativeScore calcula o score declarativo (base 1000 - deduções por "Não").
 // Mantém compatibilidade com o modelo anterior para perguntas sem risk_weight.

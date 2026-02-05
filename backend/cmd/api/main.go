@@ -40,7 +40,8 @@ func main() {
 	defer fsClient.Close()
 
 	scanRepo := firestore.NewScanRepository(fsClient)
-	scanCtrl := controller.NewScanController(scanRepo)
+	findingRepo := firestore.NewFindingRepository(fsClient)
+	scanCtrl := controller.NewScanController(scanRepo, findingRepo)
 
 	answerRepo := firestore.NewAnswerRepository(fsClient)
 	var evidenceStore *storage.EvidenceStore
