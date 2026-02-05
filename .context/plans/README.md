@@ -13,13 +13,14 @@ This directory contains plans for coordinating work across documentation and pla
 8. [Nrisk Frontend Clone Integracao](./nrisk-frontend-clone-integracao.md)
 9. [Nrisk Gaps Concorrencia](./nrisk-gaps-concorrencia.md)
 10. [Nrisk Governanca Dados Apis](./nrisk-governanca-dados-apis.md)
-11. [Nrisk Matriz Rastreabilidade Grc](./nrisk-matriz-rastreabilidade-grc.md)
-12. [Nrisk Mvp](./nrisk-mvp.md)
-13. [Nrisk Roadmap Implementacao](./nrisk-roadmap-implementacao.md)
-14. [Nrisk Scan Engine Ai2pentest](./nrisk-scan-engine-ai2pentest.md)
-15. [Nrisk Scoring Metodologia](./nrisk-scoring-metodologia.md)
-16. [Nrisk Ui Base Clone](./nrisk-ui-base-clone.md)
-17. [Solve P1 Gaps](./solve-p1-gaps.md)
+11. [Nrisk Landing Page](./nrisk-landing-page.md) — Landing do produto (inspirada em ness.com.br), **separada do projeto principal** (pasta ou repo próprio).
+12. [Nrisk Matriz Rastreabilidade Grc](./nrisk-matriz-rastreabilidade-grc.md)
+13. [Nrisk Mvp](./nrisk-mvp.md)
+14. [Nrisk Roadmap Implementacao](./nrisk-roadmap-implementacao.md)
+15. [Nrisk Scan Engine Ai2pentest](./nrisk-scan-engine-ai2pentest.md)
+16. [Nrisk Scoring Metodologia](./nrisk-scoring-metodologia.md)
+17. [Nrisk Ui Base Clone](./nrisk-ui-base-clone.md)
+18. [Solve P1 Gaps](./solve-p1-gaps.md)
 
 ## How To Create Or Update Plans
 - Run "ai-context plan <name>" to scaffold a new plan template.
