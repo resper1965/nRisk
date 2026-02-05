@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "frameworks": [
     {
       "id": "ISO27001",
@@ -11,39 +11,239 @@
           "iso_domain": "A.13.1.1",
           "text": "Existe controle de acesso para portas críticas (RDP 3389, SMB 445)?",
           "severity": "critical",
-          "score_deduction_if_no": 500
+          "score_deduction_if_no": 300,
+          "risk_weight": 5,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Segurança de Rede"
         },
         {
           "id": "Q-02",
           "control_id": "C-02",
           "iso_domain": "A.10.1.1",
-          "text": "Há gestão de certificados digitais (renovação, validade)?",
+          "text": "Há gestão de certificados digitais (renovação, validade, monitoramento)?",
           "severity": "high",
-          "score_deduction_if_no": 200
+          "score_deduction_if_no": 150,
+          "risk_weight": 4,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Criptografia"
         },
         {
           "id": "Q-03",
           "control_id": "C-03",
           "iso_domain": "A.12.6.1",
-          "text": "Existe processo de patch management para vulnerabilidades?",
-          "severity": "medium",
-          "score_deduction_if_no": 80
+          "text": "Existe processo de patch management para correção de vulnerabilidades?",
+          "severity": "high",
+          "score_deduction_if_no": 150,
+          "risk_weight": 4,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Gestão de Vulnerabilidades"
         },
         {
           "id": "Q-04",
           "control_id": "C-04",
           "iso_domain": "A.13.2.1",
-          "text": "Possui proteção anti-phishing (DMARC/SPF) configurada?",
+          "text": "Possui proteção anti-phishing (DMARC/SPF/DKIM) configurada?",
           "severity": "high",
-          "score_deduction_if_no": 200
+          "score_deduction_if_no": 150,
+          "risk_weight": 4,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Segurança de E-mail"
         },
         {
           "id": "Q-05",
-          "control_id": "C-02",
-          "iso_domain": "A.10.1.1",
-          "text": "MFA (autenticação multifator) está habilitado para acessos críticos?",
+          "control_id": "C-05",
+          "iso_domain": "A.9.4.1",
+          "text": "MFA (autenticação multifator) está habilitado para todos os acessos críticos e administrativos?",
           "severity": "critical",
-          "score_deduction_if_no": 300
+          "score_deduction_if_no": 250,
+          "risk_weight": 5,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Controle de Acesso"
+        },
+        {
+          "id": "Q-06",
+          "control_id": "C-06",
+          "iso_domain": "A.12.4.1",
+          "text": "Existe sistema centralizado de logging e monitoramento de eventos de segurança?",
+          "severity": "high",
+          "score_deduction_if_no": 120,
+          "risk_weight": 4,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Monitoramento"
+        },
+        {
+          "id": "Q-07",
+          "control_id": "C-07",
+          "iso_domain": "A.12.3.1",
+          "text": "Existe política de backup com testes periódicos de restauração?",
+          "severity": "high",
+          "score_deduction_if_no": 150,
+          "risk_weight": 4,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Backup e Recuperação"
+        },
+        {
+          "id": "Q-08",
+          "control_id": "C-08",
+          "iso_domain": "A.5.1.1",
+          "text": "A empresa possui Política de Segurança da Informação (PSI) documentada e atualizada?",
+          "severity": "high",
+          "score_deduction_if_no": 100,
+          "risk_weight": 3,
+          "evidence_type": "pdf",
+          "track": "bronze",
+          "category": "Políticas"
+        },
+        {
+          "id": "Q-09",
+          "control_id": "C-09",
+          "iso_domain": "A.7.2.2",
+          "text": "Colaboradores recebem treinamento de conscientização em segurança periodicamente?",
+          "severity": "medium",
+          "score_deduction_if_no": 80,
+          "risk_weight": 3,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Pessoas"
+        },
+        {
+          "id": "Q-10",
+          "control_id": "C-10",
+          "iso_domain": "A.16.1.1",
+          "text": "Existe plano de resposta a incidentes de segurança documentado e testado?",
+          "severity": "high",
+          "score_deduction_if_no": 120,
+          "risk_weight": 4,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Resposta a Incidentes"
+        },
+        {
+          "id": "Q-11",
+          "control_id": "C-11",
+          "iso_domain": "A.17.1.1",
+          "text": "Existe plano de continuidade de negócios (PCN) e recuperação de desastres (DR)?",
+          "severity": "high",
+          "score_deduction_if_no": 120,
+          "risk_weight": 4,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Continuidade"
+        },
+        {
+          "id": "Q-12",
+          "control_id": "C-12",
+          "iso_domain": "A.15.1.1",
+          "text": "Fornecedores críticos de TI são avaliados quanto a riscos de segurança da informação?",
+          "severity": "medium",
+          "score_deduction_if_no": 80,
+          "risk_weight": 3,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Fornecedores"
+        },
+        {
+          "id": "Q-13",
+          "control_id": "C-13",
+          "iso_domain": "A.14.2.1",
+          "text": "O ciclo de desenvolvimento de software segue práticas de desenvolvimento seguro (SDLC)?",
+          "severity": "medium",
+          "score_deduction_if_no": 80,
+          "risk_weight": 3,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Desenvolvimento Seguro"
+        },
+        {
+          "id": "Q-14",
+          "control_id": "C-14",
+          "iso_domain": "A.18.1.1",
+          "text": "A empresa está em conformidade com LGPD e possui DPO/Encarregado designado?",
+          "severity": "high",
+          "score_deduction_if_no": 100,
+          "risk_weight": 4,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Compliance e Privacidade"
+        },
+        {
+          "id": "Q-15",
+          "control_id": "C-15",
+          "iso_domain": "A.11.1.1",
+          "text": "Existem controles de acesso físico às áreas de TI, servidores e data centers?",
+          "severity": "medium",
+          "score_deduction_if_no": 60,
+          "risk_weight": 3,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Segurança Física"
+        },
+        {
+          "id": "Q-16",
+          "control_id": "C-06",
+          "iso_domain": "A.12.4.1",
+          "text": "Headers de segurança (HSTS, CSP, X-Frame-Options) estão configurados nos serviços web?",
+          "severity": "medium",
+          "score_deduction_if_no": 60,
+          "risk_weight": 2,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Monitoramento"
+        },
+        {
+          "id": "Q-17",
+          "control_id": "C-09",
+          "iso_domain": "A.7.2.2",
+          "text": "Existem simulações de phishing para testar a resiliência dos colaboradores?",
+          "severity": "medium",
+          "score_deduction_if_no": 50,
+          "risk_weight": 2,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Pessoas"
+        },
+        {
+          "id": "Q-18",
+          "control_id": "C-10",
+          "iso_domain": "A.16.1.5",
+          "text": "Incidentes de segurança são reportados e tratados dentro de SLAs definidos?",
+          "severity": "medium",
+          "score_deduction_if_no": 60,
+          "risk_weight": 3,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Resposta a Incidentes"
+        },
+        {
+          "id": "Q-19",
+          "control_id": "C-03",
+          "iso_domain": "A.8.1.1",
+          "text": "Existe inventário atualizado de ativos de TI com classificação de criticidade?",
+          "severity": "medium",
+          "score_deduction_if_no": 60,
+          "risk_weight": 3,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Gestão de Vulnerabilidades"
+        },
+        {
+          "id": "Q-20",
+          "control_id": "C-14",
+          "iso_domain": "A.18.1.4",
+          "text": "Dados pessoais possuem classificação e controles de acesso adequados conforme LGPD?",
+          "severity": "high",
+          "score_deduction_if_no": 100,
+          "risk_weight": 4,
+          "evidence_type": "none",
+          "track": "bronze",
+          "category": "Compliance e Privacidade"
         }
       ]
     }

@@ -23,12 +23,19 @@ type MappingEntry struct {
 	Recommendation   string `json:"recommendation"`
 }
 
+// ControlCategory contém metadata de um controle para spider chart.
+type ControlCategory struct {
+	Category  string `json:"category"`
+	ISODomain string `json:"iso_domain"`
+}
+
 // MappingLogic é a estrutura do arquivo mapping_logic.json.
 type MappingLogic struct {
-	Version   string         `json:"version"`
-	Mappings  []MappingEntry `json:"mappings"`
-	PortMap   map[string]string `json:"port_map"`
-	TemplateIDPrefixMap map[string]string `json:"template_id_prefix_map"`
+	Version             string                     `json:"version"`
+	Mappings            []MappingEntry             `json:"mappings"`
+	PortMap             map[string]string          `json:"port_map"`
+	TemplateIDPrefixMap map[string]string          `json:"template_id_prefix_map"`
+	ControlCategories   map[string]ControlCategory `json:"control_categories"`
 }
 
 // Parser utiliza mapping_logic.json como única fonte de verdade.
@@ -145,6 +152,36 @@ func (p *Parser) ToAuditFinding(tenantID, scanID, domain, toolName, technicalFin
 		Recommendation:   entry.Recommendation,
 		RawOutput:        rawOutput,
 	}, nil
+}
+
+// FindByControlID retorna todos os mapeamentos para um control_id.
+func (p *Parser) FindByControlID(controlID string) []MappingEntry {
+	var results []MappingEntry
+	for _, m := range p.mapping.Mappings {
+		if m.ControlID == controlID {
+			results = append(results, m)
+		}
+	}
+	return results
+}
+
+// GetControlCategories retorna o mapa de categorias de controles.
+func (p *Parser) GetControlCategories() map[string]ControlCategory {
+	return p.mapping.ControlCategories
+}
+
+// HighestSeverity retorna a maior severidade de uma lista de findings.
+func HighestSeverity(findings []MappingEntry) string {
+	order := map[string]int{"critical": 4, "high": 3, "medium": 2, "low": 1}
+	best := ""
+	bestVal := 0
+	for _, f := range findings {
+		if v, ok := order[f.Severity]; ok && v > bestVal {
+			bestVal = v
+			best = f.Severity
+		}
+	}
+	return best
 }
 
 func coalesce(a, b string) string {
