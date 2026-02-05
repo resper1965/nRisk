@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./components/Layout";
+import ScrollToTop from "./components/ScrollToTop";
 import NriskOverview from "./pages/NriskOverview";
 import SupplyChain from "./pages/SupplyChain";
 import Insurance from "./pages/Insurance";
@@ -9,7 +10,9 @@ import Contact from "./pages/Contact";
 
 function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Navigate to="/nrisk" replace />} />
         <Route path="nrisk" element={<NriskOverview />} />
@@ -21,6 +24,7 @@ function App() {
       </Route>
       <Route path="*" element={<Navigate to="/nrisk" replace />} />
     </Routes>
+    </>
   );
 }
 

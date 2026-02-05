@@ -38,9 +38,9 @@ function Header() {
         </nav>
         <Link
           to="/nrisk/contact"
-          className="inline-flex items-center justify-center rounded-md border border-gray-600 bg-gray-800 px-4 py-2 text-sm font-medium text-gray-100 shadow-sm transition-smooth hover:bg-gray-700 hover:border-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+          className="inline-flex items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm transition-smooth hover:scale-105 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
         >
-          Falar com especialista
+          Solicitar demonstração
         </Link>
       </div>
     </header>

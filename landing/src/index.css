@@ -11,9 +11,14 @@ body {
   @apply bg-gray-900 text-gray-100 antialiased;
 }
 
-/* Transições suaves para interativos */
+/* Transições e animações */
 @layer utilities {
   .transition-smooth {
-    @apply transition-all duration-200 ease-out;
+    @apply transition-all duration-300 ease-out;
   }
+  .animate-delay-100 { animation-delay: 100ms; }
+  .animate-delay-150 { animation-delay: 150ms; }
+  .animate-delay-200 { animation-delay: 200ms; }
+  .animate-delay-300 { animation-delay: 300ms; }
+  .animate-delay-400 { animation-delay: 400ms; }
 }
