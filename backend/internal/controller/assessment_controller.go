@@ -17,26 +17,28 @@ import (
 
 // AssessmentController trata requisições de assessment declarativo.
 type AssessmentController struct {
-	answerRepo    *firestore.AnswerRepository
-	scanRepo      *firestore.ScanRepository
-	findingRepo   *firestore.FindingRepository
-	snapshotRepo  *firestore.ScoreSnapshotRepository
-	evidenceStore *storage.EvidenceStore
-	questionsPath string
+	answerRepo        *firestore.AnswerRepository
+	scanRepo          *firestore.ScanRepository
+	findingRepo       *firestore.FindingRepository
+	snapshotRepo      *firestore.ScoreSnapshotRepository
+	justificationRepo *firestore.FindingJustificationRepository
+	evidenceStore     *storage.EvidenceStore
+	questionsPath     string
 }
 
 // NewAssessmentController cria um novo AssessmentController.
-func NewAssessmentController(answerRepo *firestore.AnswerRepository, scanRepo *firestore.ScanRepository, findingRepo *firestore.FindingRepository, snapshotRepo *firestore.ScoreSnapshotRepository, evidenceStore *storage.EvidenceStore, questionsPath string) *AssessmentController {
+func NewAssessmentController(answerRepo *firestore.AnswerRepository, scanRepo *firestore.ScanRepository, findingRepo *firestore.FindingRepository, snapshotRepo *firestore.ScoreSnapshotRepository, justificationRepo *firestore.FindingJustificationRepository, evidenceStore *storage.EvidenceStore, questionsPath string) *AssessmentController {
 	if questionsPath == "" {
 		questionsPath = "assessment_questions.json"
 	}
 	return &AssessmentController{
-		answerRepo:    answerRepo,
-		scanRepo:      scanRepo,
-		findingRepo:   findingRepo,
-		snapshotRepo:  snapshotRepo,
-		evidenceStore: evidenceStore,
-		questionsPath: questionsPath,
+		answerRepo:        answerRepo,
+		scanRepo:          scanRepo,
+		findingRepo:       findingRepo,
+		snapshotRepo:      snapshotRepo,
+		justificationRepo: justificationRepo,
+		evidenceStore:     evidenceStore,
+		questionsPath:     questionsPath,
 	}
 }
 
@@ -215,12 +217,32 @@ func (ac *AssessmentController) GetFullScore(c *gin.Context) {
 		return
 	}
 
-	findingsByControl := make(map[string][]string)
-	if ac.findingRepo != nil {
-		findings, _ := ac.findingRepo.ListByScan(c.Request.Context(), tenantIDStr, scanID)
-		for _, f := range findings {
-			findingsByControl[f.ControlID] = append(findingsByControl[f.ControlID], f.Severity)
+	// P1.6: findings com justificativa aprovada deixam de penalizar o score
+	var approvedFindingIDs map[string]bool
+	if ac.justificationRepo != nil {
+		ids, _ := ac.justificationRepo.ListApprovedFindingIDs(c.Request.Context(), tenantIDStr, scanID)
+		approvedFindingIDs = make(map[string]bool)
+		for _, id := range ids {
+			approvedFindingIDs[id] = true
 		}
+	}
+
+	var allFindings []*domain.AuditFinding
+	if ac.findingRepo != nil {
+		allFindings, _ = ac.findingRepo.ListByScan(c.Request.Context(), tenantIDStr, scanID)
+	}
+	// Filtrar findings que têm justificativa aprovada (não entram no score)
+	var findings []*domain.AuditFinding
+	for _, f := range allFindings {
+		if approvedFindingIDs[f.ID] {
+			continue
+		}
+		findings = append(findings, f)
+	}
+
+	findingsByControl := make(map[string][]string)
+	for _, f := range findings {
+		findingsByControl[f.ControlID] = append(findingsByControl[f.ControlID], f.Severity)
 	}
 
 	hasCritical := false
@@ -234,6 +256,12 @@ func (ac *AssessmentController) GetFullScore(c *gin.Context) {
 		if hasCritical {
 			break
 		}
+	}
+
+	// Score técnico: usar recalculado quando há justificativas aprovadas; senão usar scan.Score
+	technicalScore := scan.Score
+	if ac.justificationRepo != nil && len(approvedFindingIDs) > 0 {
+		technicalScore = assessment.TechnicalScoreFromFindings(findings)
 	}
 
 	q, err := assessment.LoadQuestionnaire(ac.questionsPath, frameworkID)
@@ -254,7 +282,7 @@ func (ac *AssessmentController) GetFullScore(c *gin.Context) {
 	}
 
 	input := assessment.ScoreInput{
-		TechnicalScore:     scan.Score,
+		TechnicalScore:     technicalScore,
 		HasCriticalFinding: hasCritical,
 		Questions:          q.Questions,
 		AnswersByQuestion:  answersByQuestion,

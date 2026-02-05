@@ -175,6 +175,100 @@ Snapshots são criados quando `GET /api/v1/assessment/score/full?scan_id=...` é
 
 ---
 
+### Justificativas de findings (P1.6)
+
+Permitem que o cliente submeta justificativas para findings; o avaliador aprova ou rejeita. Findings com justificativa **aprovada** deixam de penalizar o score em `GET /api/v1/assessment/score/full`.
+
+#### POST /api/v1/scans/:scan_id/findings/:finding_id/justifications
+
+Submete uma justificativa para um finding.
+
+**Auth:** Obrigatório  
+**Params:** `scan_id` (UUID), `finding_id` (ID do finding)  
+**Body:**
+
+```json
+{
+  "text": "Risco aceito pela diretoria; controles compensatórios documentados.",
+  "submitted_by": "user@empresa.com"
+}
+```
+
+**Response:** `201 Created`
+
+```json
+{
+  "justification": {
+    "id": "uuid",
+    "tenant_id": "...",
+    "scan_id": "...",
+    "finding_id": "...",
+    "status": "submitted",
+    "text": "...",
+    "submitted_by": "...",
+    "submitted_at": "2026-02-05T..."
+  },
+  "scan_id": "...",
+  "finding_id": "..."
+}
+```
+
+**Erros:** `400` — INVALID_SCAN_ID, INVALID_FINDING_ID, INVALID_BODY; `401`/`403` — auth; `500` — SAVE_FAILED.
+
+#### GET /api/v1/scans/:scan_id/findings/:finding_id/justifications
+
+Lista justificativas de um finding (para cliente e avaliador).
+
+**Auth:** Obrigatório  
+**Params:** `scan_id` (UUID), `finding_id` (ID do finding)
+
+**Response:** `200 OK`
+
+```json
+{
+  "justifications": [
+    {
+      "id": "uuid",
+      "status": "submitted",
+      "text": "...",
+      "submitted_by": "...",
+      "submitted_at": "...",
+      "reviewed_by": "",
+      "reviewed_at": null,
+      "decision_note": ""
+    }
+  ],
+  "scan_id": "...",
+  "finding_id": "..."
+}
+```
+
+**Erros:** `400` — INVALID_SCAN_ID, INVALID_FINDING_ID; `500` — LIST_FAILED.
+
+#### PATCH /api/v1/scans/:scan_id/justifications/:id/review
+
+Avaliador aprova ou rejeita uma justificativa.
+
+**Auth:** Obrigatório  
+**Params:** `scan_id` (UUID), `id` (ID da justificativa)  
+**Body:**
+
+```json
+{
+  "reviewed_by": "avaliador@nrisk.com",
+  "decision": "approved",
+  "decision_note": "Evidência de controles compensatórios aceita."
+}
+```
+
+- `decision`: `"approved"` ou `"rejected"`.
+
+**Response:** `200 OK` — corpo com a justificativa atualizada (inclui `status`, `reviewed_at`, `decision_note`).
+
+**Erros:** `400` — INVALID_SCAN_ID, INVALID_ID, INVALID_BODY, INVALID_DECISION; `404` — NOT_FOUND; `500` — UPDATE_FAILED.
+
+---
+
 ### GET /api/v1/assessments
 
 Lista o progresso dos assessments do tenant.
@@ -241,9 +335,11 @@ Salva uma resposta e opcionalmente faz upload de evidência (multipart). Path GC
 
 Retorna score híbrido: `(T * 0.6) + (C * 0.4)`. **Query:** `?framework=ISO27001&scan_id=opcional`
 
-### GET /api/v1/assessment/score/full (P1.2 jornada persistida)
+### GET /api/v1/assessment/score/full (P1.2 jornada persistida; P1.6 justificativas)
 
 Calcula ScoreBreakdown completo (cross-check, F, penalidade crítica, domain_scores), **persiste snapshot** no histórico do scan e retorna o breakdown. **Query:** `?scan_id=uuid` (obrigatório), `?framework=ISO27001`
+
+**P1.6:** Findings com justificativa **aprovada** (via PATCH /scans/:scan_id/justifications/:id/review) deixam de penalizar o score: são excluídos de `findingsByControl`, de `has_critical_finding` e o score técnico (T) é recalculado a partir dos findings restantes.
 
 **Response:** `200 OK` — `{ "score_breakdown": { ... }, "scan_id": "uuid", "framework_id": "ISO27001" }`. Cada chamada adiciona um registro em GET /api/v1/scans/:id/score-history.
 

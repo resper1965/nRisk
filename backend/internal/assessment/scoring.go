@@ -186,6 +186,19 @@ func ComputeFullScore(input ScoreInput) domain.ScoreBreakdown {
 	}
 }
 
+// TechnicalScoreFromFindings calcula o score técnico (0–1000) a partir dos findings (base 1000 - deduções).
+// Usado em GetFullScore quando há justificativas aprovadas (P1.6) para recalcular T excluindo findings aprovados.
+func TechnicalScoreFromFindings(findings []*domain.AuditFinding) int {
+	score := baseScore
+	for _, f := range findings {
+		score -= f.ScoreDeduction
+	}
+	if score < 0 {
+		score = 0
+	}
+	return score
+}
+
 // ScoreInput contém todos os dados necessários para cálculo completo do score.
 type ScoreInput struct {
 	TechnicalScore     int

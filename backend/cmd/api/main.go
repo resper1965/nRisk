@@ -42,7 +42,9 @@ func main() {
 	scanRepo := firestore.NewScanRepository(fsClient)
 	findingRepo := firestore.NewFindingRepository(fsClient)
 	snapshotRepo := firestore.NewScoreSnapshotRepository(fsClient)
+	justificationRepo := firestore.NewFindingJustificationRepository(fsClient)
 	scanCtrl := controller.NewScanController(scanRepo, findingRepo, snapshotRepo)
+	justificationCtrl := controller.NewJustificationController(justificationRepo)
 
 	answerRepo := firestore.NewAnswerRepository(fsClient)
 	var evidenceStore *storage.EvidenceStore
@@ -59,7 +61,7 @@ func main() {
 	if questionsPath == "" {
 		questionsPath = filepath.Join(".", "assessment_questions.json")
 	}
-	assessmentCtrl := controller.NewAssessmentController(answerRepo, scanRepo, findingRepo, snapshotRepo, evidenceStore, questionsPath)
+	assessmentCtrl := controller.NewAssessmentController(answerRepo, scanRepo, findingRepo, snapshotRepo, justificationRepo, evidenceStore, questionsPath)
 
 	router := gin.New()
 	router.Use(gin.Recovery())
@@ -78,6 +80,10 @@ func main() {
 		v1.POST("/scans", scanCtrl.StartScan)
 		v1.GET("/scans/:id", scanCtrl.GetScan)
 		v1.GET("/scans/:id/score-history", scanCtrl.GetScoreHistory)
+
+		v1.POST("/scans/:scan_id/findings/:finding_id/justifications", justificationCtrl.SubmitJustification)
+		v1.GET("/scans/:scan_id/findings/:finding_id/justifications", justificationCtrl.ListJustifications)
+		v1.PATCH("/scans/:scan_id/justifications/:id/review", justificationCtrl.ReviewJustification)
 
 		v1.GET("/assessment", assessmentCtrl.ListQuestions)
 		v1.POST("/assessment/answer", assessmentCtrl.SubmitAnswer)

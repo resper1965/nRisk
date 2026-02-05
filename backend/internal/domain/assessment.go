@@ -65,10 +65,26 @@ type ScoreBreakdown struct {
 
 // ScoreSnapshot persiste cross-check + ScoreBreakdown por assessment/scan (P1.2 jornada persistida).
 type ScoreSnapshot struct {
-	ID             string        `json:"id"`
-	TenantID       string        `json:"tenant_id"`
-	ScanID         string        `json:"scan_id"`
-	Domain         string        `json:"domain"`
-	ComputedAt     time.Time     `json:"computed_at"`
+	ID             string         `json:"id"`
+	TenantID       string         `json:"tenant_id"`
+	ScanID         string         `json:"scan_id"`
+	Domain         string         `json:"domain"`
+	ComputedAt     time.Time      `json:"computed_at"`
 	ScoreBreakdown ScoreBreakdown `json:"score_breakdown"`
+}
+
+// FindingJustification representa justificativa de finding (P1.6 — cliente submete, avaliador aprova/rejeita).
+// Regra: se aprovada, o finding deixa de penalizar o score (ou penaliza menos).
+type FindingJustification struct {
+	ID           string    `json:"id"`
+	TenantID     string    `json:"tenant_id"`
+	ScanID       string    `json:"scan_id"`
+	FindingID    string    `json:"finding_id"`
+	Status       string    `json:"status"` // submitted, approved, rejected
+	Text         string    `json:"text"`
+	SubmittedBy  string    `json:"submitted_by"`
+	SubmittedAt  time.Time `json:"submitted_at"`
+	ReviewedBy    string    `json:"reviewed_by,omitempty"`
+	ReviewedAt    time.Time `json:"reviewed_at,omitempty"`
+	DecisionNote string    `json:"decision_note,omitempty"`
 }
