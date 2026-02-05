@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 	"path/filepath"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/nrisk/backend/internal/assessment"
@@ -18,18 +19,22 @@ import (
 type AssessmentController struct {
 	answerRepo    *firestore.AnswerRepository
 	scanRepo      *firestore.ScanRepository
+	findingRepo   *firestore.FindingRepository
+	snapshotRepo  *firestore.ScoreSnapshotRepository
 	evidenceStore *storage.EvidenceStore
 	questionsPath string
 }
 
 // NewAssessmentController cria um novo AssessmentController.
-func NewAssessmentController(answerRepo *firestore.AnswerRepository, scanRepo *firestore.ScanRepository, evidenceStore *storage.EvidenceStore, questionsPath string) *AssessmentController {
+func NewAssessmentController(answerRepo *firestore.AnswerRepository, scanRepo *firestore.ScanRepository, findingRepo *firestore.FindingRepository, snapshotRepo *firestore.ScoreSnapshotRepository, evidenceStore *storage.EvidenceStore, questionsPath string) *AssessmentController {
 	if questionsPath == "" {
 		questionsPath = "assessment_questions.json"
 	}
 	return &AssessmentController{
 		answerRepo:    answerRepo,
 		scanRepo:      scanRepo,
+		findingRepo:   findingRepo,
+		snapshotRepo:  snapshotRepo,
 		evidenceStore: evidenceStore,
 		questionsPath: questionsPath,
 	}
@@ -181,4 +186,94 @@ func (ac *AssessmentController) GetHybridScore(c *gin.Context) {
 		"hybrid_score":       hybrid,
 		"framework_id":       frameworkID,
 	})
+}
+
+// GetFullScore calcula ScoreBreakdown completo (cross-check + F + penalidade), persiste snapshot (P1.2) e retorna.
+// GET /api/v1/assessment/score/full?scan_id=uuid&framework=ISO27001
+func (ac *AssessmentController) GetFullScore(c *gin.Context) {
+	tenantID, exists := c.Get(middleware.TenantIDKey)
+	if !exists {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "tenant_id not in context", "code": "INTERNAL"})
+		return
+	}
+	tenantIDStr := tenantID.(string)
+
+	scanID := c.Query("scan_id")
+	if scanID == "" || !validator.IsValidUUID(scanID) {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "scan_id required and must be valid UUID", "code": "INVALID_SCAN_ID"})
+		return
+	}
+
+	frameworkID := c.Query("framework")
+	if frameworkID == "" {
+		frameworkID = "ISO27001"
+	}
+
+	scan, err := ac.scanRepo.GetByID(c.Request.Context(), tenantIDStr, scanID)
+	if err != nil || scan == nil {
+		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "scan not found", "code": "SCAN_NOT_FOUND"})
+		return
+	}
+
+	findingsByControl := make(map[string][]string)
+	if ac.findingRepo != nil {
+		findings, _ := ac.findingRepo.ListByScan(c.Request.Context(), tenantIDStr, scanID)
+		for _, f := range findings {
+			findingsByControl[f.ControlID] = append(findingsByControl[f.ControlID], f.Severity)
+		}
+	}
+
+	hasCritical := false
+	for _, sevs := range findingsByControl {
+		for _, s := range sevs {
+			if s == "critical" {
+				hasCritical = true
+				break
+			}
+		}
+		if hasCritical {
+			break
+		}
+	}
+
+	q, err := assessment.LoadQuestionnaire(ac.questionsPath, frameworkID)
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "framework not found", "code": "FRAMEWORK_NOT_FOUND"})
+		return
+	}
+
+	answers, err := ac.answerRepo.ListByTenant(c.Request.Context(), tenantIDStr)
+	if err != nil {
+		logger.Error("failed to list answers", map[string]interface{}{"error": err.Error(), "tenant": tenantIDStr})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "failed to load answers", "code": "LOAD_FAILED"})
+		return
+	}
+	answersByQuestion := make(map[string]*domain.Answer)
+	for _, a := range answers {
+		answersByQuestion[a.QuestionID] = a
+	}
+
+	input := assessment.ScoreInput{
+		TechnicalScore:     scan.Score,
+		HasCriticalFinding: hasCritical,
+		Questions:          q.Questions,
+		AnswersByQuestion:  answersByQuestion,
+		FindingsByControl:  findingsByControl,
+		FrameworkID:        frameworkID,
+	}
+	breakdown := assessment.ComputeFullScore(input)
+
+	if ac.snapshotRepo != nil {
+		snap := &domain.ScoreSnapshot{
+			ScanID:         scanID,
+			Domain:         scan.Domain,
+			ComputedAt:     time.Now().UTC(),
+			ScoreBreakdown: breakdown,
+		}
+		if err := ac.snapshotRepo.Save(c.Request.Context(), tenantIDStr, scanID, snap); err != nil {
+			logger.Warn("failed to persist score snapshot", map[string]interface{}{"scan_id": scanID, "error": err.Error()})
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{"score_breakdown": breakdown, "scan_id": scanID, "framework_id": frameworkID})
 }

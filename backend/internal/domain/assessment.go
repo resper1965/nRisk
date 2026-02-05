@@ -50,15 +50,25 @@ type CrossCheckResult struct {
 
 // ScoreBreakdown contém o detalhamento completo do score híbrido.
 type ScoreBreakdown struct {
-	TechnicalScore     int                `json:"technical_score"`        // T: 0-1000
-	ComplianceScoreRaw int                `json:"compliance_score_raw"`   // C bruto: 0-1000
-	ComplianceScore    float64            `json:"compliance_score"`       // C ajustado por F
-	ConfidenceFactor   float64            `json:"confidence_factor"`      // F: 0.5-1.0
-	HybridScore        float64            `json:"hybrid_score"`           // S_f
+	TechnicalScore      int                `json:"technical_score"`        // T: 0-1000
+	ComplianceScoreRaw  int                `json:"compliance_score_raw"`   // C bruto: 0-1000
+	ComplianceScore     float64            `json:"compliance_score"`        // C ajustado por F
+	ConfidenceFactor    float64            `json:"confidence_factor"`      // F: 0.5-1.0
+	HybridScore         float64            `json:"hybrid_score"`            // S_f
 	ScoreCategory      string             `json:"score_category"`         // A-F
-	HasCriticalFinding bool               `json:"has_critical_finding"`
-	CriticalPenalty    bool               `json:"critical_penalty_applied"`
-	Inconsistencies    []CrossCheckResult `json:"inconsistencies,omitempty"`
-	DomainScores       map[string]float64 `json:"domain_scores"` // para spider chart
+	HasCriticalFinding  bool               `json:"has_critical_finding"`
+	CriticalPenalty     bool               `json:"critical_penalty_applied"`
+	Inconsistencies     []CrossCheckResult `json:"inconsistencies,omitempty"`
+	DomainScores       map[string]float64  `json:"domain_scores"`          // para spider chart
 	FrameworkID        string             `json:"framework_id"`
+}
+
+// ScoreSnapshot persiste cross-check + ScoreBreakdown por assessment/scan (P1.2 jornada persistida).
+type ScoreSnapshot struct {
+	ID             string        `json:"id"`
+	TenantID       string        `json:"tenant_id"`
+	ScanID         string        `json:"scan_id"`
+	Domain         string        `json:"domain"`
+	ComputedAt     time.Time     `json:"computed_at"`
+	ScoreBreakdown ScoreBreakdown `json:"score_breakdown"`
 }

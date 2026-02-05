@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -14,13 +15,14 @@ import (
 
 // ScanController trata requisições relacionadas a scans.
 type ScanController struct {
-	scanRepo    *firestore.ScanRepository
-	findingRepo *firestore.FindingRepository
+	scanRepo     *firestore.ScanRepository
+	findingRepo  *firestore.FindingRepository
+	snapshotRepo *firestore.ScoreSnapshotRepository
 }
 
 // NewScanController cria um novo ScanController.
-func NewScanController(scanRepo *firestore.ScanRepository, findingRepo *firestore.FindingRepository) *ScanController {
-	return &ScanController{scanRepo: scanRepo, findingRepo: findingRepo}
+func NewScanController(scanRepo *firestore.ScanRepository, findingRepo *firestore.FindingRepository, snapshotRepo *firestore.ScoreSnapshotRepository) *ScanController {
+	return &ScanController{scanRepo: scanRepo, findingRepo: findingRepo, snapshotRepo: snapshotRepo}
 }
 
 // StartScanRequest representa o body da requisição para iniciar um scan.
@@ -121,4 +123,51 @@ func (sc *ScanController) GetScan(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, resp)
+}
+
+// GetScoreHistory retorna o histórico de ScoreBreakdown do scan (P1.2 jornada persistida).
+// GET /api/v1/scans/:id/score-history?limit=50
+func (sc *ScanController) GetScoreHistory(c *gin.Context) {
+	tenantID, exists := c.Get(middleware.TenantIDKey)
+	if !exists {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "tenant_id not in context"})
+		return
+	}
+	tenantIDStr := tenantID.(string)
+	scanID := c.Param("id")
+	if !validator.IsValidUUID(scanID) {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "invalid scan id format", "code": "INVALID_SCAN_ID"})
+		return
+	}
+
+	if sc.snapshotRepo == nil {
+		c.JSON(http.StatusOK, gin.H{"snapshots": []domain.ScoreSnapshot{}})
+		return
+	}
+
+	limit := 50
+	if l := c.Query("limit"); l != "" {
+		if n, err := parseInt(l); err == nil && n > 0 && n <= 100 {
+			limit = n
+		}
+	}
+
+	snapshots, err := sc.snapshotRepo.ListByScan(c.Request.Context(), tenantIDStr, scanID, limit)
+	if err != nil {
+		logger.Warn("failed to list score history", map[string]interface{}{
+			"scan_id": scanID,
+			"tenant":  tenantIDStr,
+			"error":   err.Error(),
+		})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": "failed to load score history", "code": "LOAD_FAILED"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"scan_id": scanID, "snapshots": snapshots})
+}
+
+func parseInt(s string) (int, error) {
+	var n int
+	_, err := fmt.Sscanf(s, "%d", &n)
+	return n, err
 }

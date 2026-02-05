@@ -134,6 +134,47 @@ Retorna um scan pelo ID, restrito ao tenant do token. Inclui **domain_scores** (
 
 ---
 
+### GET /api/v1/scans/:id/score-history (P1.2 jornada persistida)
+
+Retorna o histórico de ScoreBreakdown do scan (cross-check + score por data) para demandantes.
+
+**Auth:** Obrigatório  
+**Params:** `id` — UUID do scan  
+**Query:** `limit` (opcional, 1–100, default 50)
+
+**Response:** `200 OK`
+
+```json
+{
+  "scan_id": "uuid",
+  "snapshots": [
+    {
+      "id": "snapshot-uuid",
+      "tenant_id": "org-123",
+      "scan_id": "uuid",
+      "domain": "example.com",
+      "computed_at": "2026-02-05T...",
+      "score_breakdown": {
+        "technical_score": 850,
+        "compliance_score_raw": 900,
+        "compliance_score": 765,
+        "confidence_factor": 0.85,
+        "hybrid_score": 816,
+        "score_category": "B",
+        "inconsistencies": [],
+        "domain_scores": {}
+      }
+    }
+  ]
+}
+```
+
+Snapshots são criados quando `GET /api/v1/assessment/score/full?scan_id=...` é chamado.
+
+**Erros:** idem GET /api/v1/scans/:id; `500` — LOAD_FAILED ao listar histórico.
+
+---
+
 ### GET /api/v1/assessments
 
 Lista o progresso dos assessments do tenant.
@@ -199,6 +240,12 @@ Salva uma resposta e opcionalmente faz upload de evidência (multipart). Path GC
 ### GET /api/v1/assessment/score
 
 Retorna score híbrido: `(T * 0.6) + (C * 0.4)`. **Query:** `?framework=ISO27001&scan_id=opcional`
+
+### GET /api/v1/assessment/score/full (P1.2 jornada persistida)
+
+Calcula ScoreBreakdown completo (cross-check, F, penalidade crítica, domain_scores), **persiste snapshot** no histórico do scan e retorna o breakdown. **Query:** `?scan_id=uuid` (obrigatório), `?framework=ISO27001`
+
+**Response:** `200 OK` — `{ "score_breakdown": { ... }, "scan_id": "uuid", "framework_id": "ISO27001" }`. Cada chamada adiciona um registro em GET /api/v1/scans/:id/score-history.
 
 ---
 

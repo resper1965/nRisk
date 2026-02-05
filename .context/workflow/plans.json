@@ -5,7 +5,7 @@
       "path": "plans/solve-p1-gaps.md",
       "title": "Resolver gaps P1 (n.Risk vs SecurityScorecard)",
       "summary": "Implementar os 6 itens P1 do plano nrisk-gaps-concorrencia: (1) rating A–F por eixo no spider/relatório, (2) jornada persistida (cross-check + ScoreBreakdown + histórico), (3) continuous monitoring (scans agendados + snapshot por data), (4) relatórios board/subscrição (PDF, dashboards), (5) telemetria/alertas (webhook, integração), (6) justificativa de finding (fluxo backend + UI + avaliador).",
-      "linkedAt": "2026-02-05T12:25:05.965Z",
+      "linkedAt": "2026-02-05T12:48:26.855Z",
       "status": "active"
     }
   ],
