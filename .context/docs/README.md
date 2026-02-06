@@ -7,6 +7,9 @@ Base de conhecimento do n.Risk. Comece pelo documento mestre de contexto.
 ## Documento Mestre
 
 - **[Contexto n.Risk](./contexto-nrisk.md)** — Consolidação de planos e referências para agentes
+- **[PRD — Plataforma n.Risk](./prd-plataforma-nrisk.md)** — Product Requirements Document: visão, personas, estado atual, escopo MVP e roadmap
+- **[Descrição Funcional — Plataforma n.Risk](./descricao-funcional-plataforma-nrisk.md)** — Para que serve a plataforma; como são feitas as avaliações (técnica e declarativa) e as comparações (Cross-Check, domain scores, histórico)
+- **[Gaps — Landing vs Aplicação](./gaps-landing-vs-aplicacao.md)** — O que a página pública apresenta; gaps em relação à aplicação; o que é necessário para entregar o que a página promete. A documentação (PRD, descrição funcional, project-overview, contexto) foi ajustada para refletir e resolver os gaps (estado alvo e compromissos da landing).
 
 ## Decisões de Arquitetura
 - **[ADR-001: Stack API TypeScript / Scan Go](./adr-001-stack-api-typescript-scan-go.md)** — Go só para Scan Engine; API + assessment + frontend em Next.js (TypeScript)
@@ -39,6 +42,9 @@ Base de conhecimento do n.Risk. Comece pelo documento mestre de contexto.
 ## Document Map
 | Guide | File | Primary Inputs |
 | --- | --- | --- |
+| PRD — Plataforma n.Risk | `prd-plataforma-nrisk.md` | Visão, personas, estado atual, escopo MVP, roadmap |
+| Descrição Funcional — Plataforma n.Risk | `descricao-funcional-plataforma-nrisk.md` | Propósito, avaliações (técnica/declarativa), comparações (Cross-Check, domain scores, histórico) |
+| Gaps — Landing vs Aplicação | `gaps-landing-vs-aplicacao.md` | Conteúdo da página; gaps; entregas necessárias para cumprir a landing |
 | Project Overview | `project-overview.md` | Roadmap, README, stakeholder notes |
 | API Reference | `api.md` | Endpoints, auth, validações |
 | Architecture Notes | `architecture.md` | ADRs, service boundaries, dependency graphs |

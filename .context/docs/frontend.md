@@ -10,7 +10,7 @@ scaffoldVersion: "2.0.0"
 
 # Frontend — n.Risk
 
-Base: [resper1965/clone](https://github.com/resper1965/clone) (Shadcn UI Kit — Next.js 15, React 19). Ver [nrisk-ui-base-clone](../plans/nrisk-ui-base-clone.md) para mapeamento de módulos.
+Base: [resper1965/clone](https://github.com/resper1965/clone) (Shadcn UI Kit — Next.js 15, React 19). Ver [nrisk-ui-base-clone](../plans/nrisk-ui-base-clone.md) para mapeamento de módulos. **Escopo alvo (compromissos da landing):** Trust Center (visibilidade por perfil, RBAC), Painel de Postura (score dinâmico, spider chart, histórico); detalhe em [gaps-landing-vs-aplicacao.md](./gaps-landing-vs-aplicacao.md) e [prd-plataforma-nrisk.md](./prd-plataforma-nrisk.md) (§11).
 
 ## Stack
 

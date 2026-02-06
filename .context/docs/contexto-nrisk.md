@@ -50,6 +50,7 @@ nrisk-mvp (PRD, escopo 4 meses)
 | [regras-de-negocio-assessment](./regras-de-negocio-assessment.md) | Regras de negócio: evidência, F, NA, persistência, RBAC, justificativa de finding |
 | [correlacao-securityscorecard-nrisk](./correlacao-securityscorecard-nrisk.md) | Correlação SecurityScorecard (concorrente) ↔ n.Risk: produtos, dores, personas, diferenciação |
 | [project-overview](./project-overview.md) | Visão geral, stack, scoring |
+| [gaps-landing-vs-aplicacao](./gaps-landing-vs-aplicacao.md) | O que a página apresenta; gaps; entregas necessárias |
 | [api](./api.md) | Referência de endpoints REST |
 | [api-design](./api-design.md) | Princípios, formato de erro, versionamento |
 | [architecture](./architecture.md) | Componentes GCP, estrutura de código |
@@ -73,6 +74,7 @@ nrisk-mvp (PRD, escopo 4 meses)
 3. **Scan Engine:** Consultar `nrisk-core-engine.md`; `mapping_logic.json` é fonte de verdade
 4. **Assessments Híbridos:** Consultar `nrisk-assessment-hibrido.md` e `nrisk-assessments-hibridos-implementacao.md`; Logic Engine (Cross-Check), Cloud SQL, Evidence Vault
 5. **Privacidade:** Consultar `nrisk-dpcf-privacy-compliance.md` para Evidence Vault e PII
+6. **Escopo alvo e gaps da landing:** A documentação foi ajustada para refletir e resolver os gaps em relação à página pública. Consultar [gaps-landing-vs-aplicacao.md](./gaps-landing-vs-aplicacao.md) para o que a página apresenta, status atual e checklist de entregas; [prd-plataforma-nrisk.md](./prd-plataforma-nrisk.md) (§11) para os compromissos consolidados
 6. **TPRA e gestão de terceiros:** Consultar `tpra-avaliacao-riscos-terceiros.md` para metodologia, etapas, melhores práticas e métricas de avaliação de riscos cibernéticos de terceiros
 
 ## Estrutura do Repositório
