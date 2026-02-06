@@ -114,10 +114,30 @@ O **produto comparável direto** é [Security Ratings](https://securityscorecard
 
 ---
 
-## 5. Referências
+## 5. Metodologia TPRA — Posicionamento do n.Risk
 
-- **[Security Ratings — SecurityScorecard](https://securityscorecard.com/why-securityscorecard/security-ratings/)** — Produto concorrente: rating A–F, 10 risk factors, use cases (own org, supply chain, extended chain, cyber insurance), metodologia ML/AI, “best predictor of breach”.
+O n.Risk implementa o ciclo completo de **Third-Party Risk Assessment (TPRA)**, diferenciando-se do mercado pela transparência e pelo modelo híbrido. Detalhamento em [tpra-avaliacao-riscos-terceiros.md](./tpra-avaliacao-riscos-terceiros.md).
+
+| Etapa TPRA | SecurityScorecard | n.Risk | Diferencial n.Risk |
+|------------|-------------------|--------|-------------------|
+| **Identificação** | Automatic Vendor Detection; portfolio de vendors | Cadastro multi-tenant; convites de assessment | Foco em fornecedores críticos; priorização explícita por acesso a dados/sistemas |
+| **Due Diligence** | Questionnaires & Assessments (genéricos) | Assessment híbrido: trilhas Bronze/Prata/Ouro com evidência obrigatória | Trilhas progressivas; evidência SHA-256; Evidence Vault isolado |
+| **Risk Scoring** | ML/AI; "best predictor of breach"; caixa fechada | $S_f = (T \times 0.6) + (C \times 0.4)$; fórmula pública | Transparência total: avaliado vê impacto de cada achado e inconsistência |
+| **Conformidade** | Múltiplos frameworks (SOC 2, etc.) | ISO 27001 + LGPD; 15 domínios no spider chart | Cross-check automático declarado vs detectado; mapeamento direto para controles |
+| **Monitoramento** | Continuous monitoring; SCDR | Re-scans + score snapshots + jornada persistida | Justificativa de finding com workflow de aceite; jornada consumível por seguradora |
+
+**Dados de mercado que reforçam a necessidade de TPRA:**
+- 69% das empresas relatam postura de segurança mais fraca em fornecedores
+- 20% sofreram violações de dados através de terceiros
+- Casos como SolarWinds, Kaseya e MOVEit demonstram o impacto de supply chain attacks
+
+---
+
+## 6. Referências
+
+- **[Security Ratings — SecurityScorecard](https://securityscorecard.com/why-securityscorecard/security-ratings/)** — Produto concorrente: rating A–F, 10 risk factors, use cases (own org, supply chain, extended chain, cyber insurance), metodologia ML/AI, "best predictor of breach".
 - [SecurityScorecard](https://securityscorecard.com/) — Site do concorrente (SCDR, TPRM, Cyber Insurance, Questionnaires & Assessments).
+- [tpra-avaliacao-riscos-terceiros.md](./tpra-avaliacao-riscos-terceiros.md) — Metodologia TPRA completa: etapas, melhores práticas, ferramentas e métricas.
 - [regras-de-negocio-assessment.md](./regras-de-negocio-assessment.md) — Regras de negócio do assessment e scoring.
 - [project-overview.md](./project-overview.md) — Visão geral do n.Risk.
 - [glossary.md](./glossary.md) — Terminologia e referência de mercado.

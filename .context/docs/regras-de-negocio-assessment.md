@@ -168,9 +168,32 @@ Implementação pode dividir isso em eventos (ex.: “assessment.submitted”) e
 
 ---
 
+## 10. Melhores Práticas TPRA Integradas ao Assessment
+
+O módulo de assessment implementa as melhores práticas de **Third-Party Risk Assessment (TPRA)**, conforme detalhado em [tpra-avaliacao-riscos-terceiros.md](./tpra-avaliacao-riscos-terceiros.md).
+
+| Prática TPRA | Como se aplica no assessment |
+|--------------|------------------------------|
+| **Contratos com cláusulas de segurança** | Trust Center exibe selos e compliance; score A–F é consumido por seguradoras para subscrição |
+| **Abordagem baseada em risco** | Trilhas Bronze/Prata/Ouro escalonam rigor conforme criticidade do fornecedor |
+| **Uso de frameworks (ISO 27001)** | Todas as perguntas mapeadas para controles via `mapping_logic.json`; 15 domínios ISO |
+| **Auditorias periódicas** | Trilha Ouro = auditoria formal com evidências; cross-check automatiza verificação |
+| **Monitoramento contínuo** | Score snapshots + jornada persistida; re-scans atualizam T |
+| **Questionários padronizados** | Question Bank alinhado a padrões SIG/CAIQ; evidência obrigatória em Prata/Ouro |
+
+**Métricas TPRM rastreáveis:**
+- Cobertura de avaliação (% de fornecedores críticos com assessment submetido)
+- Score médio do portfólio (agregação por seguradora/corretora)
+- Taxa de inconsistência (% de cross-checks inconsistentes)
+- Tempo de remediação (delta entre detecção e resolução)
+- Evolução da postura (tendência de score via snapshots)
+
+---
+
 ## Referências
 
 - [contexto-nrisk.md](./contexto-nrisk.md)
 - [nrisk-assessment-hibrido.md](../plans/nrisk-assessment-hibrido.md)
 - [nrisk-scoring-metodologia.md](../plans/nrisk-scoring-metodologia.md)
+- [tpra-avaliacao-riscos-terceiros.md](./tpra-avaliacao-riscos-terceiros.md)
 - [glossary.md](./glossary.md)

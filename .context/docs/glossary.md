@@ -60,11 +60,27 @@ scaffoldVersion: "2.0.0"
 | **Cloud Run Service** | API REST; escala automática; PORT injetado pelo GCP |
 | **Cloud Run Job** | Scan Engine; execução batch; env vars TENANT_ID, SCAN_ID, DOMAIN |
 
+## Termos TPRA / Gestão de Terceiros
+
+| Termo | Definição |
+|-------|-----------|
+| **TPRA (Third-Party Risk Assessment)** | Processo de identificar, analisar e mitigar vulnerabilidades introduzidas por parceiros, fornecedores ou prestadores de serviços. Metodologia detalhada em [tpra-avaliacao-riscos-terceiros.md](./tpra-avaliacao-riscos-terceiros.md). |
+| **TPRM (Third-Party Risk Management)** | Disciplina contínua de gestão de risco de terceiros; TPRA é o componente de avaliação dentro do TPRM. No n.Risk, engloba cadastro, assessment, scoring, remediação e monitoramento. |
+| **Due Diligence** | Investigação prévia sobre a postura de segurança de um terceiro antes ou durante a relação contratual. No n.Risk: assessment híbrido + scan passivo. |
+| **Cyber Risk Score** | Nota quantitativa (0–1000, categorias A–F) que traduz a postura de segurança de uma organização. No n.Risk: $S_f = (T \times 0.6) + (C \times 0.4)$. |
+| **SIG (Standardized Information Gathering)** | Questionário padronizado do Shared Assessments para coleta de informações de segurança de terceiros. Referência para o Question Bank do n.Risk. |
+| **CAIQ** | Consensus Assessments Initiative Questionnaire (CSA); questionário para avaliação de provedores cloud. |
+| **Supply Chain Risk** | Risco cibernético originado na cadeia de suprimentos; terceiros com postura fraca amplificam a superfície de ataque da organização contratante. |
+| **Fornecedor Crítico** | Terceiro com acesso a dados sensíveis (PII, financeiros) ou sistemas core; exige avaliação prioritária (trilha Prata/Ouro). |
+| **Cross-Check (TPRA)** | Validação cruzada entre o que o terceiro declara (questionário) e o que o scan detecta (superfície externa). Inconsistências reduzem o fator de confiança F. |
+
 ## Referência de Mercado (Concorrente)
 
 | Termo | Definição |
 |-------|------------|
-| **SecurityScorecard** | [Concorrente](https://securityscorecard.com/). **Produto comparável:** [Security Ratings](https://securityscorecard.com/why-securityscorecard/security-ratings/) — rating A–F, 10 risk factors (Network Security, DNS Health, Patching Cadence, Endpoint Security, IP Reputation, Application Security, Cubit Score, Hacker Chatter, Social Engineering, Information Leak), use cases (own org, supply chain, cyber insurance), metodologia ML/AI (“best predictor of breach”). Referência para escopo de score (rating por organização/domínio), questionários e visibilidade para seguradoras/corretores. **Não** confundir com Microsoft Secure Score. |
+| **SecurityScorecard** | [Concorrente](https://securityscorecard.com/). **Produto comparável:** [Security Ratings](https://securityscorecard.com/why-securityscorecard/security-ratings/) — rating A–F, 10 risk factors (Network Security, DNS Health, Patching Cadence, Endpoint Security, IP Reputation, Application Security, Cubit Score, Hacker Chatter, Social Engineering, Information Leak), use cases (own org, supply chain, cyber insurance), metodologia ML/AI ("best predictor of breach"). Referência para escopo de score (rating por organização/domínio), questionários e visibilidade para seguradoras/corretores. **Não** confundir com Microsoft Secure Score. |
+| **Bitsight** | Concorrente em security ratings; escala 0–100 (vs 0–1000 do n.Risk/SecurityScorecard); foco em monitoramento contínuo e TPRM. |
+| **Ecotrust** | Plataforma brasileira de gestão de vulnerabilidades e risco cibernético; referência regional para TPRM. |
 
 ## Controles ISO (exemplos)
 
