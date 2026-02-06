@@ -27,6 +27,10 @@ A plataforma implementa o ciclo completo de **Third-Party Risk Assessment (TPRA)
 | Etapa TPRA | Implementação n.Risk |
 |------------|---------------------|
 | **Identificação de terceiros** | Cadastro multi-tenant; priorização por criticidade (acesso a dados sensíveis/sistemas core) |
+| **Due diligence** | Assessment híbrido com trilhas Bronze (20 perguntas)/Prata (35 com evidencia)/Ouro (55 framework completo); mapeadas para ISO 27001 |
+| **Risk Scoring** | Score 0–1000 (A–F); fórmula transparente $S_f = (T \times 0.6) + (C \times 0.4)$ |
+| **Conformidade (LGPD/GDPR)** | Cross-Check Engine; Evidence Vault com SHA-256; controles de privacidade |
+| **Remediação e monitoramento** | Justificativa de finding; score snapshots; jornada persistida; re-scans periódicos |
 | **Due diligence** | Assessment híbrido com trilhas Bronze/Prata/Ouro (evidência obrigatória em Prata/Ouro no escopo alvo); questionários ISO 27001 (NIST CSF, LGPD no escopo alvo) |
 | **Risk Scoring** | Score 0–1000 (A–F); fórmula transparente $S_f = (T \times 0.6) + (C \times 0.4)$; domain_scores por eixo |
 | **Conformidade (LGPD/GDPR)** | Cross-Check Engine; Evidence Vault (upload; comentários e aprovação no escopo alvo); controles de privacidade |
@@ -35,6 +39,7 @@ A plataforma implementa o ciclo completo de **Third-Party Risk Assessment (TPRA)
 **Melhores práticas integradas:** contratos com cláusulas de segurança e pentests, abordagem baseada em risco (priorização por impacto), frameworks reconhecidos (ISO 27001, NIST), auditorias periódicas via trilhas de maturidade.
 
 > Detalhamento completo: [tpra-avaliacao-riscos-terceiros.md](./tpra-avaliacao-riscos-terceiros.md)
+> Plano de implementacao: [nrisk-tpra-implementacao.md](../plans/nrisk-tpra-implementacao.md)
 
 ## Componentes Principais
 

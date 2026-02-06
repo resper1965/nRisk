@@ -132,6 +132,81 @@ tenants + assessments ← assessment_answers → assessment_questions, controls
 
 ---
 
+## 2.1 Tabelas TPRA (Planejadas — Migrations 003-006)
+
+> Ver [plano de implementacao TPRA](../plans/nrisk-tpra-implementacao.md) para detalhes completos.
+
+### `suppliers` (003_suppliers.sql)
+
+| Campo | Tipo | Descricao |
+|-------|------|-----------|
+| id | UUID PK | ID do fornecedor |
+| tenant_id | UUID FK | Tenant do avaliador |
+| name | VARCHAR(255) | Nome do fornecedor |
+| domain | VARCHAR(253) | Dominio principal |
+| cnpj | VARCHAR(18) | CNPJ (opcional) |
+| criticality | ENUM(critical,high,medium,low) | Nivel de criticidade |
+| status | ENUM(active,inactive,pending_assessment,blocked) | Status do fornecedor |
+| supplier_tenant_id | UUID FK (nullable) | Se fornecedor tambem e tenant |
+| contact_name | VARCHAR(255) | Contato principal |
+| contact_email | VARCHAR(255) | E-mail do contato |
+
+**RLS:** Isolamento por `tenant_id` do avaliador.
+**Indices:** `tenant_id`, `domain`, `(tenant_id, criticality)`.
+
+### `supplier_invitations` (004_invitations.sql)
+
+| Campo | Tipo | Descricao |
+|-------|------|-----------|
+| id | UUID PK | ID do convite |
+| tenant_id | UUID FK | Tenant do avaliador |
+| supplier_id | UUID FK | Fornecedor convidado |
+| track | ENUM(bronze,silver,gold) | Trilha do assessment |
+| framework_id | VARCHAR(50) | ISO27001, NIST, LGPD |
+| invited_email | VARCHAR(255) | E-mail do convidado |
+| token | VARCHAR(64) UNIQUE | Token de acesso |
+| status | ENUM(pending,accepted,in_progress,completed,expired) | Status |
+| expires_at | TIMESTAMP | Validade (30 dias) |
+
+### `trust_center_profiles` (006_trust_center.sql)
+
+| Campo | Tipo | Descricao |
+|-------|------|-----------|
+| id | UUID PK | ID do perfil |
+| tenant_id | UUID FK UNIQUE | Um Trust Center por tenant |
+| slug | VARCHAR(100) UNIQUE | URL publica /trust/{slug} |
+| is_public | BOOLEAN | Visibilidade publica |
+| show_score | BOOLEAN | Exibir score A-F |
+| nda_required | BOOLEAN | Exigir NDA para docs sensiveis |
+| seals | JSONB | Array de selos |
+| public_documents | JSONB | Docs publicos |
+| nda_documents | JSONB | Docs protegidos por NDA |
+
+### `nda_requests` (006_trust_center.sql)
+
+| Campo | Tipo | Descricao |
+|-------|------|-----------|
+| id | UUID PK | ID da solicitacao |
+| trust_center_id | UUID FK | Trust Center alvo |
+| requester_email | VARCHAR(255) | E-mail do solicitante |
+| status | ENUM(pending,approved,rejected,expired) | Status |
+| approved_by | VARCHAR(255) | Quem aprovou |
+| expires_at | TIMESTAMP | Validade do acesso NDA (90 dias) |
+
+### Alteracoes em tabelas existentes (005_questions_tracks.sql)
+
+| Tabela | Campo novo | Tipo | Descricao |
+|--------|------------|------|-----------|
+| assessment_questions | track | ENUM(bronze,silver,gold) | Trilha minima |
+| assessment_questions | evidence_required | BOOLEAN | Exige evidencia em Prata/Ouro |
+| assessment_questions | tpra_stage | ENUM | Estagio TPRA |
+| assessment_questions | supplier_context | BOOLEAN | Especifica para avaliacao de terceiros |
+| assessments | track | ENUM(bronze,silver,gold) | Trilha do assessment |
+| assessments | supplier_id | UUID FK | Fornecedor avaliado |
+| assessments | invitation_id | UUID FK | Convite que originou |
+
+---
+
 ## 3. Separação Firestore vs Cloud SQL
 
 | Critério | Firestore | Cloud SQL |
