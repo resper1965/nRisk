@@ -15,91 +15,40 @@ export function Footer() {
               </span>
             </div>
             <p className="mt-3 text-sm text-muted">
-              Plataforma de avaliacao de postura cibernetica para Cyber
-              Insurance e gestao de riscos de terceiros.
+              Saiba o risco real dos seus fornecedores antes que um incidente custe milhoes.
             </p>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider">
-              Plataforma
-            </h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider">Solucoes</h3>
             <ul className="mt-3 space-y-2">
-              <li>
-                <Link
-                  href="/#tpra"
-                  className="text-sm text-muted hover:text-foreground"
-                >
-                  TPRA
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#scoring"
-                  className="text-sm text-muted hover:text-foreground"
-                >
-                  Cyber Risk Score
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/trust/demo"
-                  className="text-sm text-muted hover:text-foreground"
-                >
-                  Trust Center
-                </Link>
-              </li>
+              <li><Link href="/#para-quem" className="text-sm text-muted hover:text-foreground">Para Seguradoras</Link></li>
+              <li><Link href="/#para-quem" className="text-sm text-muted hover:text-foreground">Para Gestores GRC</Link></li>
+              <li><Link href="/#para-quem" className="text-sm text-muted hover:text-foreground">Para CISOs</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider">
-              Solucoes
-            </h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider">Produto</h3>
             <ul className="mt-3 space-y-2">
-              <li>
-                <Link
-                  href="/grc/tpra"
-                  className="text-sm text-muted hover:text-foreground"
-                >
-                  Gestao de Terceiros
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/grc/fornecedores"
-                  className="text-sm text-muted hover:text-foreground"
-                >
-                  Fornecedores
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#praticas"
-                  className="text-sm text-muted hover:text-foreground"
-                >
-                  Melhores Praticas
-                </Link>
-              </li>
+              <li><Link href="/#como-funciona" className="text-sm text-muted hover:text-foreground">Como Funciona</Link></li>
+              <li><Link href="/trust/demo" className="text-sm text-muted hover:text-foreground">Trust Center Demo</Link></li>
+              <li><Link href="/#solucao" className="text-sm text-muted hover:text-foreground">Cyber Risk Score</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider">
-              Frameworks
-            </h3>
+            <h3 className="text-sm font-semibold uppercase tracking-wider">Compliance</h3>
             <ul className="mt-3 space-y-2">
               <li className="text-sm text-muted">ISO 27001</li>
-              <li className="text-sm text-muted">NIST CSF</li>
               <li className="text-sm text-muted">LGPD / GDPR</li>
-              <li className="text-sm text-muted">CIS Controls</li>
+              <li className="text-sm text-muted">NIST CSF</li>
             </ul>
           </div>
         </div>
 
         <div className="mt-8 border-t border-border pt-8 text-center text-sm text-muted">
-          n.Risk — Avaliacao de Postura Cibernetica e Gestao de Riscos de
-          Terceiros
+          n.Risk — Gestao de riscos ciberneticos de terceiros para quem nao pode errar.
         </div>
       </div>
     </footer>

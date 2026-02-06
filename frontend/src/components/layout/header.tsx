@@ -14,44 +14,32 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
-          <Link
-            href="/#tpra"
-            className="text-sm font-medium text-muted transition-colors hover:text-foreground"
-          >
-            TPRA
+          <Link href="/#problema" className="text-sm font-medium text-muted transition-colors hover:text-foreground">
+            O Problema
           </Link>
-          <Link
-            href="/#scoring"
-            className="text-sm font-medium text-muted transition-colors hover:text-foreground"
-          >
-            Scoring
+          <Link href="/#solucao" className="text-sm font-medium text-muted transition-colors hover:text-foreground">
+            Solucao
           </Link>
-          <Link
-            href="/#etapas"
-            className="text-sm font-medium text-muted transition-colors hover:text-foreground"
-          >
-            Etapas
+          <Link href="/#como-funciona" className="text-sm font-medium text-muted transition-colors hover:text-foreground">
+            Como Funciona
           </Link>
-          <Link
-            href="/#praticas"
-            className="text-sm font-medium text-muted transition-colors hover:text-foreground"
-          >
-            Melhores Praticas
+          <Link href="/#para-quem" className="text-sm font-medium text-muted transition-colors hover:text-foreground">
+            Para Quem
           </Link>
-          <Link
-            href="/trust/demo"
-            className="text-sm font-medium text-muted transition-colors hover:text-foreground"
-          >
-            Trust Center
+          <Link href="/trust/demo" className="text-sm font-medium text-muted transition-colors hover:text-foreground">
+            Demo
           </Link>
         </nav>
 
         <div className="flex items-center gap-3">
+          <Link href="/#agendar" className="hidden text-sm font-medium text-muted hover:text-foreground sm:block">
+            Login
+          </Link>
           <Link
-            href="/grc/tpra"
+            href="/#agendar"
             className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-dark"
           >
-            Acessar Plataforma
+            Agendar Demo Gratuita
           </Link>
         </div>
       </div>

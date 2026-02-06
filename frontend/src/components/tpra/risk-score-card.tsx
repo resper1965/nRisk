@@ -1,216 +1,90 @@
 const categories = [
-  {
-    grade: "A",
-    range: ">= 900",
-    label: "Risco muito baixo",
-    description: "Postura excelente",
-    color: "bg-green-600",
-    textColor: "text-green-600",
-    bgLight: "bg-green-50",
-  },
-  {
-    grade: "B",
-    range: ">= 750",
-    label: "Risco baixo",
-    description: "Postura boa",
-    color: "bg-lime-600",
-    textColor: "text-lime-600",
-    bgLight: "bg-lime-50",
-  },
-  {
-    grade: "C",
-    range: ">= 600",
-    label: "Risco moderado",
-    description: "Melhorias necessarias",
-    color: "bg-amber-500",
-    textColor: "text-amber-600",
-    bgLight: "bg-amber-50",
-  },
-  {
-    grade: "D",
-    range: ">= 400",
-    label: "Risco alto",
-    description: "Remediacoes urgentes",
-    color: "bg-orange-600",
-    textColor: "text-orange-600",
-    bgLight: "bg-orange-50",
-  },
-  {
-    grade: "E",
-    range: ">= 250",
-    label: "Risco muito alto",
-    description: "Gaps criticos",
-    color: "bg-red-600",
-    textColor: "text-red-600",
-    bgLight: "bg-red-50",
-  },
-  {
-    grade: "F",
-    range: "< 250",
-    label: "Risco inaceitavel",
-    description: "Parceria deve ser reavaliada",
-    color: "bg-red-900",
-    textColor: "text-red-900",
-    bgLight: "bg-red-50",
-  },
+  { grade: "A", label: "Excelente", color: "bg-green-600", bgLight: "bg-green-50", textColor: "text-green-700" },
+  { grade: "B", label: "Bom", color: "bg-lime-600", bgLight: "bg-lime-50", textColor: "text-lime-700" },
+  { grade: "C", label: "Atencao", color: "bg-amber-500", bgLight: "bg-amber-50", textColor: "text-amber-700" },
+  { grade: "D", label: "Critico", color: "bg-orange-600", bgLight: "bg-orange-50", textColor: "text-orange-700" },
+  { grade: "E", label: "Grave", color: "bg-red-600", bgLight: "bg-red-50", textColor: "text-red-700" },
+  { grade: "F", label: "Inaceitavel", color: "bg-red-900", bgLight: "bg-red-100", textColor: "text-red-900" },
 ];
 
 export function RiskScoreCard() {
   return (
-    <section id="scoring" className="bg-card py-20">
+    <section id="solucao" className="bg-card py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+          <p className="text-sm font-semibold uppercase tracking-wider text-primary">
             Cyber Risk Score
+          </p>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+            Um numero que diz tudo sobre seu fornecedor
           </h2>
           <p className="mt-4 text-lg text-muted">
-            Score hibrido 0-1000 que combina evidencias tecnicas com
-            conformidade declaratoria
+            Score de 0 a 1000 com formula aberta. Sem caixa-preta, sem achismo.
+            Voce e seu fornecedor veem exatamente o que impactou a nota.
           </p>
         </div>
 
         <div className="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <div className="rounded-xl border border-border bg-background p-8">
-            <h3 className="text-lg font-semibold">Formula do Score</h3>
-            <div className="mt-6 rounded-lg bg-primary-light p-6 text-center">
-              <p className="font-mono text-2xl font-bold text-primary">
-                S<sub>f</sub> = (T x 0.6) + (C x 0.4)
-              </p>
-            </div>
-            <div className="mt-6 space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-700">
-                  T
+          {/* Left: what makes it different */}
+          <div className="space-y-6">
+            <div className="rounded-xl border border-border bg-background p-6">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                  </svg>
                 </div>
                 <div>
-                  <p className="font-medium">Score Tecnico (60%)</p>
-                  <p className="text-sm text-muted">
-                    Base 1000, com deducoes por achados (portas abertas, SSL
-                    expirado, DMARC ausente, CVEs, credenciais vazadas)
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
-                  C
-                </div>
-                <div>
-                  <p className="font-medium">Score de Compliance (40%)</p>
-                  <p className="text-sm text-muted">
-                    Aditivo; respostas positivas somam pontos proporcionais ao
-                    risk_weight do controle ISO 27001
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-amber-100 text-sm font-bold text-amber-700">
-                  F
-                </div>
-                <div>
-                  <p className="font-medium">Fator de Confianca</p>
-                  <p className="text-sm text-muted">
-                    0.5-1.0; penalizado por inconsistencias no cross-check e
-                    falta de evidencia
-                  </p>
+                  <h3 className="font-semibold">Scan tecnico + Questionario</h3>
+                  <p className="text-sm text-muted">60% vem do que detectamos na superficie. 40% do que o fornecedor declara e comprova.</p>
                 </div>
               </div>
             </div>
-
-            <div className="mt-6 rounded-lg border border-red-200 bg-red-50 p-4">
-              <p className="text-sm font-medium text-red-800">
-                Penalidade Critica: Se houver achado de severidade Critica
-                (ex: porta RDP exposta, CVE com exploit), o score final nao
-                pode ultrapassar 500.
-              </p>
+            <div className="rounded-xl border border-border bg-background p-6">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100 text-emerald-700">
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Cross-check automatico</h3>
+                  <p className="text-sm text-muted">Fornecedor diz que usa SSL? Nosso scan verifica. Inconsistencias viram bandeira vermelha.</p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-xl border border-border bg-background p-6">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100 text-amber-700">
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold">100% transparente</h3>
+                  <p className="text-sm text-muted">Concorrentes usam &quot;ML/AI&quot; como caixa-preta. No n.Risk, voce ve a formula e cada achado que impactou a nota.</p>
+                </div>
+              </div>
             </div>
           </div>
 
+          {/* Right: score categories */}
           <div className="rounded-xl border border-border bg-background p-8">
-            <h3 className="text-lg font-semibold">Categorias de Risco</h3>
+            <h3 className="text-lg font-semibold">Rating A-F — Entenda em 1 segundo</h3>
+            <p className="mt-1 text-sm text-muted">
+              Linguagem que seguradora, board e fornecedor entendem sem precisar de relatorio de 50 paginas.
+            </p>
             <div className="mt-6 space-y-3">
               {categories.map((cat) => (
-                <div
-                  key={cat.grade}
-                  className={`flex items-center gap-4 rounded-lg p-3 ${cat.bgLight}`}
-                >
-                  <div
-                    className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-lg font-bold text-white ${cat.color}`}
-                  >
+                <div key={cat.grade} className={`flex items-center gap-4 rounded-lg p-3 ${cat.bgLight}`}>
+                  <div className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg text-lg font-bold text-white ${cat.color}`}>
                     {cat.grade}
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className={`font-semibold ${cat.textColor}`}>
-                        {cat.label}
-                      </span>
-                      <span className="font-mono text-sm text-muted">
-                        {cat.range}
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted">{cat.description}</p>
-                  </div>
+                  <span className={`font-semibold ${cat.textColor}`}>{cat.label}</span>
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-
-        <div className="rounded-xl border border-border bg-background p-8">
-          <h3 className="text-lg font-semibold">
-            Diferencial n.Risk vs Mercado
-          </h3>
-          <div className="mt-6 overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="px-4 py-3 text-left font-semibold">
-                    Aspecto
-                  </th>
-                  <th className="px-4 py-3 text-left font-semibold">
-                    n.Risk
-                  </th>
-                  <th className="px-4 py-3 text-left font-semibold">
-                    Mercado (referencia)
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                <tr>
-                  <td className="px-4 py-3 font-medium">Escala</td>
-                  <td className="px-4 py-3">0-1000 (categorias A-F)</td>
-                  <td className="px-4 py-3 text-muted">
-                    Varia: 0-100 (Bitsight), 0-1000 (SecurityScorecard)
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-medium">Composicao</td>
-                  <td className="px-4 py-3">
-                    Hibrido: tecnico (60%) + compliance (40%)
-                  </td>
-                  <td className="px-4 py-3 text-muted">
-                    Geralmente so tecnico (scan externo)
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-medium">Transparencia</td>
-                  <td className="px-4 py-3">
-                    Formula publica; avaliado ve impacto de cada achado
-                  </td>
-                  <td className="px-4 py-3 text-muted">
-                    Tipicamente caixa fechada (&quot;ML/AI&quot;)
-                  </td>
-                </tr>
-                <tr>
-                  <td className="px-4 py-3 font-medium">Cross-check</td>
-                  <td className="px-4 py-3">
-                    Declarado vs detectado; inconsistencias visiveis
-                  </td>
-                  <td className="px-4 py-3 text-muted">
-                    Questionarios separados do rating
-                  </td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
