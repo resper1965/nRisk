@@ -20,6 +20,22 @@ Plataforma de avaliação de postura cibernética voltada para **Cyber Insurance
 | **Clientes (Empresas)** | Gerir segurança da cadeia de suprimentos e centralizar evidências de conformidade |
 | **Fornecedores (Avaliados)** | Demonstrar transparência via Trust Center para acelerar vendas |
 
+## Avaliação de Riscos de Terceiros (TPRA)
+
+A plataforma implementa o ciclo completo de **Third-Party Risk Assessment (TPRA)**, processo crítico dado que 69% das empresas relatam postura de segurança mais fraca em seus fornecedores e 20% sofreram violações de dados através deles.
+
+| Etapa TPRA | Implementação n.Risk |
+|------------|---------------------|
+| **Identificação de terceiros** | Cadastro multi-tenant; priorização por criticidade (acesso a dados sensíveis/sistemas core) |
+| **Due diligence** | Assessment híbrido com trilhas Bronze/Prata/Ouro; 20+ perguntas mapeadas para ISO 27001 |
+| **Risk Scoring** | Score 0–1000 (A–F); fórmula transparente $S_f = (T \times 0.6) + (C \times 0.4)$ |
+| **Conformidade (LGPD/GDPR)** | Cross-Check Engine; Evidence Vault com SHA-256; controles de privacidade |
+| **Remediação e monitoramento** | Justificativa de finding; score snapshots; jornada persistida; re-scans periódicos |
+
+**Melhores práticas integradas:** contratos com cláusulas de segurança e pentests, abordagem baseada em risco (priorização por impacto), frameworks reconhecidos (ISO 27001, NIST), auditorias periódicas via trilhas de maturidade.
+
+> Detalhamento completo: [tpra-avaliacao-riscos-terceiros.md](./tpra-avaliacao-riscos-terceiros.md)
+
 ## Componentes Principais
 
 | Componente | Descrição |

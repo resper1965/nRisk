@@ -61,6 +61,7 @@ nrisk-mvp (PRD, escopo 4 meses)
 | [glossary](./glossary.md) | Terminologia, entidades, severidades |
 | [security](./security.md) | Auth, criptografia, LGPD |
 | [security-audit-checklist](./security-audit-checklist.md) | Checklist de auditoria de segurança |
+| [tpra-avaliacao-riscos-terceiros](./tpra-avaliacao-riscos-terceiros.md) | Metodologia TPRA: etapas, melhores práticas, ferramentas e métricas para avaliação de riscos de terceiros |
 | [development-workflow](./development-workflow.md) | Branching, commits, deploy |
 | [testing-strategy](./testing-strategy.md) | Cobertura, casos críticos |
 | [tooling](./tooling.md) | Go, Docker, GCP, ai-context |
@@ -72,6 +73,7 @@ nrisk-mvp (PRD, escopo 4 meses)
 3. **Scan Engine:** Consultar `nrisk-core-engine.md`; `mapping_logic.json` é fonte de verdade
 4. **Assessments Híbridos:** Consultar `nrisk-assessment-hibrido.md` e `nrisk-assessments-hibridos-implementacao.md`; Logic Engine (Cross-Check), Cloud SQL, Evidence Vault
 5. **Privacidade:** Consultar `nrisk-dpcf-privacy-compliance.md` para Evidence Vault e PII
+6. **TPRA e gestão de terceiros:** Consultar `tpra-avaliacao-riscos-terceiros.md` para metodologia, etapas, melhores práticas e métricas de avaliação de riscos cibernéticos de terceiros
 
 ## Estrutura do Repositório
 
