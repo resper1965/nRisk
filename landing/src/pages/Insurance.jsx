@@ -73,15 +73,15 @@ export default function Insurance() {
     <div>
       <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-24">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wider text-accent">Seguradoras</p>
-          <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-gray-100 sm:text-4xl lg:text-5xl">
+          <p className="opacity-0 animate-fade-in text-sm font-medium uppercase tracking-wider text-accent">Seguradoras</p>
+          <h1 className="opacity-0 animate-fade-in animate-delay-100 mt-4 text-3xl font-semibold leading-tight tracking-tight text-gray-100 sm:text-4xl lg:text-5xl">
             Gerencie o risco cibernético em todo o seu{" "}
             <span className="text-accent">portfólio</span>
           </h1>
-          <p className="mt-6 mx-auto max-w-2xl text-lg text-gray-400">
+          <p className="opacity-0 animate-fade-in animate-delay-200 mt-6 mx-auto max-w-2xl text-lg text-gray-400">
             Para seguradoras e corretoras de seguro, a n.Risk é uma ferramenta para avaliar o risco na contratação de uma apólice de risco cibernético. Identifique, meça e resolva ameaças com score híbrido e evidências — dados, não só declarações.
           </p>
-          <div className="mt-10">
+          <div className="opacity-0 animate-fade-in animate-delay-300 mt-10">
             <Link
               to="/nrisk/contact"
               className="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-gray-900 shadow-lg shadow-accent/20 transition-smooth hover:scale-105 hover:shadow-accent/30 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"

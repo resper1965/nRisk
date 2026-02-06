@@ -2,37 +2,47 @@ import { Link } from "react-router-dom";
 import ProductMock from "../components/ProductMock";
 import CtaSection from "../components/CtaSection";
 
-const WHY_BULLETS = [
-  "Pare de depender de declarações sem prova — detecte inconsistências entre o que o fornecedor diz e o que o scan encontra.",
-  "Priorize com clareza: score híbrido 0–1000, Fator de Confiança e eixos técnicos para decisão em subscrição e TPRM.",
-  "Remedie com rastreabilidade: evidências centralizadas, instantâneos e trilha de auditoria para compliance e subscritores.",
-];
-
-const USE_CASES = [
+const WHY_ITEMS = [
   {
-    title: "Seguradoras",
-    bullets: ["Subscrição baseada em score e eixos", "Monitoramento contínuo das apólices", "Relatórios para diretoria e subscritores"],
-    result: "Subscrição e monitoramento com rastreabilidade.",
+    title: "Declarações sem prova deixam você vulnerável",
+    text: "Avaliações tradicionais dependem do que o fornecedor diz. A n.Risk detecta inconsistências entre declaração e scan técnico — Cross-Check e Fator de Confiança tornam a confiança auditável.",
   },
   {
-    title: "TPRM / GRC",
-    bullets: ["Qualificação contínua de fornecedores", "Evidências centralizadas", "Alertas e Trust Center"],
-    result: "Qualificação contínua e evidências centralizadas.",
+    title: "Priorize com clareza, remedie com rastreabilidade",
+    text: "Score híbrido 0–1000, categoria A–F e eixos técnicos para decisão em subscrição e TPRM. Evidências centralizadas, instantâneos e trilha de auditoria para compliance e subscritores.",
   },
   {
-    title: "CISO / TI",
-    bullets: ["Clareza sobre priorização", "Correções comprováveis", "Justificativas e trilha de auditoria"],
-    result: "Clareza, priorização e correções comprováveis.",
+    title: "Uma plataforma para quem decide",
+    text: "Seguradoras, equipes TPRM/GRC e CISOs confiam na n.Risk para risco de terceiros. Detecte, priorize e remedie em um só lugar — dados, não só declarações.",
   },
 ];
 
-const RESOURCES = [
-  "Scan técnico",
-  "Avaliações",
-  "Cofre de evidências",
-  "Cross-Check",
-  "Scores por eixo",
-  "Instantâneos",
+const SOLUTIONS = [
+  {
+    title: "Cadeia de suprimentos",
+    desc: "Risco de terceiros com visibilidade contínua",
+    bullets: ["TPRM e detecção contínua", "Conferência cruzada e Trust Center", "Qualificação de fornecedores"],
+    href: "/nrisk/supply-chain",
+  },
+  {
+    title: "Seguradoras e corretoras",
+    desc: "Avalie o risco na contratação de apólices de cyber",
+    bullets: ["Subscrição baseada em score e evidências", "Monitoramento de portfólio", "Triagem e precificação"],
+    href: "/nrisk/insurance",
+  },
+  {
+    title: "Avaliações e governança",
+    desc: "Questionários por framework com evidências centralizadas",
+    bullets: ["ISO 27001, NIST CSF, LGPD", "Cofre de evidências", "Trust Center para terceiros"],
+    href: "/nrisk/assessments",
+  },
+];
+
+const PRODUCTS = [
+  { label: "Score e scan de superfície", desc: "Avalie a exposição técnica de qualquer organização" },
+  { label: "Cross-Check e Fator de Confiança", desc: "Consistência entre declaração e realidade técnica" },
+  { label: "Avaliações híbridas", desc: "Técnico + declarativo com evidências centralizadas" },
+  { label: "Trust Center", desc: "Visibilidade configurável para terceiros e demandantes" },
 ];
 
 const ONBOARDING = [
@@ -81,80 +91,85 @@ function NriskOverview() {
       <section className="scroll-mt-20 border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
         <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
-            O problema com avaliações tradicionais
+            Por que a n.Risk?
           </h2>
           <p className="mt-3 text-gray-400 max-w-2xl mx-auto">
-            Declarações sem evidência deixam você vulnerável. A n.Risk muda isso.
+            Ratings de segurança são vitais para reguladores, seguradoras e empresas. A n.Risk oferece monitoramento contínuo e insights em tempo real para avaliar e gerenciar riscos cibernéticos de forma eficaz.
           </p>
-          <ul className="mt-10 mx-auto max-w-2xl space-y-5 text-left">
-            {WHY_BULLETS.map((text, i) => (
-              <li key={i} className={`flex gap-3 opacity-0 animate-fade-in ${i === 0 ? "animate-delay-200" : i === 1 ? "animate-delay-300" : "animate-delay-400"}`}>
-                <span className="shrink-0 mt-1.5 h-2 w-2 rounded-full bg-accent" />
-                <span className="text-gray-300">{text}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-20">
-        <div className="mx-auto max-w-6xl text-center">
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
-            Feito para <span className="text-accent">quem decide</span>
-          </h2>
-          <p className="mt-3 text-gray-400">
-            Seguradoras, equipes TPRM/GRC e CISOs confiam na n.Risk para risco de terceiros.
-          </p>
-          <div className="mt-12 grid gap-6 md:grid-cols-3 justify-items-center">
-            {USE_CASES.map((uc, idx) => (
+          <div className="mt-12 grid gap-6 md:grid-cols-3 text-left">
+            {WHY_ITEMS.map((item) => (
               <div
-                key={uc.title}
-                className={`group opacity-0 animate-scale-in rounded-xl border-2 border-gray-800 p-6 w-full max-w-sm transition-smooth hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 hover:-translate-y-1 ${idx === 0 ? "" : idx === 1 ? "animate-delay-150" : "animate-delay-300"}`}
+                key={item.title}
+                className="rounded-xl border-2 border-gray-800 p-6 transition-smooth hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
               >
-                <p className="font-semibold text-accent">{uc.title}</p>
-                <ul className="mt-4 list-inside list-disc space-y-2 text-sm text-gray-400">
-                  {uc.bullets.map((b, i) => (
-                    <li key={i}>{b}</li>
-                  ))}
-                </ul>
-                <p className="mt-5 text-sm font-medium text-gray-200 border-t border-gray-800 pt-4">
-                  Resultado: <span className="text-accent">{uc.result}</span>
-                </p>
+                <p className="font-semibold text-accent">{item.title}</p>
+                <p className="mt-3 text-sm text-gray-400">{item.text}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
+      <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-20">
         <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
-            Tudo em um só lugar
+            Soluções para risco de terceiros
           </h2>
           <p className="mt-3 text-gray-400">
-            Recursos que transformam risco cibernético em decisão acionável.
+            A n.Risk oferece recursos desenhados para avaliar e gerenciar risco cibernético em diferentes contextos — TPRM, subscrição de cyber e governança.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            {RESOURCES.map((r, i) => (
-              <span
-                key={r}
-                className="rounded-lg border-2 border-accent/30 bg-gray-800/80 px-4 py-2 text-sm font-medium text-gray-200 shadow-sm transition-smooth hover:border-accent hover:bg-accent/10 hover:scale-105"
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {SOLUTIONS.map((sol) => (
+              <Link
+                key={sol.title}
+                to={sol.href}
+                className="group block rounded-xl border-2 border-gray-800 p-6 text-left transition-smooth hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 hover:-translate-y-1"
               >
-                {r}
-              </span>
+                <p className="font-semibold text-accent group-hover:text-accent">{sol.title}</p>
+                <p className="mt-2 text-sm font-medium text-gray-300">{sol.desc}</p>
+                <ul className="mt-4 space-y-2">
+                  {sol.bullets.map((b) => (
+                    <li key={b} className="flex gap-2 text-sm text-gray-400">
+                      <span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-accent" />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
+        <div className="mx-auto max-w-6xl">
+          <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl text-center">
+            Produtos e serviços
+          </h2>
+          <p className="mt-3 text-gray-400 text-center max-w-2xl mx-auto">
+            Portfolio de recursos para avaliar, gerenciar e reduzir riscos cibernéticos.
+          </p>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            {PRODUCTS.map((p) => (
+              <div
+                key={p.label}
+                className="rounded-lg border-2 border-accent/30 bg-gray-800/50 p-4 transition-smooth hover:border-accent/50"
+              >
+                <p className="font-medium text-gray-100">{p.label}</p>
+                <p className="mt-1 text-sm text-gray-400">{p.desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-20">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
             Monitoramento <span className="text-accent">contínuo</span>
           </h2>
           <p className="mt-4 text-gray-400">
-            Tendência de score, inconsistências entre declaração e scan, evidências pendentes e
-            justificativas em análise. Tudo persistido e consumível por demandantes conforme RBAC.
+            Tendência de score, inconsistências entre declaração e scan, evidências pendentes e justificativas em análise. Tudo persistido e consumível por demandantes conforme RBAC — para subscrição, TPRM e compliance.
           </p>
         </div>
       </section>

@@ -13,6 +13,8 @@ gcloud run deploy "$SERVICE" \
   --allow-unauthenticated \
   --project "$PROJECT"
 echo ""
-echo "--- URL do serviço (use como CNAME para nrisk.ness.com.br): ---"
+echo "--- URL do serviço (.run.app): ---"
 gcloud run services describe "$SERVICE" --region "$REGION" --project "$PROJECT" --format='value(status.url)' | sed 's|https://||'
+echo ""
+echo "--- Domínio nrisk.ness.com.br: CNAME nrisk -> ghs.googlehosted.com. (ver README) ---"
 echo "---"

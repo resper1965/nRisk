@@ -63,6 +63,26 @@ O Dockerfile faz build Vite e serve **dist/** com nginx (porta 8080). SPA: fallb
 
 Ou manualmente com `gcloud run deploy` (fonte . ou imagem do Dockerfile).
 
+### Domínio personalizado e SSL (nrisk.ness.com.br)
+
+Para HTTPS no domínio customizado, o **mapeamento de domínio** no Cloud Run já foi criado. O certificado SSL é emitido pelo Google quando o DNS estiver correto.
+
+**Registro DNS obrigatório** (no provedor do domínio ness.com.br):
+
+| Tipo  | Nome  | Valor / Alvo           |
+|-------|--------|-------------------------|
+| CNAME | `nrisk` | `ghs.googlehosted.com.` |
+
+- **Nome:** `nrisk` (subdomínio nrisk.ness.com.br).
+- **Alvo:** exatamente `ghs.googlehosted.com.` (com ponto final no valor, conforme o provedor).
+
+Se o CNAME estiver apontando para a URL do Cloud Run (`*.run.app`), altere para `ghs.googlehosted.com.` para o certificado ser provisionado. A emissão pode levar de 15 minutos a 24 horas.
+
+Consultar mapeamentos e registros:
+```bash
+gcloud beta run domain-mappings describe --domain nrisk.ness.com.br --region us-central1 --project nrisk-486513
+```
+
 ## Footer
 
 "© {ano} ness. Todos os direitos reservados." + "powered by ness." (link https://ness.com.br).
