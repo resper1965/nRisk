@@ -124,6 +124,49 @@ O módulo combina **declarações do usuário** (questionários) com **validaç�
 | **Evidence Vault** | GCS path: `tenants/{tid}/assessments/{aid}/evidence/{file}`; SHA-256 por arquivo para verificação de integridade |
 | **MarkInconsistentAnswers** | Função Go em `internal/assessment/crosscheck.go` |
 
+## Modulo TPRA (Third-Party Risk Assessment)
+
+O modulo TPRA estende a arquitetura para suportar o ciclo completo de gestao de riscos de terceiros. Ver [plano de implementacao TPRA](../plans/nrisk-tpra-implementacao.md).
+
+### Novas Entidades (Cloud SQL)
+
+| Entidade | Papel | Relacionamento |
+|----------|-------|----------------|
+| **suppliers** | Cadastro de fornecedores por tenant avaliador | `tenant_id` → tenants; `supplier_tenant_id` → tenants (opcional) |
+| **supplier_invitations** | Convites de assessment para fornecedores | `supplier_id` → suppliers; `token` para acesso sem auth |
+| **trust_center_profiles** | Perfil publico Trust Center do avaliado | `tenant_id` → tenants; `slug` para URL publica |
+| **nda_requests** | Solicitacoes de NDA para docs sensiveis | `trust_center_id` → trust_center_profiles |
+
+### Fluxo TPRA
+
+```
+Gestor GRC cadastra fornecedor (POST /api/v1/suppliers)
+    ↓
+Scan automatico do dominio (Pub/Sub → Scan Job)
+    ↓
+Gestor envia convite (POST /api/v1/suppliers/:id/invite)
+    ↓
+Fornecedor aceita (POST /api/v1/invitations/:token/accept)
+    ↓
+Fornecedor preenche assessment (trilha Bronze/Prata/Ouro)
+    ↓
+Cross-Check Engine compara respostas vs scan do fornecedor
+    ↓
+Score hibrido calculado (Sf = T*0.6 + C*0.4)
+    ↓
+Gestor ve portfolio (GET /api/v1/portfolio/summary)
+    ↓
+Monitoramento continuo (re-scans por criticidade)
+```
+
+### Trilhas de Maturidade
+
+| Trilha | Perguntas | Evidencia | Uso |
+|--------|-----------|-----------|-----|
+| Bronze | 20 | Opcional | Triagem; baixo risco |
+| Prata | 35 | Obrigatoria | Medio/alto risco |
+| Ouro | 55 | Obrigatoria + framework completo | Criticos; seguradoras |
+
 ## Boundaries Internos
 
 | Camada | Responsabilidade |

@@ -345,6 +345,230 @@ Calcula ScoreBreakdown completo (cross-check, F, penalidade crítica, domain_sco
 
 ---
 
+---
+
+## Endpoints TPRA (Gestao de Fornecedores)
+
+> Endpoints planejados para o modulo TPRA. Ver [plano de implementacao](../plans/nrisk-tpra-implementacao.md).
+
+### POST /api/v1/suppliers
+
+Cadastra um fornecedor. Dispara scan automatico do dominio.
+
+**Auth:** Obrigatorio (Gestor GRC)
+**Body:**
+
+```json
+{
+  "name": "Fornecedor Exemplo",
+  "domain": "fornecedor.com.br",
+  "criticality": "high",
+  "category": "saas",
+  "contact_name": "Joao Silva",
+  "contact_email": "joao@fornecedor.com.br",
+  "cnpj": "12.345.678/0001-90"
+}
+```
+
+**Response:** `201 Created`
+
+```json
+{
+  "id": "uuid",
+  "tenant_id": "org-123",
+  "name": "Fornecedor Exemplo",
+  "domain": "fornecedor.com.br",
+  "criticality": "high",
+  "status": "pending_assessment",
+  "scan_id": "uuid-do-scan-automatico"
+}
+```
+
+---
+
+### GET /api/v1/suppliers
+
+Lista fornecedores do tenant com filtros.
+
+**Auth:** Obrigatorio
+**Query:** `criticality` (critical/high/medium/low), `status` (active/inactive/pending_assessment/blocked), `page`, `per_page`
+
+**Response:** `200 OK` — Array de suppliers com ultimo score.
+
+---
+
+### GET /api/v1/suppliers/:id
+
+Detalhes do fornecedor com ultimo score e historico.
+
+**Auth:** Obrigatorio
+**Response:** `200 OK` — Supplier + ultimo scan + score + assessment status.
+
+---
+
+### PATCH /api/v1/suppliers/:id
+
+Atualiza dados do fornecedor.
+
+**Auth:** Obrigatorio (Gestor GRC)
+**Body:** Campos parciais (name, criticality, category, contact_*, notes).
+
+---
+
+### POST /api/v1/suppliers/:id/invite
+
+Envia convite de assessment para o fornecedor.
+
+**Auth:** Obrigatorio (Gestor GRC)
+**Body:**
+
+```json
+{
+  "track": "silver",
+  "framework_id": "ISO27001",
+  "invited_email": "ciso@fornecedor.com.br"
+}
+```
+
+**Response:** `201 Created` — Invitation com token e expires_at.
+
+---
+
+### GET /api/v1/invitations
+
+Lista convites do tenant.
+
+**Auth:** Obrigatorio
+**Query:** `status` (pending/accepted/in_progress/completed/expired), `supplier_id`
+
+---
+
+### POST /api/v1/invitations/:token/accept
+
+Fornecedor aceita convite. **Sem auth** (via token).
+
+**Response:** `200 OK` — Assessment criado, link para preenchimento.
+
+---
+
+### GET /api/v1/suppliers/:id/score
+
+Score hibrido do fornecedor com cross-check TPRA.
+
+**Auth:** Obrigatorio
+**Response:** `200 OK` — ScoreBreakdown + inconsistencias TPRA.
+
+---
+
+### GET /api/v1/suppliers/:id/score-history
+
+Historico de scores do fornecedor (snapshots).
+
+**Auth:** Obrigatorio
+**Query:** `limit` (1-100, default 50)
+
+---
+
+### GET /api/v1/portfolio/summary
+
+Metricas agregadas do portfolio de fornecedores.
+
+**Auth:** Obrigatorio (Gestor GRC / Seguradora)
+
+**Response:** `200 OK`
+
+```json
+{
+  "total_suppliers": 45,
+  "assessed": 38,
+  "coverage_pct": 84.4,
+  "avg_score": 712,
+  "avg_category": "B",
+  "at_risk": 5,
+  "distribution": { "A": 8, "B": 15, "C": 10, "D": 3, "E": 1, "F": 1 },
+  "inconsistency_rate_pct": 12.3
+}
+```
+
+---
+
+### GET /api/v1/portfolio/suppliers
+
+Lista de fornecedores com score, tendencia e criticidade para o dashboard.
+
+**Auth:** Obrigatorio
+**Query:** `sort_by` (score/criticality/name), `order` (asc/desc), `category` (A-F), `page`, `per_page`
+
+---
+
+### POST /api/v1/trust-center
+
+Cria ou atualiza perfil Trust Center do tenant.
+
+**Auth:** Obrigatorio (CISO)
+**Body:**
+
+```json
+{
+  "slug": "fornecedor-exemplo",
+  "display_name": "Fornecedor Exemplo",
+  "is_public": true,
+  "show_score": true,
+  "show_domain_scores": true,
+  "nda_required": true,
+  "seals": [
+    { "name": "ISO 27001", "status": "certified", "valid_until": "2027-03-15" },
+    { "name": "LGPD", "status": "compliant" }
+  ],
+  "public_documents": [
+    { "name": "Politica de Privacidade", "url": "https://...", "type": "policy" }
+  ]
+}
+```
+
+---
+
+### GET /trust/:slug
+
+Endpoint publico (sem auth). Retorna perfil Trust Center.
+
+**Response:** `200 OK` — display_name, score (se show_score), selos, docs publicos.
+
+---
+
+### POST /trust/:slug/nda-request
+
+Solicita acesso NDA (sem auth).
+
+**Body:**
+
+```json
+{
+  "requester_email": "gestor@empresa.com",
+  "requester_name": "Maria Santos",
+  "requester_company": "Empresa Contratante"
+}
+```
+
+---
+
+### GET /api/v1/nda-requests
+
+Lista solicitacoes NDA do tenant.
+
+**Auth:** Obrigatorio (CISO)
+
+---
+
+### PATCH /api/v1/nda-requests/:id
+
+Aprovar ou rejeitar solicitacao NDA.
+
+**Auth:** Obrigatorio (CISO)
+**Body:** `{ "status": "approved" }` ou `{ "status": "rejected" }`
+
+---
+
 ## Scan Job (Cloud Run Job)
 
 Não é API HTTP. Executado como job com variáveis de ambiente:

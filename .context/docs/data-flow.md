@@ -62,7 +62,73 @@ scaffoldVersion: "2.0.0"
 
 Detalhes de esquemas e hierarquias em [database.md](./database.md).
 
-## 4. Integrações Externas (Planejadas)
+## 4. Fluxo TPRA (Gestao de Fornecedores)
+
+### 4.1 Cadastro e Scan Automatico
+
+```
+1. Gestor GRC chama POST /api/v1/suppliers
+   body: { name, domain, criticality, contact_email }
+   ↓
+2. API cria registro em Cloud SQL (suppliers)
+   ↓
+3. API dispara scan automatico: POST /api/v1/scans { domain }
+   → Firestore (pending) + Pub/Sub (scan-request)
+   ↓
+4. Scan Job executa → findings → score tecnico (T)
+```
+
+### 4.2 Convite e Assessment
+
+```
+1. Gestor chama POST /api/v1/suppliers/:id/invite
+   body: { track: "silver", invited_email, framework_id: "ISO27001" }
+   ↓
+2. API cria invitation com token unico (validade 30 dias)
+   ↓
+3. Fornecedor recebe e-mail com link /invitations/:token/accept
+   ↓
+4. Fornecedor aceita → cria assessment vinculado ao supplier
+   ↓
+5. Fornecedor responde questionario (filtrado por trilha)
+   → Upload de evidencias para GCS (Evidence Vault)
+   ↓
+6. CISO submete → Cross-Check Engine compara respostas vs scan
+   → Score hibrido calculado e snapshot persistido
+```
+
+### 4.3 Portfolio e Monitoramento
+
+```
+1. Gestor chama GET /api/v1/portfolio/summary
+   → Metricas: cobertura, score medio, distribuicao A-F, inconsistencias
+   ↓
+2. Cloud Scheduler dispara re-scans conforme criticidade:
+   - Critico: semanal
+   - Alto: quinzenal
+   - Medio: mensal
+   - Baixo: trimestral
+   ↓
+3. Score comparado com snapshot anterior
+   → Se deteriorou: alerta ao gestor (webhook/in-app)
+```
+
+### 4.4 Trust Center (Publico)
+
+```
+1. CISO configura Trust Center (POST /api/v1/trust-center)
+   → slug, selos, documentos publicos, NDA config
+   ↓
+2. Visitante acessa GET /trust/:slug (sem auth)
+   → Ve score A-F, selos, docs publicos
+   ↓
+3. Se NDA necessario: POST /trust/:slug/nda-request
+   → CISO aprova/rejeita → acesso a docs sensiveis
+```
+
+---
+
+## 5. Integrações Externas (Planejadas)
 
 - **Threat Intel:** Shodan, Censys, HaveIBeenPwned (Secret Manager)
 - **Assinatura Digital:** Provedor externo para NDA

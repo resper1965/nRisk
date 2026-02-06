@@ -1,6 +1,6 @@
 {
-  "version": "2.0",
-  "description": "Única fonte de verdade para traduzir achados técnicos em controles ISO 27001. Cobre 15 domínios do Anexo A para spider chart completo.",
+  "version": "3.0",
+  "description": "Unica fonte de verdade para traduzir achados tecnicos em controles ISO 27001. Cobre 15 dominios do Anexo A para spider chart completo. v3.0: adicionadas regras de cross-check TPRA e mapeamento supplier_context.",
   "mappings": [
     {
       "technical_finding": "open_rdp_port",
@@ -8,10 +8,12 @@
       "port": 3389,
       "control_id": "C-01",
       "iso_domain": "A.13.1.1",
-      "iso_title": "Redes - Controle de acesso a serviços",
+      "iso_title": "Redes - Controle de acesso a servicos",
       "score_deduction": 400,
       "severity": "critical",
-      "recommendation": "Restringir porta 3389 ou usar VPN. Nunca expor RDP diretamente à internet."
+      "recommendation": "Restringir porta 3389 ou usar VPN. Nunca expor RDP diretamente a internet.",
+      "cross_check_questions": ["Q-01"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "open_smb_port",
@@ -19,10 +21,12 @@
       "port": 445,
       "control_id": "C-01",
       "iso_domain": "A.13.1.1",
-      "iso_title": "Redes - Controle de acesso a serviços",
+      "iso_title": "Redes - Controle de acesso a servicos",
       "score_deduction": 400,
       "severity": "critical",
-      "recommendation": "Bloquear porta 445 para internet. SMB não deve ser acessível externamente."
+      "recommendation": "Bloquear porta 445 para internet. SMB nao deve ser acessivel externamente.",
+      "cross_check_questions": ["Q-01"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "open_database_port_mysql",
@@ -30,10 +34,12 @@
       "port": 3306,
       "control_id": "C-01",
       "iso_domain": "A.13.1.1",
-      "iso_title": "Redes - Controle de acesso a serviços",
+      "iso_title": "Redes - Controle de acesso a servicos",
       "score_deduction": 350,
       "severity": "critical",
-      "recommendation": "Restringir acesso ao MySQL (3306) via firewall. Usar conexões privadas."
+      "recommendation": "Restringir acesso ao MySQL (3306) via firewall. Usar conexoes privadas.",
+      "cross_check_questions": ["Q-01"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "open_database_port_postgres",
@@ -41,10 +47,12 @@
       "port": 5432,
       "control_id": "C-01",
       "iso_domain": "A.13.1.1",
-      "iso_title": "Redes - Controle de acesso a serviços",
+      "iso_title": "Redes - Controle de acesso a servicos",
       "score_deduction": 350,
       "severity": "critical",
-      "recommendation": "Restringir acesso ao PostgreSQL (5432) via firewall."
+      "recommendation": "Restringir acesso ao PostgreSQL (5432) via firewall.",
+      "cross_check_questions": ["Q-01"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "open_database_port_mongo",
@@ -52,10 +60,12 @@
       "port": 27017,
       "control_id": "C-01",
       "iso_domain": "A.13.1.1",
-      "iso_title": "Redes - Controle de acesso a serviços",
+      "iso_title": "Redes - Controle de acesso a servicos",
       "score_deduction": 350,
       "severity": "critical",
-      "recommendation": "Restringir acesso ao MongoDB (27017). Nunca expor sem autenticação."
+      "recommendation": "Restringir acesso ao MongoDB (27017). Nunca expor sem autenticacao.",
+      "cross_check_questions": ["Q-01"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "expired_ssl",
@@ -66,7 +76,9 @@
       "iso_title": "Criptografia - Certificados digitais",
       "score_deduction": 200,
       "severity": "high",
-      "recommendation": "Renovar certificado SSL imediatamente."
+      "recommendation": "Renovar certificado SSL imediatamente.",
+      "cross_check_questions": ["Q-02", "Q-42"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "ssl_expires_soon",
@@ -77,7 +89,9 @@
       "iso_title": "Criptografia - Certificados digitais",
       "score_deduction": 80,
       "severity": "medium",
-      "recommendation": "Planejar renovação do certificado antes da expiração."
+      "recommendation": "Planejar renovacao do certificado antes da expiracao.",
+      "cross_check_questions": ["Q-02"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "weak_tls",
@@ -88,7 +102,9 @@
       "iso_title": "Criptografia - TLS",
       "score_deduction": 120,
       "severity": "high",
-      "recommendation": "Desabilitar TLS 1.0/1.1. Usar TLS 1.2+ com cipher suites fortes."
+      "recommendation": "Desabilitar TLS 1.0/1.1. Usar TLS 1.2+ com cipher suites fortes.",
+      "cross_check_questions": ["Q-02", "Q-42"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "self_signed_cert",
@@ -99,7 +115,9 @@
       "iso_title": "Criptografia - Certificados digitais",
       "score_deduction": 100,
       "severity": "medium",
-      "recommendation": "Substituir certificado auto-assinado por CA confiável."
+      "recommendation": "Substituir certificado auto-assinado por CA confiavel.",
+      "cross_check_questions": ["Q-02"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "outdated_software",
@@ -110,7 +128,9 @@
       "iso_title": "Vulnerabilidades - Patch management",
       "score_deduction": 80,
       "severity": "medium",
-      "recommendation": "Aplicar patches de segurança conforme processo de gestão de vulnerabilidades."
+      "recommendation": "Aplicar patches de seguranca conforme processo de gestao de vulnerabilidades.",
+      "cross_check_questions": ["Q-03", "Q-27"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "known_cve",
@@ -121,7 +141,9 @@
       "iso_title": "Vulnerabilidades - CVE conhecida",
       "score_deduction": 150,
       "severity": "high",
-      "recommendation": "Aplicar patch para a CVE identificada. Consultar NVD para detalhes."
+      "recommendation": "Aplicar patch para a CVE identificada. Consultar NVD para detalhes.",
+      "cross_check_questions": ["Q-03", "Q-27"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "critical_cve",
@@ -129,10 +151,12 @@
       "port": null,
       "control_id": "C-03",
       "iso_domain": "A.12.6.1",
-      "iso_title": "Vulnerabilidades - CVE crítica (CVSS >= 9.0)",
+      "iso_title": "Vulnerabilidades - CVE critica (CVSS >= 9.0)",
       "score_deduction": 350,
       "severity": "critical",
-      "recommendation": "CVE crítica com CVSS >= 9.0. Aplicar patch emergencialmente."
+      "recommendation": "CVE critica com CVSS >= 9.0. Aplicar patch emergencialmente.",
+      "cross_check_questions": ["Q-03", "Q-27"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "subdomain_exposure",
@@ -140,10 +164,12 @@
       "port": null,
       "control_id": "C-03",
       "iso_domain": "A.12.6.1",
-      "iso_title": "Descoberta de ativos - Subdomínios expostos",
+      "iso_title": "Descoberta de ativos - Subdominios expostos",
       "score_deduction": 20,
       "severity": "low",
-      "recommendation": "Revisar subdomínios expostos e desativar os não utilizados."
+      "recommendation": "Revisar subdominios expostos e desativar os nao utilizados.",
+      "cross_check_questions": ["Q-19"],
+      "tpra_stage": "identification"
     },
     {
       "technical_finding": "nuclei_generic",
@@ -151,10 +177,12 @@
       "port": null,
       "control_id": "C-03",
       "iso_domain": "A.12.6.1",
-      "iso_title": "Vulnerabilidades - Achado genérico Nuclei",
+      "iso_title": "Vulnerabilidades - Achado generico Nuclei",
       "score_deduction": 80,
       "severity": "medium",
-      "recommendation": "Corrigir vulnerabilidade identificada pelo scanner."
+      "recommendation": "Corrigir vulnerabilidade identificada pelo scanner.",
+      "cross_check_questions": ["Q-03"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "missing_dmarc",
@@ -162,10 +190,12 @@
       "port": null,
       "control_id": "C-04",
       "iso_domain": "A.13.2.1",
-      "iso_title": "Comunicações - Anti-phishing (DMARC)",
+      "iso_title": "Comunicacoes - Anti-phishing (DMARC)",
       "score_deduction": 150,
       "severity": "high",
-      "recommendation": "Implementar DMARC com política p=reject ou p=quarantine."
+      "recommendation": "Implementar DMARC com politica p=reject ou p=quarantine.",
+      "cross_check_questions": ["Q-04"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "dmarc_none",
@@ -173,10 +203,12 @@
       "port": null,
       "control_id": "C-04",
       "iso_domain": "A.13.2.1",
-      "iso_title": "Comunicações - DMARC em modo permissivo",
+      "iso_title": "Comunicacoes - DMARC em modo permissivo",
       "score_deduction": 100,
       "severity": "high",
-      "recommendation": "Alterar política DMARC de p=none para p=quarantine ou p=reject."
+      "recommendation": "Alterar politica DMARC de p=none para p=quarantine ou p=reject.",
+      "cross_check_questions": ["Q-04"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "missing_spf",
@@ -184,10 +216,12 @@
       "port": null,
       "control_id": "C-04",
       "iso_domain": "A.13.2.1",
-      "iso_title": "Comunicações - SPF ausente",
+      "iso_title": "Comunicacoes - SPF ausente",
       "score_deduction": 120,
       "severity": "high",
-      "recommendation": "Implementar registro SPF para prevenir spoofing de e-mail."
+      "recommendation": "Implementar registro SPF para prevenir spoofing de e-mail.",
+      "cross_check_questions": ["Q-04"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "missing_dkim",
@@ -195,10 +229,12 @@
       "port": null,
       "control_id": "C-04",
       "iso_domain": "A.13.2.1",
-      "iso_title": "Comunicações - DKIM ausente",
+      "iso_title": "Comunicacoes - DKIM ausente",
       "score_deduction": 80,
       "severity": "medium",
-      "recommendation": "Configurar DKIM para autenticação de e-mails enviados."
+      "recommendation": "Configurar DKIM para autenticacao de e-mails enviados.",
+      "cross_check_questions": ["Q-04"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "open_ssh_port",
@@ -209,7 +245,9 @@
       "iso_title": "Controle de acesso - SSH exposto",
       "score_deduction": 60,
       "severity": "medium",
-      "recommendation": "Restringir SSH via firewall ou bastion host. Desabilitar autenticação por senha."
+      "recommendation": "Restringir SSH via firewall ou bastion host. Desabilitar autenticacao por senha.",
+      "cross_check_questions": ["Q-05"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "open_telnet_port",
@@ -220,7 +258,9 @@
       "iso_title": "Controle de acesso - Telnet (texto claro)",
       "score_deduction": 300,
       "severity": "critical",
-      "recommendation": "Desabilitar Telnet. Usar SSH para acesso remoto seguro."
+      "recommendation": "Desabilitar Telnet. Usar SSH para acesso remoto seguro.",
+      "cross_check_questions": ["Q-05", "Q-42"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "open_ftp_port",
@@ -231,7 +271,9 @@
       "iso_title": "Controle de acesso - FTP (texto claro)",
       "score_deduction": 150,
       "severity": "high",
-      "recommendation": "Desabilitar FTP. Usar SFTP ou SCP para transferência segura."
+      "recommendation": "Desabilitar FTP. Usar SFTP ou SCP para transferencia segura.",
+      "cross_check_questions": ["Q-05", "Q-42"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "missing_hsts",
@@ -239,10 +281,12 @@
       "port": null,
       "control_id": "C-06",
       "iso_domain": "A.12.4.1",
-      "iso_title": "Segurança operacional - Header HSTS ausente",
+      "iso_title": "Seguranca operacional - Header HSTS ausente",
       "score_deduction": 50,
       "severity": "medium",
-      "recommendation": "Configurar Strict-Transport-Security com max-age adequado."
+      "recommendation": "Configurar Strict-Transport-Security com max-age adequado.",
+      "cross_check_questions": ["Q-16"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "missing_csp",
@@ -250,10 +294,12 @@
       "port": null,
       "control_id": "C-06",
       "iso_domain": "A.12.4.1",
-      "iso_title": "Segurança operacional - Header CSP ausente",
+      "iso_title": "Seguranca operacional - Header CSP ausente",
       "score_deduction": 50,
       "severity": "medium",
-      "recommendation": "Implementar Content-Security-Policy para prevenir XSS."
+      "recommendation": "Implementar Content-Security-Policy para prevenir XSS.",
+      "cross_check_questions": ["Q-16"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "missing_x_frame_options",
@@ -261,10 +307,12 @@
       "port": null,
       "control_id": "C-06",
       "iso_domain": "A.12.4.1",
-      "iso_title": "Segurança operacional - X-Frame-Options ausente",
+      "iso_title": "Seguranca operacional - X-Frame-Options ausente",
       "score_deduction": 40,
       "severity": "medium",
-      "recommendation": "Configurar X-Frame-Options: DENY ou SAMEORIGIN para prevenir clickjacking."
+      "recommendation": "Configurar X-Frame-Options: DENY ou SAMEORIGIN para prevenir clickjacking.",
+      "cross_check_questions": ["Q-16"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "server_version_exposed",
@@ -272,10 +320,12 @@
       "port": null,
       "control_id": "C-06",
       "iso_domain": "A.12.4.1",
-      "iso_title": "Segurança operacional - Versão de servidor exposta",
+      "iso_title": "Seguranca operacional - Versao de servidor exposta",
       "score_deduction": 20,
       "severity": "low",
-      "recommendation": "Remover ou ocultar banners de versão de servidor (Server, X-Powered-By)."
+      "recommendation": "Remover ou ocultar banners de versao de servidor (Server, X-Powered-By).",
+      "cross_check_questions": [],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "leaked_credentials",
@@ -286,7 +336,9 @@
       "iso_title": "Resposta a incidentes - Credenciais vazadas",
       "score_deduction": 400,
       "severity": "critical",
-      "recommendation": "Revogar credenciais vazadas imediatamente. Investigar extensão do vazamento."
+      "recommendation": "Revogar credenciais vazadas imediatamente. Investigar extensao do vazamento.",
+      "cross_check_questions": ["Q-10", "Q-25"],
+      "tpra_stage": "compliance"
     },
     {
       "technical_finding": "exposed_admin_panel",
@@ -297,7 +349,9 @@
       "iso_title": "Desenvolvimento seguro - Painel admin exposto",
       "score_deduction": 120,
       "severity": "high",
-      "recommendation": "Restringir acesso ao painel administrativo via VPN ou whitelist de IP."
+      "recommendation": "Restringir acesso ao painel administrativo via VPN ou whitelist de IP.",
+      "cross_check_questions": ["Q-13", "Q-45"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "directory_listing",
@@ -308,7 +362,9 @@
       "iso_title": "Desenvolvimento seguro - Directory listing habilitado",
       "score_deduction": 80,
       "severity": "medium",
-      "recommendation": "Desabilitar directory listing no servidor web."
+      "recommendation": "Desabilitar directory listing no servidor web.",
+      "cross_check_questions": ["Q-13"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "information_disclosure",
@@ -319,7 +375,9 @@
       "iso_title": "Desenvolvimento seguro - Information disclosure",
       "score_deduction": 60,
       "severity": "medium",
-      "recommendation": "Corrigir vazamento de informações sensíveis (stack traces, config, etc.)."
+      "recommendation": "Corrigir vazamento de informacoes sensiveis (stack traces, config, etc.).",
+      "cross_check_questions": ["Q-13"],
+      "tpra_stage": "risk_scoring"
     },
     {
       "technical_finding": "missing_privacy_policy",
@@ -327,10 +385,12 @@
       "port": null,
       "control_id": "C-14",
       "iso_domain": "A.18.1.1",
-      "iso_title": "Compliance - Política de privacidade ausente",
+      "iso_title": "Compliance - Politica de privacidade ausente",
       "score_deduction": 80,
       "severity": "medium",
-      "recommendation": "Publicar política de privacidade conforme LGPD Art. 9°."
+      "recommendation": "Publicar politica de privacidade conforme LGPD Art. 9.",
+      "cross_check_questions": ["Q-14", "Q-20"],
+      "tpra_stage": "compliance"
     },
     {
       "technical_finding": "cookies_without_consent",
@@ -341,7 +401,9 @@
       "iso_title": "Compliance - Cookies sem consentimento",
       "score_deduction": 60,
       "severity": "medium",
-      "recommendation": "Implementar banner de consentimento de cookies conforme LGPD."
+      "recommendation": "Implementar banner de consentimento de cookies conforme LGPD.",
+      "cross_check_questions": ["Q-14", "Q-20"],
+      "tpra_stage": "compliance"
     }
   ],
   "port_map": {
@@ -361,20 +423,79 @@
     "http-missing-security-headers": "C-06"
   },
   "control_categories": {
-    "C-01": {"category": "Segurança de Rede", "iso_domain": "A.13.1.1"},
+    "C-01": {"category": "Seguranca de Rede", "iso_domain": "A.13.1.1"},
     "C-02": {"category": "Criptografia", "iso_domain": "A.10.1.1"},
-    "C-03": {"category": "Gestão de Vulnerabilidades", "iso_domain": "A.12.6.1"},
-    "C-04": {"category": "Segurança de E-mail", "iso_domain": "A.13.2.1"},
+    "C-03": {"category": "Gestao de Vulnerabilidades", "iso_domain": "A.12.6.1"},
+    "C-04": {"category": "Seguranca de E-mail", "iso_domain": "A.13.2.1"},
     "C-05": {"category": "Controle de Acesso", "iso_domain": "A.9.4.1"},
     "C-06": {"category": "Monitoramento", "iso_domain": "A.12.4.1"},
-    "C-07": {"category": "Backup e Recuperação", "iso_domain": "A.12.3.1"},
-    "C-08": {"category": "Políticas", "iso_domain": "A.5.1.1"},
+    "C-07": {"category": "Backup e Recuperacao", "iso_domain": "A.12.3.1"},
+    "C-08": {"category": "Politicas", "iso_domain": "A.5.1.1"},
     "C-09": {"category": "Pessoas", "iso_domain": "A.7.2.2"},
     "C-10": {"category": "Resposta a Incidentes", "iso_domain": "A.16.1.1"},
     "C-11": {"category": "Continuidade", "iso_domain": "A.17.1.1"},
     "C-12": {"category": "Fornecedores", "iso_domain": "A.15.1.1"},
     "C-13": {"category": "Desenvolvimento Seguro", "iso_domain": "A.14.2.1"},
     "C-14": {"category": "Compliance e Privacidade", "iso_domain": "A.18.1.1"},
-    "C-15": {"category": "Segurança Física", "iso_domain": "A.11.1.1"}
-  }
+    "C-15": {"category": "Seguranca Fisica", "iso_domain": "A.11.1.1"}
+  },
+  "cross_check_severity_map": {
+    "critical_inconsistency": {
+      "description": "Contradicao grave: resposta 'Sim' para controle critico contradita por finding critico",
+      "impact": "Zera ponto do controle; aplica penalidade critica (Sf <= 500)",
+      "example": "Declara controle de acesso para portas criticas, scan encontra RDP aberto"
+    },
+    "inconsistency": {
+      "description": "Contradicao: resposta positiva invalidada por finding",
+      "impact": "Ponto do questionario nao conta como atendido",
+      "example": "Declara DMARC configurado, scan detecta DMARC ausente"
+    },
+    "risk_alert": {
+      "description": "Possivel discrepancia; maturidade reduzida",
+      "impact": "Reducao parcial da nota do controle",
+      "example": "Declara TLS forte, scan encontra TLS 1.1 em subdominio"
+    }
+  },
+  "tpra_cross_check_rules": [
+    {
+      "rule_id": "TPRA-CC-01",
+      "description": "Fornecedor declara avaliar terceiros criticos, mas scan detecta portas abertas de fornecedores conhecidos",
+      "question_ids": ["Q-12", "Q-51"],
+      "finding_types": ["open_rdp_port", "open_smb_port", "open_database_port_mysql", "open_database_port_postgres", "open_database_port_mongo"],
+      "severity": "risk_alert",
+      "tpra_stage": "identification"
+    },
+    {
+      "rule_id": "TPRA-CC-02",
+      "description": "Fornecedor declara plano de resposta a incidentes, mas credenciais vazadas sem notificacao",
+      "question_ids": ["Q-10", "Q-25"],
+      "finding_types": ["leaked_credentials"],
+      "severity": "critical_inconsistency",
+      "tpra_stage": "compliance"
+    },
+    {
+      "rule_id": "TPRA-CC-03",
+      "description": "Fornecedor declara dados pessoais protegidos, mas scan encontra politica de privacidade ausente",
+      "question_ids": ["Q-14", "Q-20", "Q-29"],
+      "finding_types": ["missing_privacy_policy", "cookies_without_consent"],
+      "severity": "inconsistency",
+      "tpra_stage": "compliance"
+    },
+    {
+      "rule_id": "TPRA-CC-04",
+      "description": "Fornecedor declara criptografia forte, mas scan detecta TLS fraco ou certificado expirado",
+      "question_ids": ["Q-02", "Q-24", "Q-42"],
+      "finding_types": ["weak_tls", "expired_ssl", "self_signed_cert"],
+      "severity": "inconsistency",
+      "tpra_stage": "risk_scoring"
+    },
+    {
+      "rule_id": "TPRA-CC-05",
+      "description": "Fornecedor declara SDLC seguro, mas scan encontra paineis admin expostos ou information disclosure",
+      "question_ids": ["Q-13", "Q-32", "Q-49"],
+      "finding_types": ["exposed_admin_panel", "directory_listing", "information_disclosure"],
+      "severity": "inconsistency",
+      "tpra_stage": "risk_scoring"
+    }
+  ]
 }
