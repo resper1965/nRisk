@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import Accordion from "../components/Accordion";
 import CtaSection from "../components/CtaSection";
+import NriskBrand from "../components/NriskBrand";
 
 const WHY_ITEMS = [
   {
     title: "Questionários sem evidência não bastam",
-    text: "Avaliações declarativas precisam ser validadas. A n.Risk mapeia respostas a controles e faz conferência cruzada com achados técnicos — inconsistências reduzem o Fator de Confiança e orientam priorização.",
+    textJsx: <>Avaliações declarativas precisam ser validadas. A <NriskBrand /> mapeia respostas a controles e faz conferência cruzada com achados técnicos — inconsistências reduzem o Fator de Confiança e orientam priorização.</>,
   },
   {
     title: "Cofre de evidências com trilha de auditoria",
@@ -66,7 +67,7 @@ export default function Assessments() {
             <span className="text-accent">evidências e governança</span>
           </h1>
           <p className="opacity-0 animate-fade-in animate-delay-200 mt-6 mx-auto max-w-2xl text-lg text-gray-400">
-            Para equipes de TPRM, GRC e compliance, a n.Risk é uma ferramenta para avaliar fornecedores e parceiros com questionários por framework, evidências centralizadas e Trust Center. Confiança medida, não só declarada.
+            Para equipes de TPRM, GRC e compliance, a <NriskBrand /> é uma ferramenta para avaliar fornecedores e parceiros com questionários por framework, evidências centralizadas e Trust Center. Confiança medida, não só declarada.
           </p>
           <div className="opacity-0 animate-fade-in animate-delay-300 mt-10 flex flex-wrap justify-center gap-4">
             <Link
@@ -88,10 +89,10 @@ export default function Assessments() {
       <section className="border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
         <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
-            Por que a n.Risk para avaliações?
+            Por que a <NriskBrand /> para avaliações?
           </h2>
           <p className="mt-3 text-gray-400 max-w-2xl mx-auto">
-            Avaliações declarativas sem validação deixam você vulnerável. A n.Risk combina questionários por framework com conferência cruzada e evidências centralizadas.
+            Avaliações declarativas sem validação deixam você vulnerável. A <NriskBrand /> combina questionários por framework com conferência cruzada e evidências centralizadas.
           </p>
           <div className="mt-12 grid gap-6 md:grid-cols-3 text-left">
             {WHY_ITEMS.map((item) => (
@@ -100,7 +101,7 @@ export default function Assessments() {
                 className="rounded-xl border-2 border-gray-800 p-6 transition-smooth hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
               >
                 <p className="font-semibold text-accent">{item.title}</p>
-                <p className="mt-3 text-sm text-gray-400">{item.text}</p>
+                <p className="mt-3 text-sm text-gray-400">{item.textJsx ?? item.text}</p>
               </div>
             ))}
           </div>
@@ -113,7 +114,7 @@ export default function Assessments() {
             Soluções para Questionários e Avaliações
           </h2>
           <p className="mt-3 text-gray-400">
-            A n.Risk oferece recursos desenhados para avaliar fornecedores e parceiros com transparência e evidências.
+            A <NriskBrand /> oferece recursos desenhados para avaliar fornecedores e parceiros com transparência e evidências.
           </p>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {SOLUTIONS.map((sol) => (

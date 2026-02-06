@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import NriskBrand from "./NriskBrand";
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -7,7 +8,7 @@ function Footer() {
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6">
         <div className="flex flex-col gap-1">
           <p className="text-sm text-gray-500">
-            {"© " + year + " ness. Todos os direitos reservados."}
+            © {year} ness. Todos os direitos reservados.
           </p>
           <p className="text-xs text-gray-500">
             powered by{" "}
@@ -23,7 +24,7 @@ function Footer() {
         </div>
         <nav className="flex gap-6">
           <Link to="/nrisk" className="text-sm text-gray-400 transition-smooth hover:text-gray-100">
-            n.Risk
+            <NriskBrand />
           </Link>
           <Link to="/nrisk/contact" className="text-sm text-gray-400 transition-smooth hover:text-gray-100">
             Contato

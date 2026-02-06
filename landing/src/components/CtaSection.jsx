@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import NriskBrand from "./NriskBrand";
 
 export default function CtaSection({ id = "cta" }) {
   return (
@@ -8,7 +9,7 @@ export default function CtaSection({ id = "cta" }) {
           Pronto para assumir o controle do seu risco cibernético?
         </h2>
         <p className="mt-4 text-lg text-gray-400">
-          Converse com um especialista e veja como a n.Risk se aplica ao seu contexto — subscrição, TPRM ou governança.
+          Converse com um especialista e veja como a <NriskBrand /> se aplica ao seu contexto — subscrição, TPRM ou governança.
         </p>
         <div className="mt-12 flex flex-wrap justify-center gap-4">
           <Link

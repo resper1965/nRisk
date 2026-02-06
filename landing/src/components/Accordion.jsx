@@ -40,7 +40,7 @@ export default function Accordion({ items }) {
             hidden={openId !== id}
             className="overflow-hidden"
           >
-            <p className="pb-4 text-sm text-gray-400">{answer}</p>
+            <div className="pb-4 text-sm text-gray-400">{answer}</div>
           </div>
         </div>
       ))}

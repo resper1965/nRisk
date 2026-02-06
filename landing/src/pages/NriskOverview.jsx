@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import ProductMock from "../components/ProductMock";
 import CtaSection from "../components/CtaSection";
+import NriskBrand from "../components/NriskBrand";
 
 const WHY_ITEMS = [
   {
     title: "Declarações sem prova deixam você vulnerável",
-    text: "Avaliações tradicionais dependem do que o fornecedor diz. A n.Risk detecta inconsistências entre declaração e scan técnico — Cross-Check e Fator de Confiança tornam a confiança auditável.",
+    textJsx: <>Avaliações tradicionais dependem do que o fornecedor diz. A <NriskBrand /> detecta inconsistências entre declaração e scan técnico — Cross-Check e Fator de Confiança tornam a confiança auditável.</>,
   },
   {
     title: "Priorize com clareza, remedie com rastreabilidade",
@@ -13,7 +14,7 @@ const WHY_ITEMS = [
   },
   {
     title: "Uma plataforma para quem decide",
-    text: "Seguradoras, equipes TPRM/GRC e CISOs confiam na n.Risk para risco de terceiros. Detecte, priorize e remedie em um só lugar — dados, não só declarações.",
+    textJsx: <>Seguradoras, equipes TPRM/GRC e CISOs confiam na <NriskBrand /> para risco de terceiros. Detecte, priorize e remedie em um só lugar — dados, não só declarações.</>,
   },
 ];
 
@@ -91,10 +92,10 @@ function NriskOverview() {
       <section className="scroll-mt-20 border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
         <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
-            Por que a n.Risk?
+            Por que a <NriskBrand />?
           </h2>
           <p className="mt-3 text-gray-400 max-w-2xl mx-auto">
-            Ratings de segurança são vitais para reguladores, seguradoras e empresas. A n.Risk oferece monitoramento contínuo e insights em tempo real para avaliar e gerenciar riscos cibernéticos de forma eficaz.
+            Ratings de segurança são vitais para reguladores, seguradoras e empresas. A <NriskBrand /> oferece monitoramento contínuo e insights em tempo real para avaliar e gerenciar riscos cibernéticos de forma eficaz.
           </p>
           <div className="mt-12 grid gap-6 md:grid-cols-3 text-left">
             {WHY_ITEMS.map((item) => (
@@ -103,7 +104,7 @@ function NriskOverview() {
                 className="rounded-xl border-2 border-gray-800 p-6 transition-smooth hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
               >
                 <p className="font-semibold text-accent">{item.title}</p>
-                <p className="mt-3 text-sm text-gray-400">{item.text}</p>
+                <p className="mt-3 text-sm text-gray-400">{item.textJsx ?? item.text}</p>
               </div>
             ))}
           </div>
@@ -116,7 +117,7 @@ function NriskOverview() {
             Soluções para risco de terceiros
           </h2>
           <p className="mt-3 text-gray-400">
-            A n.Risk oferece recursos desenhados para avaliar e gerenciar risco cibernético em diferentes contextos — TPRM, subscrição de cyber e governança.
+            A <NriskBrand /> oferece recursos desenhados para avaliar e gerenciar risco cibernético em diferentes contextos — TPRM, subscrição de cyber e governança.
           </p>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {SOLUTIONS.map((sol) => (

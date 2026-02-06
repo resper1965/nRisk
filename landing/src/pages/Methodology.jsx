@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Accordion from "../components/Accordion";
 import CtaSection from "../components/CtaSection";
+import NriskBrand from "../components/NriskBrand";
 
 const WHY_ITEMS = [
   {
@@ -47,7 +48,7 @@ export default function Methodology() {
             Metodologia clara. Resultado <span className="text-accent">defensável</span>
           </h1>
           <p className="opacity-0 animate-fade-in animate-delay-200 mt-6 mx-auto max-w-2xl text-lg text-gray-400">
-            Para subscritores, TPRM e compliance, a n.Risk oferece uma metodologia transparente: score híbrido, conferência cruzada e histórico auditável. Confiança medida com transparência.
+            Para subscritores, TPRM e compliance, a <NriskBrand /> oferece uma metodologia transparente: score híbrido, conferência cruzada e histórico auditável. Confiança medida com transparência.
           </p>
           <div className="opacity-0 animate-fade-in animate-delay-300 mt-10 flex flex-wrap justify-center gap-4">
             <Link
@@ -72,7 +73,7 @@ export default function Methodology() {
             Por que a metodologia importa?
           </h2>
           <p className="mt-3 text-gray-400 max-w-2xl mx-auto">
-            Uma metodologia transparente e defensável é essencial para decisões de subscrição, TPRM e compliance. A n.Risk combina dados técnicos e declarativos com métricas explícitas.
+            Uma metodologia transparente e defensável é essencial para decisões de subscrição, TPRM e compliance. A <NriskBrand /> combina dados técnicos e declarativos com métricas explícitas.
           </p>
           <div className="mt-12 grid gap-6 md:grid-cols-3 text-left">
             {WHY_ITEMS.map((item) => (

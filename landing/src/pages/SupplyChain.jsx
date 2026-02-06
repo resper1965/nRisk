@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import Accordion from "../components/Accordion";
 import CtaSection from "../components/CtaSection";
+import NriskBrand from "../components/NriskBrand";
 
 const WHY_ITEMS = [
   {
     title: "Risco de terceiros fora de controle",
-    text: "Fornecedores e parceiros ampliam sua superfície de ataque. A n.Risk combina scan outside-in com avaliações por framework — score híbrido e scores por eixo permitem priorizar e acompanhar a evolução.",
+    textJsx: <>Fornecedores e parceiros ampliam sua superfície de ataque. A <NriskBrand /> combina scan outside-in com avaliações por framework — score híbrido e scores por eixo permitem priorizar e acompanhar a evolução.</>,
   },
   {
     title: "Plataforma única para TPRM e GRC",
@@ -47,7 +48,7 @@ const PRODUCTS = [
 ];
 
 const FAQ_ITEMS = [
-  { id: 1, question: "Como a n.Risk qualifica fornecedores?", answer: "Combina scan outside-in com avaliações por framework. O score híbrido e os scores por eixo permitem priorizar e acompanhar a evolução. Conferência cruzada detecta inconsistências entre o que o fornecedor declara e o que o scan encontra." },
+  { id: 1, question: <>Como a <NriskBrand /> qualifica fornecedores?</>, answer: <>Combina scan outside-in com avaliações por framework. O score híbrido e os scores por eixo permitem priorizar e acompanhar a evolução. Conferência cruzada detecta inconsistências entre o que o fornecedor declara e o que o scan encontra.</> },
   { id: 2, question: "O que terceiros veem no Trust Center?", answer: "Score, categoria, eixos (A–F), status de evidências e histórico conforme permissões (RBAC). Demandantes — seguradoras, clientes, parceiros — acessam apenas o que está liberado para seu perfil." },
   { id: 3, question: "Como funcionam os alertas?", answer: "Alertas configuráveis para finding crítico, queda de score e inconsistências. Integração por webhook e e-mail em roadmap. Permitem ação rápida antes que o risco se materialize." },
 ];
@@ -65,7 +66,7 @@ export default function SupplyChain() {
             <span className="text-accent">visibilidade contínua</span>
           </h1>
           <p className="opacity-0 animate-fade-in animate-delay-200 mt-6 mx-auto max-w-2xl text-lg text-gray-400">
-            Para equipes de TPRM e GRC, a n.Risk é uma ferramenta para identificar, medir e resolver riscos cibernéticos em fornecedores e parceiros. Detecte inconsistências, priorize com score híbrido e evidências — dados, não só declarações.
+            Para equipes de TPRM e GRC, a <NriskBrand /> é uma ferramenta para identificar, medir e resolver riscos cibernéticos em fornecedores e parceiros. Detecte inconsistências, priorize com score híbrido e evidências — dados, não só declarações.
           </p>
           <div className="opacity-0 animate-fade-in animate-delay-300 mt-10 flex flex-wrap justify-center gap-4">
             <Link
@@ -87,10 +88,10 @@ export default function SupplyChain() {
       <section className="border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
         <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
-            Por que a n.Risk para cadeia de suprimentos?
+            Por que a <NriskBrand /> para cadeia de suprimentos?
           </h2>
           <p className="mt-3 text-gray-400 max-w-2xl mx-auto">
-            O risco cibernético de terceiros é uma das principais fontes de brechas. A n.Risk oferece visibilidade contínua e priorização baseada em evidências para reduzir exposição.
+            O risco cibernético de terceiros é uma das principais fontes de brechas. A <NriskBrand /> oferece visibilidade contínua e priorização baseada em evidências para reduzir exposição.
           </p>
           <div className="mt-12 grid gap-6 md:grid-cols-3 text-left">
             {WHY_ITEMS.map((item) => (
@@ -99,7 +100,7 @@ export default function SupplyChain() {
                 className="rounded-xl border-2 border-gray-800 p-6 transition-smooth hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
               >
                 <p className="font-semibold text-accent">{item.title}</p>
-                <p className="mt-3 text-sm text-gray-400">{item.text}</p>
+                <p className="mt-3 text-sm text-gray-400">{item.textJsx ?? item.text}</p>
               </div>
             ))}
           </div>
@@ -112,7 +113,7 @@ export default function SupplyChain() {
             Soluções para Supply Chain Cyber Risk
           </h2>
           <p className="mt-3 text-gray-400">
-            A n.Risk oferece recursos desenhados para avaliar e gerenciar risco cibernético de terceiros, ajudando equipes de TPRM e GRC a tomar decisões informadas.
+            A <NriskBrand /> oferece recursos desenhados para avaliar e gerenciar risco cibernético de terceiros, ajudando equipes de TPRM e GRC a tomar decisões informadas.
           </p>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {SOLUTIONS.map((sol) => (

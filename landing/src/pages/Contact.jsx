@@ -1,10 +1,11 @@
 import { useState } from "react";
 import CtaSection from "../components/CtaSection";
+import NriskBrand from "../components/NriskBrand";
 
 const BENEFITS = [
   {
     title: "Demonstração personalizada",
-    text: "Veja como a n.Risk se aplica ao seu contexto — subscrição de cyber, TPRM, cadeia de suprimentos ou governança.",
+    textJsx: <>Veja como a <NriskBrand /> se aplica ao seu contexto — subscrição de cyber, TPRM, cadeia de suprimentos ou governança.</>,
   },
   {
     title: "Resposta em até 24h",
@@ -12,7 +13,7 @@ const BENEFITS = [
   },
   {
     title: "Sem compromisso",
-    text: "Uma conversa para explorar se a n.Risk faz sentido para você. Sem pressão comercial.",
+    textJsx: <>Uma conversa para explorar se a <NriskBrand /> faz sentido para você. Sem pressão comercial.</>,
   },
 ];
 
@@ -34,7 +35,7 @@ function Contact() {
               Fale com um <span className="text-accent">especialista</span>
             </h1>
             <p className="mt-6 mx-auto max-w-2xl text-lg text-gray-400">
-              Pronto para assumir o controle do seu risco cibernético? Converse com nossa equipe e veja como a n.Risk se aplica ao seu contexto — subscrição, TPRM, cadeia de suprimentos ou governança.
+              Pronto para assumir o controle do seu risco cibernético? Converse com nossa equipe e veja como a <NriskBrand /> se aplica ao seu contexto — subscrição, TPRM, cadeia de suprimentos ou governança.
             </p>
           </div>
 
@@ -45,7 +46,7 @@ function Contact() {
                 className="rounded-xl border-2 border-gray-800 p-6 transition-smooth hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
               >
                 <p className="font-semibold text-accent">{b.title}</p>
-                <p className="mt-3 text-sm text-gray-400">{b.text}</p>
+                <p className="mt-3 text-sm text-gray-400">{b.textJsx ?? b.text}</p>
               </div>
             ))}
           </div>

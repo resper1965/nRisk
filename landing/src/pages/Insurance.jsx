@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Accordion from "../components/Accordion";
 import CtaSection from "../components/CtaSection";
+import NriskBrand from "../components/NriskBrand";
 
 const WHY_ITEMS = [
   {
@@ -59,7 +60,7 @@ const FAQ_ITEMS = [
   {
     id: 3,
     question: "Como as seguradoras avaliam o risco para apólices de cyber?",
-    answer: "Avaliam fatores como medidas de segurança, incidentes passados e riscos do setor. A n.Risk agrega: score técnico (scan), avaliações declarativas, Cross-Check para inconsistências e Fator de Confiança — tudo em um único painel para decisão informada.",
+    answer: <>Avaliam fatores como medidas de segurança, incidentes passados e riscos do setor. A <NriskBrand /> agrega: score técnico (scan), avaliações declarativas, Cross-Check para inconsistências e Fator de Confiança — tudo em um único painel para decisão informada.</>,
   },
   {
     id: 4,
@@ -79,7 +80,7 @@ export default function Insurance() {
             <span className="text-accent">portfólio</span>
           </h1>
           <p className="opacity-0 animate-fade-in animate-delay-200 mt-6 mx-auto max-w-2xl text-lg text-gray-400">
-            Para seguradoras e corretoras de seguro, a n.Risk é uma ferramenta para avaliar o risco na contratação de uma apólice de risco cibernético. Identifique, meça e resolva ameaças com score híbrido e evidências — dados, não só declarações.
+            Para seguradoras e corretoras de seguro, a <NriskBrand /> é uma ferramenta para avaliar o risco na contratação de uma apólice de risco cibernético. Identifique, meça e resolva ameaças com score híbrido e evidências — dados, não só declarações.
           </p>
           <div className="opacity-0 animate-fade-in animate-delay-300 mt-10">
             <Link
@@ -95,10 +96,10 @@ export default function Insurance() {
       <section className="border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
         <div className="mx-auto max-w-6xl text-center">
           <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
-            Por que a n.Risk para apólices de risco cibernético?
+            Por que a <NriskBrand /> para apólices de risco cibernético?
           </h2>
           <p className="mt-3 text-gray-400 max-w-2xl mx-auto">
-            Ratings de segurança são vitais para reguladores, seguradoras e empresas. A n.Risk oferece monitoramento contínuo e insights em tempo real para avaliar e gerenciar riscos cibernéticos de forma eficaz.
+            Ratings de segurança são vitais para reguladores, seguradoras e empresas. A <NriskBrand /> oferece monitoramento contínuo e insights em tempo real para avaliar e gerenciar riscos cibernéticos de forma eficaz.
           </p>
           <div className="mt-12 grid gap-6 md:grid-cols-3 text-left">
             {WHY_ITEMS.map((item, i) => (
@@ -120,7 +121,7 @@ export default function Insurance() {
             Soluções para subscrição de risco cibernético
           </h2>
           <p className="mt-3 text-gray-400">
-            A n.Risk oferece recursos desenhados para avaliar e melhorar a subscrição de cyber, ajudando seguradoras a tomar decisões informadas e segurados a atender requisitos de segurança.
+            A <NriskBrand /> oferece recursos desenhados para avaliar e melhorar a subscrição de cyber, ajudando seguradoras a tomar decisões informadas e segurados a atender requisitos de segurança.
           </p>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {SOLUTIONS.map((sol) => (
