@@ -16,6 +16,7 @@ Instruções para agentes e desenvolvedores do n.Risk.
 3. **Scoring e GRC:** Consultar `nrisk-scoring-metodologia.md` e `nrisk-matriz-rastreabilidade-grc.md`
 4. **Scan Engine:** `mapping_logic.json` é fonte de verdade para mapeamento ISO 27001
 5. **Privacidade/LGPD:** Consultar `nrisk-dpcf-privacy-compliance.md`
+6. **Escopo alvo e gaps da landing:** A documentação (PRD, descrição funcional, project-overview, contexto) foi ajustada para refletir e resolver os gaps em relação à página pública. Consultar [gaps-landing-vs-aplicacao.md](.context/docs/gaps-landing-vs-aplicacao.md) para o que a página apresenta, status atual e entregas necessárias; [prd-plataforma-nrisk.md](.context/docs/prd-plataforma-nrisk.md) (§11) para os compromissos consolidados
 
 ## Stack
 

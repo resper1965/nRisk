@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+COPY.md
+README.md
+deploy-gcp.sh
+.dockerignore
+styles.css
+dist

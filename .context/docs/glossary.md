@@ -21,10 +21,10 @@ scaffoldVersion: "2.0.0"
 | **Assessment Question** | Pergunta do catálogo; vinculada a control_id do mapping_logic (ISO 27001). |
 | **Assessment Answer** | Resposta do usuário; answer_status: sim, nao, na, **Inconsistent** (quando scan contradiz). Regras: [regras-de-negocio-assessment.md](./regras-de-negocio-assessment.md). |
 | **Logic Engine (Cross-Check)** | Função que compara findings do scan com respostas positivas; marca Inconsistent se contraditadas. |
-| **Trust Center** | Página pública com selos, documentos e resumo de postura de segurança. |
-| **Evidence Vault** | Armazenamento GCS de evidências (PDFs, imagens) em `tenants/{tid}/assessments/{aid}/evidence/`; hash SHA-256 por arquivo para integridade. |
-| **Trilha (Track)** | Nível de maturidade do questionário: Bronze (auto-declaração), Prata (evidência obrigatória), Ouro (framework completo). |
-| **RBAC** | Operador responde perguntas; CISO/Admin submete assessment final para a seguradora. |
+| **Trust Center** | Página pública com selos, documentos e resumo de postura. Escopo alvo: visibilidade por perfil (RBAC); score, categoria, eixos A–F, status de evidências, histórico para demandantes. Ver [gaps-landing-vs-aplicacao.md](./gaps-landing-vs-aplicacao.md). |
+| **Evidence Vault** | Armazenamento GCS de evidências (PDFs, imagens) em `tenants/{tid}/assessments/{aid}/evidence/`; hash SHA-256 por arquivo. Escopo alvo: comentários e aprovação por evidência; trilha de auditoria. Ver [gaps-landing-vs-aplicacao.md](./gaps-landing-vs-aplicacao.md). |
+| **Trilha (Track)** | Nível de maturidade do questionário: Bronze (auto-declaração), Prata (evidência obrigatória para controles selecionados), Ouro (framework completo). Escopo alvo (FR3). |
+| **RBAC** | Operador responde perguntas; apenas CISO/Admin submete assessment final (escopo alvo — FR8). Resultado visível para demandantes conforme perfil. |
 
 ## Termos Técnicos
 
