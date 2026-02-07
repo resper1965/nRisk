@@ -46,6 +46,12 @@ func main() {
 	scanCtrl := controller.NewScanController(scanRepo, findingRepo, snapshotRepo)
 	justificationCtrl := controller.NewJustificationController(justificationRepo)
 
+	// TPRA Fase 1: Suppliers e Invitations
+	supplierRepo := firestore.NewSupplierRepository(fsClient)
+	invitationRepo := firestore.NewInvitationRepository(fsClient)
+	supplierCtrl := controller.NewSupplierController(supplierRepo, scanRepo)
+	invitationCtrl := controller.NewInvitationController(invitationRepo, supplierRepo)
+
 	answerRepo := firestore.NewAnswerRepository(fsClient)
 	var evidenceStore *storage.EvidenceStore
 	if bucket := os.Getenv("GCS_EVIDENCE_BUCKET"); bucket != "" {
@@ -89,7 +95,20 @@ func main() {
 		v1.POST("/assessment/answer", assessmentCtrl.SubmitAnswer)
 		v1.GET("/assessment/score", assessmentCtrl.GetHybridScore)
 		v1.GET("/assessment/score/full", assessmentCtrl.GetFullScore)
+
+		// TPRA Fase 1: Suppliers
+		v1.POST("/suppliers", supplierCtrl.CreateSupplier)
+		v1.GET("/suppliers", supplierCtrl.ListSuppliers)
+		v1.GET("/suppliers/:id", supplierCtrl.GetSupplier)
+		v1.PATCH("/suppliers/:id", supplierCtrl.UpdateSupplier)
+
+		// TPRA Fase 1: Invitations
+		v1.POST("/suppliers/:id/invite", invitationCtrl.SendInvite)
+		v1.GET("/invitations", invitationCtrl.ListInvitations)
 	}
+
+	// Aceite de convite — endpoint publico (sem auth, via token)
+	router.POST("/api/v1/invitations/:token/accept", invitationCtrl.AcceptInvite)
 
 	srv := &http.Server{
 		Addr:         ":" + getPort(),
