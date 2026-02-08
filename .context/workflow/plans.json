@@ -1,14 +1,14 @@
 {
   "active": [
     {
-      "slug": "solve-p1-gaps",
-      "path": "plans/solve-p1-gaps.md",
-      "title": "Resolver gaps P1 (n.Risk vs SecurityScorecard)",
-      "summary": "Implementar os 6 itens P1 do plano nrisk-gaps-concorrencia: (1) rating A–F por eixo no spider/relatório, (2) jornada persistida (cross-check + ScoreBreakdown + histórico), (3) continuous monitoring (scans agendados + snapshot por data), (4) relatórios board/subscrição (PDF, dashboards), (5) telemetria/alertas (webhook, integração), (6) justificativa de finding (fluxo backend + UI + avaliador).",
-      "linkedAt": "2026-02-05T12:48:26.855Z",
+      "slug": "nrisk-landing-redacao-ux-polimento",
+      "path": "plans/nrisk-landing-redacao-ux-polimento.md",
+      "title": "n.Risk Landing — Redação e UX/UI",
+      "summary": "Plano para melhorar redação (copy) e polimento visual/UX do site n.Risk, usando agentes especializados e boas práticas de copywriting corporativo e design.",
+      "linkedAt": "2026-02-05T20:19:36.081Z",
       "status": "active"
     }
   ],
   "completed": [],
-  "primary": "solve-p1-gaps"
+  "primary": "nrisk-landing-redacao-ux-polimento"
 }

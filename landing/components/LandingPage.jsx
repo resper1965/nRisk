@@ -656,7 +656,7 @@ export default function LandingPage() {
             </div>
             <nav className="flex gap-6">
               <a href="#" className="text-sm text-slate-500 hover:text-slate-700">
-                Privacidade
+                LGPD
               </a>
               <a href="#" className="text-sm text-slate-500 hover:text-slate-700">
                 Termos

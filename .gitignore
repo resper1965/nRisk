@@ -30,6 +30,11 @@ service-account*.json
 dist/
 build/
 
+# Next.js (landing)
+landing/.next/
+landing/node_modules/
+landing/out/
+
 # OS
 .DS_Store
 Thumbs.db
