@@ -4,6 +4,7 @@ import (
 	"math"
 
 	"github.com/nrisk/backend/internal/domain"
+	"github.com/nrisk/backend/internal/insight"
 )
 
 const (
@@ -171,6 +172,12 @@ func ComputeFullScore(input ScoreInput) domain.ScoreBreakdown {
 		}
 	}
 
+	// 8. Generate Robo-CISO insights
+	var insights []domain.FindingInsight
+	for _, id := range input.FindingIDs {
+		insights = append(insights, insight.GetInsight(id))
+	}
+
 	return domain.ScoreBreakdown{
 		TechnicalScore:     input.TechnicalScore,
 		ComplianceScoreRaw: complianceRaw,
@@ -182,6 +189,7 @@ func ComputeFullScore(input ScoreInput) domain.ScoreBreakdown {
 		CriticalPenalty:    criticalApplied,
 		Inconsistencies:    inconsistencies,
 		DomainScores:       domainScores,
+		Insights:           insights,
 		FrameworkID:        input.FrameworkID,
 	}
 }
@@ -206,6 +214,7 @@ type ScoreInput struct {
 	Questions          []domain.Question
 	AnswersByQuestion  map[string]*domain.Answer
 	FindingsByControl  map[string][]string // control_id -> lista de severidades
+	FindingIDs         []string            // IDs de achados técnicos para geração de insights
 	FrameworkID        string
 }
 

@@ -23,6 +23,15 @@ type Question struct {
 	Category           string `json:"category"`             // categoria para agrupamento no spider chart
 }
 
+// FindingInsight representa uma interpretação humana de um achado técnico.
+type FindingInsight struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Impact      string `json:"impact"`
+	Remediation string `json:"remediation"`
+}
+
 // Answer representa a resposta de um tenant a uma pergunta.
 type Answer struct {
 	ID          string    `json:"id"`
@@ -60,6 +69,7 @@ type ScoreBreakdown struct {
 	CriticalPenalty     bool               `json:"critical_penalty_applied"`
 	Inconsistencies     []CrossCheckResult `json:"inconsistencies,omitempty"`
 	DomainScores       map[string]float64  `json:"domain_scores"`          // para spider chart
+	Insights          []FindingInsight    `json:"insights,omitempty"`      // Robo-CISO insights
 	FrameworkID        string             `json:"framework_id"`
 }
 
