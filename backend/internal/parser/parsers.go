@@ -107,11 +107,11 @@ func ParseSubfinderOutput(output string) []RawFinding {
 }
 
 // TranslateToAuditFindings converte RawFindings em AuditFindings usando o Parser.
-func TranslateToAuditFindings(p *Parser, tenantID, scanID, domain string, raw []RawFinding) []*domain.AuditFinding {
+func TranslateToAuditFindings(p *Parser, tenantID, scanID, domainName string, raw []RawFinding) []*domain.AuditFinding {
 	var result []*domain.AuditFinding
 	for _, r := range raw {
 		af, err := p.ToAuditFinding(
-			tenantID, scanID, domain,
+			tenantID, scanID, domainName,
 			r.ToolName, r.TechnicalFinding,
 			r.Title, r.Detail, r.RawOutput,
 			r.Port, r.TemplateID,

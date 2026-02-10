@@ -46,13 +46,8 @@ func main() {
 	scanCtrl := controller.NewScanController(scanRepo, findingRepo, snapshotRepo)
 	justificationCtrl := controller.NewJustificationController(justificationRepo)
 
-	// TPRA Fase 1: Suppliers e Invitations
-	supplierRepo := firestore.NewSupplierRepository(fsClient)
-	invitationRepo := firestore.NewInvitationRepository(fsClient)
-	supplierCtrl := controller.NewSupplierController(supplierRepo, scanRepo)
-	invitationCtrl := controller.NewInvitationController(invitationRepo, supplierRepo)
-
 	answerRepo := firestore.NewAnswerRepository(fsClient)
+
 	var evidenceStore *storage.EvidenceStore
 	if bucket := os.Getenv("GCS_EVIDENCE_BUCKET"); bucket != "" {
 		sc, err := gcpstorage.NewClient(ctx)
@@ -68,6 +63,12 @@ func main() {
 		questionsPath = filepath.Join(".", "assessment_questions.json")
 	}
 	assessmentCtrl := controller.NewAssessmentController(answerRepo, scanRepo, findingRepo, snapshotRepo, justificationRepo, evidenceStore, questionsPath)
+
+	// TPRA Fase 1+3: Suppliers, Invitations e Score
+	supplierRepo := firestore.NewSupplierRepository(fsClient)
+	invitationRepo := firestore.NewInvitationRepository(fsClient)
+	supplierCtrl := controller.NewSupplierController(supplierRepo, scanRepo, answerRepo, findingRepo, snapshotRepo, justificationRepo, evidenceStore, questionsPath)
+	invitationCtrl := controller.NewInvitationController(invitationRepo, supplierRepo)
 
 	router := gin.New()
 	router.Use(gin.Recovery())
@@ -96,13 +97,18 @@ func main() {
 		v1.GET("/assessment/score", assessmentCtrl.GetHybridScore)
 		v1.GET("/assessment/score/full", assessmentCtrl.GetFullScore)
 
-		// TPRA Fase 1: Suppliers
+		// TPRA: Suppliers CRUD
 		v1.POST("/suppliers", supplierCtrl.CreateSupplier)
 		v1.GET("/suppliers", supplierCtrl.ListSuppliers)
 		v1.GET("/suppliers/:id", supplierCtrl.GetSupplier)
 		v1.PATCH("/suppliers/:id", supplierCtrl.UpdateSupplier)
 
-		// TPRA Fase 1: Invitations
+		// TPRA Fase 3: Supplier Assessment e Score
+		v1.POST("/suppliers/:id/answer", supplierCtrl.SubmitSupplierAnswer)
+		v1.GET("/suppliers/:id/score", supplierCtrl.GetSupplierScore)
+		v1.GET("/suppliers/:id/score-history", supplierCtrl.GetSupplierScoreHistory)
+
+		// TPRA: Invitations
 		v1.POST("/suppliers/:id/invite", invitationCtrl.SendInvite)
 		v1.GET("/invitations", invitationCtrl.ListInvitations)
 	}
