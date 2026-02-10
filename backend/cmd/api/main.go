@@ -70,6 +70,11 @@ func main() {
 	supplierCtrl := controller.NewSupplierController(supplierRepo, scanRepo, answerRepo, findingRepo, snapshotRepo, justificationRepo, evidenceStore, questionsPath)
 	invitationCtrl := controller.NewInvitationController(invitationRepo, supplierRepo)
 
+	// TPRA Fase 4: Trust Center e NDA
+	trustCenterRepo := firestore.NewTrustCenterRepository(fsClient)
+	ndaRepo := firestore.NewNDARepository(fsClient)
+	trustCenterCtrl := controller.NewTrustCenterController(trustCenterRepo, ndaRepo, snapshotRepo, scanRepo)
+
 	router := gin.New()
 	router.Use(gin.Recovery())
 	router.Use(middleware.SecurityHeaders())
@@ -111,10 +116,20 @@ func main() {
 		// TPRA: Invitations
 		v1.POST("/suppliers/:id/invite", invitationCtrl.SendInvite)
 		v1.GET("/invitations", invitationCtrl.ListInvitations)
+
+		// TPRA Fase 4: Trust Center (autenticado)
+		v1.POST("/trust-center", trustCenterCtrl.CreateOrUpdateTrustCenter)
+		v1.GET("/trust-center", trustCenterCtrl.GetTrustCenter)
+
+		// TPRA Fase 4: NDA Management (autenticado)
+		v1.GET("/nda-requests", trustCenterCtrl.ListNDARequests)
+		v1.PATCH("/nda-requests/:id", trustCenterCtrl.ReviewNDARequest)
 	}
 
-	// Aceite de convite — endpoint publico (sem auth, via token)
+	// Endpoints publicos (sem auth)
 	router.POST("/api/v1/invitations/:token/accept", invitationCtrl.AcceptInvite)
+	router.GET("/trust/:slug", trustCenterCtrl.GetPublicTrustCenter)
+	router.POST("/trust/:slug/nda-request", trustCenterCtrl.SubmitNDARequest)
 
 	srv := &http.Server{
 		Addr:         ":" + getPort(),
