@@ -18,6 +18,9 @@ type QuestionsFile struct {
 	} `json:"frameworks"`
 }
 
+// trackOrder define a hierarquia de trilhas: bronze < silver < gold.
+var trackOrder = map[string]int{"bronze": 1, "silver": 2, "gold": 3}
+
 // LoadQuestionnaire carrega perguntas do framework informado.
 func LoadQuestionnaire(path, frameworkID string) (*domain.Questionnaire, error) {
 	if path == "" {
@@ -41,4 +44,39 @@ func LoadQuestionnaire(path, frameworkID string) (*domain.Questionnaire, error) 
 		}
 	}
 	return nil, fmt.Errorf("framework %s não encontrado", frameworkID)
+}
+
+// LoadQuestionnaireByTrack carrega perguntas filtradas por trilha de maturidade.
+// Bronze: apenas perguntas bronze. Silver: bronze + silver. Gold: todas.
+func LoadQuestionnaireByTrack(path, frameworkID, track string) (*domain.Questionnaire, error) {
+	q, err := LoadQuestionnaire(path, frameworkID)
+	if err != nil {
+		return nil, err
+	}
+
+	if track == "" || track == "gold" {
+		return q, nil
+	}
+
+	maxLevel, ok := trackOrder[track]
+	if !ok {
+		maxLevel = 1
+	}
+
+	filtered := make([]domain.Question, 0, len(q.Questions))
+	for _, question := range q.Questions {
+		questionLevel := trackOrder[question.Track]
+		if questionLevel == 0 {
+			questionLevel = 1
+		}
+		if questionLevel <= maxLevel {
+			filtered = append(filtered, question)
+		}
+	}
+
+	return &domain.Questionnaire{
+		FrameworkID:   q.FrameworkID,
+		FrameworkName: q.FrameworkName,
+		Questions:     filtered,
+	}, nil
 }

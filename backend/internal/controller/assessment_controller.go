@@ -42,8 +42,8 @@ func NewAssessmentController(answerRepo *firestore.AnswerRepository, scanRepo *f
 	}
 }
 
-// ListQuestions retorna as perguntas do framework.
-// GET /api/v1/assessment?framework=ISO27001
+// ListQuestions retorna as perguntas do framework, filtradas por trilha.
+// GET /api/v1/assessment?framework=ISO27001&track=silver
 func (ac *AssessmentController) ListQuestions(c *gin.Context) {
 	tenantID, exists := c.Get(middleware.TenantIDKey)
 	if !exists {
@@ -56,13 +56,26 @@ func (ac *AssessmentController) ListQuestions(c *gin.Context) {
 	if frameworkID == "" {
 		frameworkID = "ISO27001"
 	}
-	q, err := assessment.LoadQuestionnaire(ac.questionsPath, frameworkID)
+
+	track := c.Query("track")
+	if track != "" && !domain.ValidTracks[track] {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "track must be bronze, silver, or gold", "code": "INVALID_TRACK"})
+		return
+	}
+
+	q, err := assessment.LoadQuestionnaireByTrack(ac.questionsPath, frameworkID, track)
 	if err != nil {
-		logger.Warn("failed to load questionnaire", map[string]interface{}{"error": err.Error(), "framework": frameworkID})
+		logger.Warn("failed to load questionnaire", map[string]interface{}{"error": err.Error(), "framework": frameworkID, "track": track})
 		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "framework not found", "code": "FRAMEWORK_NOT_FOUND"})
 		return
 	}
-	c.JSON(http.StatusOK, q)
+	c.JSON(http.StatusOK, gin.H{
+		"framework_id":   q.FrameworkID,
+		"framework_name": q.FrameworkName,
+		"track":          track,
+		"total_questions": len(q.Questions),
+		"questions":      q.Questions,
+	})
 }
 
 // SubmitAnswerRequest representa o body de POST /assessment/answer.
@@ -191,7 +204,7 @@ func (ac *AssessmentController) GetHybridScore(c *gin.Context) {
 }
 
 // GetFullScore calcula ScoreBreakdown completo (cross-check + F + penalidade), persiste snapshot (P1.2) e retorna.
-// GET /api/v1/assessment/score/full?scan_id=uuid&framework=ISO27001
+// GET /api/v1/assessment/score/full?scan_id=uuid&framework=ISO27001&track=silver
 func (ac *AssessmentController) GetFullScore(c *gin.Context) {
 	tenantID, exists := c.Get(middleware.TenantIDKey)
 	if !exists {
@@ -264,7 +277,9 @@ func (ac *AssessmentController) GetFullScore(c *gin.Context) {
 		technicalScore = assessment.TechnicalScoreFromFindings(findings)
 	}
 
-	q, err := assessment.LoadQuestionnaire(ac.questionsPath, frameworkID)
+	track := c.Query("track")
+
+	q, err := assessment.LoadQuestionnaireByTrack(ac.questionsPath, frameworkID, track)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "framework not found", "code": "FRAMEWORK_NOT_FOUND"})
 		return
@@ -288,6 +303,7 @@ func (ac *AssessmentController) GetFullScore(c *gin.Context) {
 		AnswersByQuestion:  answersByQuestion,
 		FindingsByControl:  findingsByControl,
 		FrameworkID:        frameworkID,
+		Track:              track,
 	}
 	breakdown := assessment.ComputeFullScore(input)
 

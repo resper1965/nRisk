@@ -145,6 +145,13 @@ func ComputeFullScore(input ScoreInput) domain.ScoreBreakdown {
 	})
 	confidenceFactor := ComputeConfidenceFactor(crossCheckResults)
 
+	// 2.5 Penalidade por falta de evidencia em Silver/Gold
+	evidencePenalty := EvidencePenalty(input.Track, input.Questions, input.AnswersByQuestion)
+	confidenceFactor -= evidencePenalty
+	if confidenceFactor < 0.5 {
+		confidenceFactor = 0.5
+	}
+
 	// 3. Score de compliance ajustado
 	complianceAdjusted := float64(complianceRaw) * confidenceFactor
 
@@ -207,6 +214,7 @@ type ScoreInput struct {
 	AnswersByQuestion  map[string]*domain.Answer
 	FindingsByControl  map[string][]string // control_id -> lista de severidades
 	FrameworkID        string
+	Track              string // trilha do assessment: bronze, silver, gold
 }
 
 // ScoreCategory retorna a categoria (A-F) para um score.
@@ -305,6 +313,37 @@ func severityOrder(s string) int {
 	default:
 		return 0
 	}
+}
+
+// EvidencePenalty calcula a penalidade no fator F por falta de evidencia em trilhas Silver/Gold.
+// Perguntas com evidence_required=true e resposta "sim" sem evidence_url reduzem F.
+// Penalidade por pergunta sem evidencia: -0.03 (Silver), -0.05 (Gold).
+func EvidencePenalty(track string, questions []domain.Question, answersByQuestion map[string]*domain.Answer) float64 {
+	if track == "" || track == "bronze" {
+		return 0 // Bronze nao exige evidencia
+	}
+
+	penaltyPerMissing := 0.03
+	if track == "gold" {
+		penaltyPerMissing = 0.05
+	}
+
+	totalPenalty := 0.0
+	for _, q := range questions {
+		if q.EvidenceType == "" || q.EvidenceType == "none" {
+			continue
+		}
+		a, ok := answersByQuestion[q.ID]
+		if !ok || a == nil {
+			continue
+		}
+		// Penalidade: respondeu "sim" mas nao anexou evidencia
+		if a.Status == "sim" && a.EvidenceURL == "" {
+			totalPenalty += penaltyPerMissing
+		}
+	}
+
+	return totalPenalty
 }
 
 func clamp(v, min, max float64) float64 {
