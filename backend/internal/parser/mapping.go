@@ -117,7 +117,7 @@ func (p *Parser) FindByTemplateID(templateID string) (*MappingEntry, bool) {
 }
 
 // ToAuditFinding converte um achado técnico em AuditFinding.
-func (p *Parser) ToAuditFinding(tenantID, scanID, domain, toolName, technicalFinding, title, detail, rawOutput string, port int, templateID string) (*domain.AuditFinding, error) {
+func (p *Parser) ToAuditFinding(tenantID, scanID, domainName, toolName, technicalFinding, title, detail, rawOutput string, port int, templateID string) (*domain.AuditFinding, error) {
 	var entry *MappingEntry
 	var ok bool
 
@@ -137,7 +137,7 @@ func (p *Parser) ToAuditFinding(tenantID, scanID, domain, toolName, technicalFin
 	return &domain.AuditFinding{
 		TenantID:         tenantID,
 		ScanID:           scanID,
-		Domain:           domain,
+		Domain:           domainName,
 		ToolName:         toolName,
 		TechnicalFinding: entry.TechnicalFinding,
 		TemplateID:       templateID,

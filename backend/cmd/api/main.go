@@ -46,13 +46,8 @@ func main() {
 	scanCtrl := controller.NewScanController(scanRepo, findingRepo, snapshotRepo)
 	justificationCtrl := controller.NewJustificationController(justificationRepo)
 
-	// TPRA Fase 1: Suppliers e Invitations
-	supplierRepo := firestore.NewSupplierRepository(fsClient)
-	invitationRepo := firestore.NewInvitationRepository(fsClient)
-	supplierCtrl := controller.NewSupplierController(supplierRepo, scanRepo)
-	invitationCtrl := controller.NewInvitationController(invitationRepo, supplierRepo)
-
 	answerRepo := firestore.NewAnswerRepository(fsClient)
+
 	var evidenceStore *storage.EvidenceStore
 	if bucket := os.Getenv("GCS_EVIDENCE_BUCKET"); bucket != "" {
 		sc, err := gcpstorage.NewClient(ctx)
@@ -68,6 +63,17 @@ func main() {
 		questionsPath = filepath.Join(".", "assessment_questions.json")
 	}
 	assessmentCtrl := controller.NewAssessmentController(answerRepo, scanRepo, findingRepo, snapshotRepo, justificationRepo, evidenceStore, questionsPath)
+
+	// TPRA Fase 1+3: Suppliers, Invitations e Score
+	supplierRepo := firestore.NewSupplierRepository(fsClient)
+	invitationRepo := firestore.NewInvitationRepository(fsClient)
+	supplierCtrl := controller.NewSupplierController(supplierRepo, scanRepo, answerRepo, findingRepo, snapshotRepo, justificationRepo, evidenceStore, questionsPath)
+	invitationCtrl := controller.NewInvitationController(invitationRepo, supplierRepo)
+
+	// TPRA Fase 4: Trust Center e NDA
+	trustCenterRepo := firestore.NewTrustCenterRepository(fsClient)
+	ndaRepo := firestore.NewNDARepository(fsClient)
+	trustCenterCtrl := controller.NewTrustCenterController(trustCenterRepo, ndaRepo, snapshotRepo, scanRepo)
 
 	router := gin.New()
 	router.Use(gin.Recovery())
@@ -96,19 +102,34 @@ func main() {
 		v1.GET("/assessment/score", assessmentCtrl.GetHybridScore)
 		v1.GET("/assessment/score/full", assessmentCtrl.GetFullScore)
 
-		// TPRA Fase 1: Suppliers
+		// TPRA: Suppliers CRUD
 		v1.POST("/suppliers", supplierCtrl.CreateSupplier)
 		v1.GET("/suppliers", supplierCtrl.ListSuppliers)
 		v1.GET("/suppliers/:id", supplierCtrl.GetSupplier)
 		v1.PATCH("/suppliers/:id", supplierCtrl.UpdateSupplier)
 
-		// TPRA Fase 1: Invitations
+		// TPRA Fase 3: Supplier Assessment e Score
+		v1.POST("/suppliers/:id/answer", supplierCtrl.SubmitSupplierAnswer)
+		v1.GET("/suppliers/:id/score", supplierCtrl.GetSupplierScore)
+		v1.GET("/suppliers/:id/score-history", supplierCtrl.GetSupplierScoreHistory)
+
+		// TPRA: Invitations
 		v1.POST("/suppliers/:id/invite", invitationCtrl.SendInvite)
 		v1.GET("/invitations", invitationCtrl.ListInvitations)
+
+		// TPRA Fase 4: Trust Center (autenticado)
+		v1.POST("/trust-center", trustCenterCtrl.CreateOrUpdateTrustCenter)
+		v1.GET("/trust-center", trustCenterCtrl.GetTrustCenter)
+
+		// TPRA Fase 4: NDA Management (autenticado)
+		v1.GET("/nda-requests", trustCenterCtrl.ListNDARequests)
+		v1.PATCH("/nda-requests/:id", trustCenterCtrl.ReviewNDARequest)
 	}
 
-	// Aceite de convite — endpoint publico (sem auth, via token)
+	// Endpoints publicos (sem auth)
 	router.POST("/api/v1/invitations/:token/accept", invitationCtrl.AcceptInvite)
+	router.GET("/trust/:slug", trustCenterCtrl.GetPublicTrustCenter)
+	router.POST("/trust/:slug/nda-request", trustCenterCtrl.SubmitNDARequest)
 
 	srv := &http.Server{
 		Addr:         ":" + getPort(),

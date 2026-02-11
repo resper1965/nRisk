@@ -71,3 +71,40 @@ func (r *AnswerRepository) ListByTenant(ctx context.Context, tenantID string) ([
 	}
 	return out, nil
 }
+
+// SaveForSupplier persiste uma resposta no escopo de um fornecedor.
+// Path: tenants/{tenantId}/suppliers/{supplierId}/answers/{questionId}
+func (r *AnswerRepository) SaveForSupplier(ctx context.Context, tenantID, supplierID string, a *domain.Answer) error {
+	a.TenantID = tenantID
+	if a.ID == "" {
+		a.ID = uuid.New().String()
+	}
+	if a.RespondedAt.IsZero() {
+		a.RespondedAt = time.Now().UTC()
+	}
+	colRef := r.client.Collection("tenants").Doc(tenantID).Collection(suppliersCollection).Doc(supplierID).Collection(answersCollection)
+	_, err := colRef.Doc(a.QuestionID).Set(ctx, a)
+	return err
+}
+
+// ListBySupplier retorna todas as respostas do assessment de um fornecedor.
+// Path: tenants/{tenantId}/suppliers/{supplierId}/answers/*
+func (r *AnswerRepository) ListBySupplier(ctx context.Context, tenantID, supplierID string) ([]*domain.Answer, error) {
+	colRef := r.client.Collection("tenants").Doc(tenantID).Collection(suppliersCollection).Doc(supplierID).Collection(answersCollection)
+	iter := colRef.Documents(ctx)
+	defer iter.Stop()
+	var out []*domain.Answer
+	for {
+		doc, err := iter.Next()
+		if err != nil {
+			break
+		}
+		var a domain.Answer
+		if err := doc.DataTo(&a); err != nil {
+			continue
+		}
+		a.ID = doc.Ref.ID
+		out = append(out, &a)
+	}
+	return out, nil
+}

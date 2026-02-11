@@ -10,6 +10,9 @@ import (
 // Labels: 1-63 chars, alfanumérico e hífen; separados por ponto.
 var hostnameRegex = regexp.MustCompile(`^([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)*[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$`)
 
+// emailRegex valida formato basico de e-mail.
+var emailRegex = regexp.MustCompile(`^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$`)
+
 // IsValidHostname retorna true se domain é um hostname válido.
 // Evita injeção em comandos (nmap, nuclei, etc.).
 func IsValidHostname(domain string) bool {
@@ -24,6 +27,14 @@ func IsValidHostname(domain string) bool {
 func IsValidUUID(s string) bool {
 	_, err := uuid.Parse(s)
 	return err == nil
+}
+
+// IsValidEmail retorna true se s tem formato basico de e-mail valido.
+func IsValidEmail(s string) bool {
+	if len(s) == 0 || len(s) > 254 {
+		return false
+	}
+	return emailRegex.MatchString(s)
 }
 
 // IsSafePathSegment retorna true se s é seguro para uso em path (tenant_id, etc.).
