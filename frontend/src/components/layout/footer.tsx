@@ -2,53 +2,52 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-                nR
-              </div>
-              <span className="text-lg font-bold">
-                n.<span className="text-primary">Risk</span>
-              </span>
-            </div>
-            <p className="mt-3 text-sm text-muted">
-              Saiba o risco real dos seus fornecedores antes que um incidente custe milhoes.
+    <footer className="border-t border-white/5 bg-gray-950 py-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
+          <div className="space-y-6">
+            <Link href="/" className="group flex items-center gap-0.5 text-[1.25rem] font-medium tracking-tight">
+              <span className="text-gray-100">n</span>
+              <span className="text-accent leading-none">.</span>
+              <span className="text-gray-100 -ml-0.5">Risk</span>
+            </Link>
+            <p className="max-w-xs text-sm leading-relaxed text-gray-500">
+              Transformando incerteza em evidência auditável. A maior autoridade em Score Híbrido para GRC e Risk Management.
             </p>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider">Solucoes</h3>
-            <ul className="mt-3 space-y-2">
-              <li><Link href="/#para-quem" className="text-sm text-muted hover:text-foreground">Para Seguradoras</Link></li>
-              <li><Link href="/#para-quem" className="text-sm text-muted hover:text-foreground">Para Gestores GRC</Link></li>
-              <li><Link href="/#para-quem" className="text-sm text-muted hover:text-foreground">Para CISOs</Link></li>
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-100">Soluções</h3>
+            <ul className="mt-6 space-y-4">
+              <li><Link href="/#para-quem" className="text-sm text-gray-500 transition-colors hover:text-accent">Para Seguradoras</Link></li>
+              <li><Link href="/#para-quem" className="text-sm text-gray-500 transition-colors hover:text-accent">Gestão de GRC</Link></li>
+              <li><Link href="/#para-quem" className="text-sm text-gray-500 transition-colors hover:text-accent">Cyber Underwriting</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider">Produto</h3>
-            <ul className="mt-3 space-y-2">
-              <li><Link href="/#como-funciona" className="text-sm text-muted hover:text-foreground">Como Funciona</Link></li>
-              <li><Link href="/trust/demo" className="text-sm text-muted hover:text-foreground">Trust Center Demo</Link></li>
-              <li><Link href="/#solucao" className="text-sm text-muted hover:text-foreground">Cyber Risk Score</Link></li>
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-100">Produto</h3>
+            <ul className="mt-6 space-y-4">
+              <li><Link href="/#como-funciona" className="text-sm text-gray-500 transition-colors hover:text-accent">Como Funciona</Link></li>
+              <li><Link href="/trust/demo" className="text-sm text-gray-500 transition-colors hover:text-accent">Trust Center</Link></li>
+              <li><Link href="/#solucao" className="text-sm text-gray-500 transition-colors hover:text-accent">Cyber Risk Score</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider">Compliance</h3>
-            <ul className="mt-3 space-y-2">
-              <li className="text-sm text-muted">ISO 27001</li>
-              <li className="text-sm text-muted">LGPD / GDPR</li>
-              <li className="text-sm text-muted">NIST CSF</li>
+            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-100">Compliance</h3>
+            <ul className="mt-6 space-y-4">
+              <li className="text-sm text-gray-500">ISO/IEC 27001</li>
+              <li className="text-sm text-gray-500">LGPD & GDPR</li>
+              <li className="text-sm text-gray-500">NIST Cyber Framework</li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-8 border-t border-border pt-8 text-center text-sm text-muted">
-          n.Risk — Gestao de riscos ciberneticos de terceiros para quem nao pode errar.
+        <div className="mt-16 border-t border-white/5 pt-8">
+          <p className="text-center text-xs font-medium tracking-widest text-gray-600 uppercase">
+            © {new Date().getFullYear()} n.Risk — Gestão de riscos de alta precisão
+          </p>
         </div>
       </div>
     </footer>

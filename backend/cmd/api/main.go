@@ -93,9 +93,9 @@ func main() {
 		v1.GET("/scans/:id", scanCtrl.GetScan)
 		v1.GET("/scans/:id/score-history", scanCtrl.GetScoreHistory)
 
-		v1.POST("/scans/:scan_id/findings/:finding_id/justifications", justificationCtrl.SubmitJustification)
-		v1.GET("/scans/:scan_id/findings/:finding_id/justifications", justificationCtrl.ListJustifications)
-		v1.PATCH("/scans/:scan_id/justifications/:id/review", justificationCtrl.ReviewJustification)
+		v1.POST("/scans/:id/findings/:finding_id/justifications", justificationCtrl.SubmitJustification)
+		v1.GET("/scans/:id/findings/:finding_id/justifications", justificationCtrl.ListJustifications)
+		v1.PATCH("/scans/:id/justifications/:justification_id/review", justificationCtrl.ReviewJustification)
 
 		v1.GET("/assessment", assessmentCtrl.ListQuestions)
 		v1.POST("/assessment/answer", assessmentCtrl.SubmitAnswer)

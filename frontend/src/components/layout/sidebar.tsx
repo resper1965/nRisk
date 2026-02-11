@@ -47,20 +47,19 @@ const icons: Record<string, React.ReactNode> = {
 
 export function Sidebar() {
   return (
-    <aside className="fixed left-0 top-0 z-40 flex h-screen w-64 flex-col border-r border-border bg-card">
-      <div className="flex h-16 items-center gap-2 border-b border-border px-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white">
-          nR
-        </div>
-        <span className="text-lg font-bold">
-          n.<span className="text-primary">Risk</span>
-        </span>
+    <aside className="fixed left-0 top-0 z-40 flex h-screen w-64 flex-col border-r border-white/5 bg-gray-950">
+      <div className="flex h-16 items-center px-6 border-b border-white/5">
+        <Link href="/" className="group flex items-center gap-0.5 text-[1.125rem] font-medium tracking-tight">
+          <span className="text-gray-100">n</span>
+          <span className="text-accent leading-none">.</span>
+          <span className="text-gray-100 -ml-0.5">Risk</span>
+        </Link>
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-4 py-4">
+      <nav className="flex-1 overflow-y-auto px-4 py-8">
         {menuItems.map((group) => (
-          <div key={group.section} className="mb-6">
-            <h3 className="mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-muted">
+          <div key={group.section} className="mb-8">
+            <h3 className="mb-4 px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-500">
               {group.section}
             </h3>
             <ul className="space-y-1">
@@ -68,9 +67,11 @@ export function Sidebar() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium text-muted transition-colors hover:bg-primary-light hover:text-foreground"
+                    className="flex items-center gap-3 rounded-sm px-3 py-2.5 text-sm font-semibold text-gray-400 transition-smooth hover:bg-white/5 hover:text-accent group"
                   >
-                    {icons[item.icon]}
+                    <span className="transition-colors group-hover:text-accent">
+                      {icons[item.icon]}
+                    </span>
                     {item.label}
                   </Link>
                 </li>
@@ -80,10 +81,10 @@ export function Sidebar() {
         ))}
       </nav>
 
-      <div className="border-t border-border p-4">
+      <div className="border-t border-white/5 p-6">
         <Link
           href="/"
-          className="text-xs text-muted hover:text-foreground"
+          className="text-xs font-bold uppercase tracking-widest text-gray-500 transition-colors hover:text-gray-100"
         >
           Voltar ao site
         </Link>

@@ -5,189 +5,180 @@ import NriskBrand from "../components/NriskBrand";
 
 const WHY_ITEMS = [
   {
-    title: "Declarações sem prova deixam você vulnerável",
-    textJsx: <>Avaliações tradicionais dependem do que o fornecedor diz. A <NriskBrand /> detecta inconsistências entre declaração e scan técnico — Cross-Check e Fator de Confiança tornam a confiança auditável.</>,
+    title: "Confiança Auditável, não Apenas Declarada",
+    textJsx: <>Processos baseados apenas em questionários são vulneráveis. A <NriskBrand /> detecta inconsistências entre o que é declarado e a realidade técnica dos ativos, gerando um Fator de Confiança real.</>,
   },
   {
-    title: "Priorize com clareza, remedie com rastreabilidade",
-    text: "Score híbrido 0–1000, categoria A–F e eixos técnicos para decisão em subscrição e TPRM. Evidências centralizadas, instantâneos e trilha de auditoria para compliance e subscritores.",
+    title: "Score Híbrido 0-1000",
+    text: "Mensure o risco com precisão matemática. Unimos Scan de Superfície, Avaliações por Framework e Gerenciamento de Evidências em um único indicador para decisões de GRC e Underwriting.",
   },
   {
-    title: "Uma plataforma para quem decide",
-    textJsx: <>Seguradoras, equipes TPRM/GRC e CISOs confiam na <NriskBrand /> para risco de terceiros. Detecte, priorize e remedie em um só lugar — dados, não só declarações.</>,
+    title: "Uma Plataforma, Múltiplas Visões",
+    textJsx: <>Seja você um CISO protegendo sua rede, uma equipe de TPRM avaliando terceiros, ou uma Seguradora subcrevendo riscos, a <NriskBrand /> entrega os dados necessários para quem decide.</>,
   },
 ];
 
 const SOLUTIONS = [
   {
-    title: "Cadeia de suprimentos",
-    desc: "Risco de terceiros com visibilidade contínua",
-    bullets: ["TPRM e detecção contínua", "Conferência cruzada e Trust Center", "Qualificação de fornecedores"],
+    title: "Third-Party Risk (TPRA)",
+    desc: "Gerencie o risco de todo o seu ecossistema",
+    bullets: ["Monitoramento contínuo de superfície", "Conferência cruzada automatizada", "Gestão de terceiros por categoria"],
     href: "/nrisk/supply-chain",
   },
   {
-    title: "Seguradoras e corretoras",
-    desc: "Avalie o risco na contratação de apólices de cyber",
-    bullets: ["Subscrição baseada em score e evidências", "Monitoramento de portfólio", "Triagem e precificação"],
+    title: "Seguradoras e Corretoras",
+    desc: "Avalie o risco na contratação de apólices",
+    bullets: ["Subscrição baseada em evidência técnica", "Triagem e precificação de portfólio", "Redução de incerteza em seguros cyber"],
     href: "/nrisk/insurance",
   },
   {
-    title: "Avaliações e governança",
-    desc: "Questionários por framework com evidências centralizadas",
-    bullets: ["ISO 27001, NIST CSF, LGPD", "Cofre de evidências", "Trust Center para terceiros"],
-    href: "/nrisk/assessments",
+    title: "Inner GRC Portal",
+    desc: "Sua conformidade interna em um só lugar",
+    bullets: ["Autoavaliação profunda (ISO, NIST, LGPD)", "Cofre de evidências imutável", "Mapeamento transversal de controles"],
+    href: "/nrisk/compliance",
   },
 ];
 
 const PRODUCTS = [
-  { label: "Score e scan de superfície", desc: "Avalie a exposição técnica de qualquer organização" },
-  { label: "Cross-Check e Fator de Confiança", desc: "Consistência entre declaração e realidade técnica" },
-  { label: "Avaliações híbridas", desc: "Técnico + declarativo com evidências centralizadas" },
-  { label: "Trust Center", desc: "Visibilidade configurável para terceiros e demandantes" },
+  { label: "Technical Score & Scan", desc: "Varredura 24/7 de exposição técnica externa e vulnerabilidades." },
+  { label: "Evidence Management", desc: "Gestão centralizada de políticas, documentos e registros técnicos." },
+  { label: "Cross-Check Engine", desc: "Detecção automática de discrepâncias entre scan e questionários." },
+  { label: "Executive Dashboards", desc: "Visão estratégica de maturidade A-F para C-Level e Boards." },
 ];
 
 const ONBOARDING = [
-  "Alinhamento de escopo (domínios, frameworks).",
-  "Configuração de tenant e integrações.",
-  "Primeira avaliação e revisão de resultados.",
-  "Ativação e acompanhamento contínuo.",
+  { step: "Alinhamento de Escopo", desc: "Definição de domínios, terceiros e frameworks de conformidade." },
+  { step: "Ativação de Tenant", desc: "Configuração do portal de GRC e início dos scans automatizados." },
+  { step: "Análise de Resultados", desc: "Revisão do primeiro ciclo de score híbrido e plano de remediação." },
+  { step: "Gestão Contínua", desc: "Monitoramento recorrente com alertas e atualizações de evidência." },
 ];
 
 function NriskOverview() {
   return (
-    <div>
-      <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-24">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="opacity-0 animate-fade-in text-sm font-medium uppercase tracking-wider text-accent">
-            Gestão de risco cibernético com evidência
+    <div className="bg-gray-950">
+      <section className="relative overflow-hidden border-b border-gray-800/50 px-4 py-20 sm:px-6 lg:py-32 text-center">
+        <div className="absolute inset-0 z-0 opacity-20 [background-image:radial-gradient(#00ade8_0.5px,transparent_0.5px)] [background-size:24px_24px]" />
+        
+        <div className="relative z-10 mx-auto max-w-5xl">
+          <p className="opacity-0 animate-fade-in text-sm font-bold uppercase tracking-[0.2em] text-accent">
+            Gestão de Risco Cibernético com Evidência
           </p>
-          <h1 className="opacity-0 animate-fade-in animate-delay-100 mt-4 text-3xl font-semibold leading-tight tracking-tight text-gray-100 sm:text-4xl lg:text-5xl">
-            Assuma o controle do risco de terceiros em toda a{" "}
-            <span className="text-accent">cadeia de suprimentos</span>
+          <h1 className="opacity-0 animate-fade-in animate-delay-100 mt-6 text-4xl font-bold leading-tight tracking-tight text-gray-100 sm:text-5xl lg:text-7xl">
+            Visibilidade Total do <br className="hidden sm:block" />
+            <span className="text-accent italic">Risco que Realmente Importa</span>
           </h1>
-          <p className="opacity-0 animate-fade-in animate-delay-200 mt-6 mx-auto max-w-2xl text-lg text-gray-400">
-            Detecte, priorize e remedie: score híbrido, Cross-Check e evidências em uma única plataforma.{" "}
-            <span className="text-accent font-medium">Confiança medida, não só declarada.</span>
+          <p className="opacity-0 animate-fade-in animate-delay-200 mt-8 mx-auto max-w-3xl text-xl leading-relaxed text-gray-400">
+            Da qualificação de <span className="text-gray-200 font-bold">terceiros (TPRA)</span> à <span className="text-gray-200 font-bold">conformidade interna (GRC)</span>: a <NriskBrand /> une scan técnico e evidências profundas para uma visão de risco sem pontos cegos.
           </p>
-          <div className="opacity-0 animate-fade-in animate-delay-300 mt-10 flex flex-wrap justify-center gap-4">
+          <div className="opacity-0 animate-fade-in animate-delay-300 mt-12 flex flex-wrap justify-center gap-6">
             <Link
               to="/nrisk/contact"
-              className="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-gray-900 shadow-lg shadow-accent/20 transition-smooth hover:scale-105 hover:shadow-accent/30 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+              className="group inline-flex items-center justify-center rounded-sm bg-accent px-8 py-4 text-sm font-bold text-gray-900 shadow-[0_0_30px_rgba(0,173,232,0.2)] transition-smooth hover:scale-105 hover:shadow-[0_0_40px_rgba(0,173,232,0.4)] hover:brightness-110 uppercase tracking-widest"
             >
-              Solicitar demonstração
+              Solicitar Demonstração
             </Link>
             <Link
               to="/nrisk/methodology"
-              className="inline-flex items-center justify-center rounded-md border-2 border-accent/50 bg-transparent px-6 py-3 text-sm font-semibold text-accent transition-smooth hover:bg-accent/10 hover:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+              className="inline-flex items-center justify-center rounded-sm border-[1px] border-accent/40 bg-transparent px-8 py-4 text-sm font-bold text-accent transition-smooth hover:bg-accent/10 hover:border-accent uppercase tracking-widest"
             >
-              Ver como funciona
+              Ver Metodologia
             </Link>
           </div>
         </div>
-        <div className="opacity-0 animate-fade-in-up animate-delay-400 mx-auto mt-16 max-w-5xl px-4">
-          <ProductMock />
+        <div className="opacity-0 animate-fade-in-up animate-delay-400 mx-auto mt-20 max-w-6xl px-4">
+          <div className="rounded-sm border-[1px] border-gray-800 bg-gray-900/50 p-2 shadow-2xl backdrop-blur-sm">
+            <ProductMock />
+          </div>
         </div>
       </section>
 
-      <section className="scroll-mt-20 border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
+      <section className="border-b border-gray-800/50 bg-gray-950 px-4 py-16 sm:px-6 lg:py-32">
         <div className="mx-auto max-w-6xl text-center">
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl text-center">
             Por que a <NriskBrand />?
           </h2>
-          <p className="mt-3 text-gray-400 max-w-2xl mx-auto">
-            Ratings de segurança são vitais para reguladores, seguradoras e empresas. A <NriskBrand /> oferece monitoramento contínuo e insights em tempo real para avaliar e gerenciar riscos cibernéticos de forma eficaz.
-          </p>
-          <div className="mt-12 grid gap-6 md:grid-cols-3 text-left">
+          <div className="mt-16 grid gap-8 md:grid-cols-3 text-left">
             {WHY_ITEMS.map((item) => (
               <div
                 key={item.title}
-                className="rounded-xl border-2 border-gray-800 p-6 transition-smooth hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5"
+                className="group relative p-8 rounded-sm border-[1px] border-gray-800 bg-gray-900 transition-smooth hover:border-accent/40 hover:shadow-2xl"
               >
-                <p className="font-semibold text-accent">{item.title}</p>
-                <p className="mt-3 text-sm text-gray-400">{item.textJsx ?? item.text}</p>
+                <p className="font-bold text-accent uppercase text-xs tracking-widest">{item.title}</p>
+                <div className="mt-4 text-sm text-gray-400 leading-relaxed group-hover:text-gray-300">{item.textJsx ?? item.text}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-20">
+      <section className="border-b border-gray-800/50 px-4 py-20 sm:px-6 lg:py-32">
         <div className="mx-auto max-w-6xl text-center">
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
-            Soluções para risco de terceiros
+          <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
+            Soluções Integradas de Risco
           </h2>
-          <p className="mt-3 text-gray-400">
-            A <NriskBrand /> oferece recursos desenhados para avaliar e gerenciar risco cibernético em diferentes contextos — TPRM, subscrição de cyber e governança.
-          </p>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-16 grid gap-0 md:grid-cols-3 border-[1px] border-gray-800">
             {SOLUTIONS.map((sol) => (
-              <Link
+              <div
                 key={sol.title}
-                to={sol.href}
-                className="group block rounded-xl border-2 border-gray-800 p-6 text-left transition-smooth hover:border-accent/50 hover:shadow-lg hover:shadow-accent/5 hover:-translate-y-1"
+                className="group relative p-12 text-left transition-smooth hover:bg-accent/5 border-[1px] border-transparent hover:border-accent/20"
               >
-                <p className="font-semibold text-accent group-hover:text-accent">{sol.title}</p>
-                <p className="mt-2 text-sm font-medium text-gray-300">{sol.desc}</p>
-                <ul className="mt-4 space-y-2">
-                  {sol.bullets.map((b) => (
-                    <li key={b} className="flex gap-2 text-sm text-gray-400">
-                      <span className="shrink-0 mt-1 h-1.5 w-1.5 rounded-full bg-accent" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </Link>
+                <div className="flex flex-col h-full">
+                  <p className="font-bold text-accent uppercase text-xs tracking-widest">{sol.title}</p>
+                  <p className="mt-3 text-lg font-bold text-gray-100">{sol.desc}</p>
+                  <ul className="mt-6 space-y-4 flex-grow">
+                    {sol.bullets.map((b) => (
+                      <li key={b} className="flex gap-3 text-sm text-gray-400">
+                        <span className="shrink-0 mt-1.5 h-1 w-1 bg-accent" />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link to={sol.href} className="mt-10 text-xs font-bold text-accent uppercase tracking-widest hover:underline">Ver Solução &rarr;</Link>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
+      <section className="border-b border-gray-800/50 bg-gray-900 px-4 py-20 sm:px-6 lg:py-32">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl text-center">
-            Produtos e serviços
+          <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-center sm:text-4xl text-center">
+            Capacidades da Plataforma
           </h2>
-          <p className="mt-3 text-gray-400 text-center max-w-2xl mx-auto">
-            Portfolio de recursos para avaliar, gerenciar e reduzir riscos cibernéticos.
-          </p>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+          <div className="mt-16 grid gap-4 sm:grid-cols-2">
             {PRODUCTS.map((p) => (
               <div
                 key={p.label}
-                className="rounded-lg border-2 border-accent/30 bg-gray-800/50 p-4 transition-smooth hover:border-accent/50"
+                className="group relative rounded-sm border-[1px] border-gray-800 bg-gray-950 p-8 transition-smooth hover:border-accent/40"
               >
-                <p className="font-medium text-gray-100">{p.label}</p>
-                <p className="mt-1 text-sm text-gray-400">{p.desc}</p>
+                <p className="font-bold text-gray-100">{p.label}</p>
+                <p className="mt-2 text-sm text-gray-400 leading-relaxed">{p.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="border-b border-gray-800 px-4 py-16 sm:px-6 lg:py-20">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
-            Monitoramento <span className="text-accent">contínuo</span>
+      <section className="border-b border-gray-800/50 bg-gray-950 px-4 py-20 sm:px-6 lg:py-32">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
+            Comece em Poucos Dias
           </h2>
           <p className="mt-4 text-gray-400">
-            Tendência de score, inconsistências entre declaração e scan, evidências pendentes e justificativas em análise. Tudo persistido e consumível por demandantes conforme RBAC — para subscrição, TPRM e compliance.
+            Processo guiado para ativar sua visibilidade de risco com agilidade.
           </p>
-        </div>
-      </section>
-
-      <section className="border-b border-gray-800 bg-gray-950 px-4 py-16 sm:px-6 lg:py-20">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-100 sm:text-3xl">
-            Comece em poucos dias
-          </h2>
-          <p className="mt-3 text-gray-400">
-            Onboarding guiado para você estar operando rápido.
-          </p>
-          <ol className="mt-8 list-decimal list-inside space-y-4 text-left text-gray-300">
-            {ONBOARDING.map((step, i) => (
-              <li key={i} className="pl-2 border-l-2 border-accent/50">{step}</li>
+          <div className="mt-20 grid gap-8 sm:grid-cols-2 text-left">
+            {ONBOARDING.map((item, i) => (
+              <div key={i} className="group relative pl-8 border-l-[1px] border-gray-800 transition-smooth hover:border-accent">
+                <span className="absolute left-0 top-0 -translate-x-1/2 flex h-6 w-6 items-center justify-center rounded-full bg-gray-900 border-[1px] border-gray-800 text-[10px] font-bold text-gray-500 group-hover:border-accent group-hover:text-accent">
+                  {i + 1}
+                </span>
+                <p className="font-bold text-gray-100">{item.step}</p>
+                <p className="mt-2 text-sm text-gray-400 leading-relaxed">{item.desc}</p>
+              </div>
             ))}
-          </ol>
+          </div>
         </div>
       </section>
 

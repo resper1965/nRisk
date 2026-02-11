@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import NessBrand from "./NessBrand";
 import NriskBrand from "./NriskBrand";
 
 function Footer() {
@@ -8,7 +9,7 @@ function Footer() {
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6">
         <div className="flex flex-col gap-1">
           <p className="text-sm text-gray-500">
-            © {year} ness. Todos os direitos reservados.
+            © {year} <NessBrand /> Todos os direitos reservados.
           </p>
           <p className="text-xs text-gray-500">
             powered by{" "}
@@ -16,9 +17,9 @@ function Footer() {
               href="https://ness.com.br"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 transition-smooth hover:text-gray-100 underline underline-offset-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-accent rounded"
+              className="transition-smooth focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-accent rounded"
             >
-              ness.
+              <NessBrand />
             </a>
           </p>
         </div>

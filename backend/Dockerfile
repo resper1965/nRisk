@@ -13,6 +13,8 @@ FROM alpine:3.19
 RUN apk --no-cache add ca-certificates
 WORKDIR /app
 COPY --from=builder /api .
+COPY assessment_questions.json .
+COPY mapping_logic.json .
 EXPOSE 8080
 ENV PORT=8080
 CMD ["./api"]

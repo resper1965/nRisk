@@ -47,30 +47,30 @@ const personas = [
 
 export function BestPractices() {
   return (
-    <section id="para-quem" className="py-20">
+    <section id="para-quem" className="py-32 bg-gray-900/5">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-primary">
-            Feito pra voce
+        <div className="mb-20 text-center">
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent mb-4">
+            Feito pra quem decide
           </p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Quem usa o n.Risk
+          <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-5xl">
+            Ecossistema <span className="italic font-medium text-accent">Integrado.</span>
           </h2>
-          <p className="mt-4 text-lg text-muted">
-            Tres personas, um problema em comum: nao saber o risco real dos terceiros.
+          <p className="mt-6 text-lg text-gray-400 max-w-2xl mx-auto">
+            Da subscrição à conformidade — uma linguagem comum para gerir o risco cibernético.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {personas.map((p) => (
-            <div key={p.title} className={`flex flex-col rounded-2xl border-2 p-8 ${p.color}`}>
-              <h3 className="text-xl font-bold">{p.title}</h3>
-              <p className="mt-1 text-sm font-semibold text-primary">{p.subtitle}</p>
-              <p className="mt-4 text-sm italic text-muted">&quot;{p.pain}&quot;</p>
-              <ul className="mt-6 flex-1 space-y-3">
+            <div key={p.title} className="flex flex-col rounded-sm border border-white/10 bg-gray-950 p-10 transition-smooth hover:border-accent/40 group">
+              <h3 className="text-xl font-bold text-gray-100 tracking-tight">{p.title}</h3>
+              <p className="mt-2 text-xs font-bold uppercase tracking-widest text-accent">{p.subtitle}</p>
+              <p className="mt-6 text-sm italic text-gray-500 leading-relaxed border-l-2 border-accent/20 pl-4">&quot;{p.pain}&quot;</p>
+              <ul className="mt-8 flex-1 space-y-4">
                 {p.benefits.map((b, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm">
-                    <svg className="mt-0.5 h-4 w-4 flex-shrink-0 text-green-600" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                  <li key={i} className="flex items-start gap-3 text-sm text-gray-400 font-medium">
+                    <svg className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
                     </svg>
                     {b}
@@ -79,7 +79,7 @@ export function BestPractices() {
               </ul>
               <Link
                 href="/#agendar"
-                className="mt-6 block rounded-lg bg-primary px-4 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-primary-dark"
+                className="mt-10 block rounded-sm border border-accent/40 bg-transparent px-4 py-3 text-center text-xs font-bold text-accent uppercase tracking-[0.2em] transition-smooth hover:bg-accent hover:text-gray-900 hover:border-accent"
               >
                 {p.cta}
               </Link>

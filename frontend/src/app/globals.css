@@ -1,26 +1,30 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
   --background: #ffffff;
-  --foreground: #0f172a;
-  --primary: #2563eb;
-  --primary-dark: #1d4ed8;
-  --primary-light: #dbeafe;
-  --accent: #0ea5e9;
-  --success: #16a34a;
+  --foreground: #020617;
+  --primary: #00ade8;
+  --primary-dark: #008ebf;
+  --primary-light: #e0f4ff;
+  --accent: #00ade8;
+  --success: #10b981;
   --warning: #f59e0b;
-  --danger: #dc2626;
+  --danger: #ef4444;
   --muted: #64748b;
   --border: #e2e8f0;
   --card: #ffffff;
-  --sidebar-bg: #0f172a;
-  --sidebar-text: #e2e8f0;
-  --score-a: #16a34a;
-  --score-b: #65a30d;
+  --sidebar-bg: #0a0a0f;
+  --sidebar-text: #f8fafc;
+
+  --score-a: #10b981;
+  --score-b: #84cc16;
   --score-c: #f59e0b;
-  --score-d: #ea580c;
-  --score-e: #dc2626;
+  --score-d: #f97316;
+  --score-e: #ef4444;
   --score-f: #991b1b;
+
+  --radius: 0.125rem;
 }
 
 @theme inline {
@@ -36,23 +40,37 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-card: var(--card);
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --font-sans: "Montserrat", system-ui, -apple-system, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  --radius-lg: 0.125rem;
+  --radius-xl: 0.125rem;
+  --radius-2xl: 0.125rem;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0f172a;
-    --foreground: #e2e8f0;
-    --primary-light: #1e3a5f;
-    --border: #334155;
-    --card: #1e293b;
-    --sidebar-bg: #020617;
+    --background: #0a0a0f;
+    --foreground: #f8fafc;
+    --primary-light: #002e40;
+    --border: #1f2937;
+    --card: #111827;
+    --sidebar-bg: #020205;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Sharp Design Tokens */
+.border-sharp {
+  border-width: 1px;
+  border-radius: var(--radius);
 }

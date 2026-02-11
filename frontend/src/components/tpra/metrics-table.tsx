@@ -34,21 +34,21 @@ export function MetricsTable() {
   return (
     <>
       {/* Social proof strip */}
-      <section className="border-y border-border bg-card py-12">
+      <section className="border-y border-white/5 bg-gray-950 py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="mb-8 text-center text-sm font-semibold uppercase tracking-wider text-muted">
-            Construido sobre padroes que o mercado confia
+          <p className="mb-12 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500">
+            Padrões globais de conformidade
           </p>
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {proofPoints.map((p) => (
-              <div key={p.label} className="text-center">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-primary-light">
-                  <svg className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <div key={p.label} className="text-center group">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-sm border border-white/10 bg-gray-900 transition-smooth group-hover:border-accent/40">
+                  <svg className="h-8 w-8 text-accent/60 transition-colors group-hover:text-accent" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
                   </svg>
                 </div>
-                <p className="mt-2 font-semibold">{p.label}</p>
-                <p className="text-xs text-muted">{p.desc}</p>
+                <p className="mt-4 text-xs font-bold uppercase tracking-widest text-gray-100">{p.label}</p>
+                <p className="mt-1 text-[10px] uppercase tracking-widest text-gray-600 font-bold">{p.desc}</p>
               </div>
             ))}
           </div>
@@ -56,18 +56,18 @@ export function MetricsTable() {
       </section>
 
       {/* FAQ */}
-      <section className="py-20">
+      <section className="py-32 bg-gray-950">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Perguntas frequentes
+          <div className="mb-16 text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-5xl">
+              Perguntas <span className="italic font-medium text-accent">Frequentes</span>
             </h2>
           </div>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 gap-4">
             {faqs.map((faq) => (
-              <div key={faq.q} className="rounded-xl border border-border bg-card p-6">
-                <h3 className="font-semibold">{faq.q}</h3>
-                <p className="mt-2 text-sm text-muted">{faq.a}</p>
+              <div key={faq.q} className="rounded-sm border border-white/5 bg-gray-900/30 p-8 transition-smooth hover:border-accent/20">
+                <h3 className="font-bold text-gray-100 uppercase tracking-widest text-sm">{faq.q}</h3>
+                <p className="mt-3 text-sm text-gray-500 leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -75,33 +75,36 @@ export function MetricsTable() {
       </section>
 
       {/* Final CTA */}
-      <section id="agendar" className="py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-primary-dark p-12 text-center text-white">
-            <h2 className="text-3xl font-bold sm:text-4xl">
-              Seu proximo fornecedor pode ser seu proximo incidente
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-lg text-blue-100">
-              69% das empresas dizem que seus fornecedores tem seguranca mais
-              fraca. Nao espere um breach pra descobrir quem sao os seus.
-            </p>
-            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Link
-                href="/#agendar"
-                className="rounded-lg bg-white px-8 py-3.5 text-base font-semibold text-primary transition-colors hover:bg-blue-50"
-              >
-                Agendar Demo Gratuita
-              </Link>
-              <Link
-                href="/trust/demo"
-                className="rounded-lg border border-white/30 px-8 py-3.5 text-base font-medium text-white transition-colors hover:bg-white/10"
-              >
-                Ver Trust Center ao vivo
-              </Link>
+      <section id="agendar" className="py-24 px-4 sm:px-6">
+        <div className="mx-auto max-w-7xl">
+          <div className="relative overflow-hidden rounded-sm bg-accent px-8 py-20 text-center text-gray-900 lg:px-16">
+            <div className="absolute inset-0 opacity-10 [background-image:linear-gradient(45deg,#000_25%,transparent_25%,transparent_50%,#000_50%,#000_75%,transparent_75%,transparent)] [background-size:40px_40px]" />
+            <div className="relative z-10">
+              <h2 className="text-4xl font-bold sm:text-6xl tracking-tighter">
+                Seu próximo fornecedor pode ser seu <br className="hidden lg:block" />
+                <span className="italic">próximo incidente.</span>
+              </h2>
+              <p className="mx-auto mt-8 max-w-2xl text-lg font-bold uppercase tracking-widest opacity-80">
+                A postura do terceiro é a sua postura. Não espere um breach para descobrir quem é o elo mais fraco.
+              </p>
+              <div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row">
+                <Link
+                  href="/#agendar"
+                  className="w-full sm:w-auto inline-flex items-center justify-center rounded-sm bg-gray-900 px-10 py-4 text-base font-bold text-accent transition-smooth hover:scale-105 hover:bg-black uppercase tracking-widest shadow-2xl"
+                >
+                  Agendar Demo
+                </Link>
+                <Link
+                  href="/trust/demo"
+                  className="w-full sm:w-auto inline-flex items-center justify-center rounded-sm border-2 border-gray-900/20 bg-transparent px-10 py-4 text-base font-bold text-gray-900 transition-smooth hover:bg-gray-900/10 uppercase tracking-widest"
+                >
+                  Ver Trust Center
+                </Link>
+              </div>
+              <p className="mt-8 text-xs font-bold uppercase tracking-[0.3em] opacity-60">
+                Setup em 5 minutos • Sem fricção • Precisão absoluta
+              </p>
             </div>
-            <p className="mt-4 text-sm text-blue-200">
-              Setup em minutos. Sem cartao de credito. Sem instalacao.
-            </p>
           </div>
         </div>
       </section>

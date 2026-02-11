@@ -11,18 +11,18 @@ export default function CtaSection({ id = "cta" }) {
         <p className="mt-4 text-lg text-gray-400">
           Converse com um especialista e veja como a <NriskBrand /> se aplica ao seu contexto — subscrição, TPRM ou governança.
         </p>
-        <div className="mt-12 flex flex-wrap justify-center gap-4">
+        <div className="mt-12 flex flex-wrap justify-center gap-6">
           <Link
             to="/nrisk/contact"
-            className="inline-flex items-center justify-center rounded-md bg-accent px-8 py-3.5 text-base font-semibold text-gray-900 shadow-lg shadow-accent/25 transition-smooth hover:scale-105 hover:shadow-accent/35 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+            className="inline-flex items-center justify-center rounded-sm bg-accent px-8 py-4 text-sm font-bold text-gray-900 shadow-[0_0_20px_rgba(0,173,232,0.15)] transition-smooth hover:scale-105 hover:shadow-[0_0_30px_rgba(0,173,232,0.3)] hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent uppercase tracking-widest"
           >
-            Solicitar demonstração
+            Agendar Demo
           </Link>
           <Link
             to="/nrisk/methodology"
-            className="inline-flex items-center justify-center rounded-md border-2 border-accent/50 bg-transparent px-8 py-3.5 text-base font-semibold text-accent transition-smooth hover:bg-accent/10 hover:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+            className="inline-flex items-center justify-center rounded-sm border-[1px] border-accent/40 bg-transparent px-8 py-4 text-sm font-bold text-accent transition-smooth hover:bg-accent/10 hover:border-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent uppercase tracking-widest"
           >
-            Ver metodologia
+            Ver Metodologia
           </Link>
         </div>
       </div>

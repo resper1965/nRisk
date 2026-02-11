@@ -4,9 +4,9 @@ export default function Accordion({ items }) {
   const [openId, setOpenId] = useState(null);
 
   return (
-    <div className="rounded-lg border border-gray-800 bg-gray-800 px-4 shadow-sm">
+    <div className="rounded-sm border-[1px] border-gray-800 bg-gray-950 px-4 shadow-sm">
       {items.map(({ id, question, answer }) => (
-        <div key={id} className="border-b border-gray-700 last:border-b-0">
+        <div key={id} className="border-b-[1px] border-gray-800 last:border-b-0">
           <h3>
             <button
               type="button"
@@ -20,7 +20,7 @@ export default function Accordion({ items }) {
                   setOpenId(openId === id ? null : id);
                 }
               }}
-              className="flex w-full items-center justify-between py-4 text-left text-sm font-medium text-gray-100 transition-smooth hover:text-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent rounded"
+              className="flex w-full items-center justify-between py-5 text-left text-sm font-bold text-gray-100 transition-smooth hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent rounded-sm"
             >
               {question}
               <span

@@ -33,35 +33,34 @@ export default function Home() {
       <Header />
       <main>
         {/* Hero — Lead with the pain */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-primary-light to-background py-24 lg:py-32">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="relative overflow-hidden bg-gray-950 px-4 py-24 sm:px-6 lg:py-32">
+          <div className="absolute inset-0 z-0 opacity-20 [background-image:radial-gradient(#00ade8_0.5px,transparent_0.5px)] [background-size:24px_24px]" />
+          <div className="relative z-10 mx-auto max-w-7xl">
             <div className="mx-auto max-w-3xl text-center">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-                Voce confia nos seus fornecedores.{" "}
-                <span className="text-primary">Deveria verificar.</span>
-              </h1>
-              <p className="mt-6 text-xl text-muted">
-                O n.Risk mostra o risco cibernetico real de cada fornecedor em
-                minutos — com scan automatico, cross-check e score transparente.
-                Sem instalar nada. Sem depender deles.
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-accent mb-6 animate-fade-in">
+                Third-Party Risk Management (TPRA)
               </p>
-              <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+              <h1 className="text-4xl font-bold tracking-tight text-gray-100 sm:text-5xl lg:text-7xl animate-fade-in-up">
+                Confiança que <br />
+                <span className="text-accent italic font-medium">pode ser verificada.</span>
+              </h1>
+              <p className="mt-8 text-xl leading-relaxed text-gray-400 max-w-2xl mx-auto animate-fade-in-up delay-100 transition-smooth">
+                A única plataforma que cruza <span className="text-gray-100 font-bold">questionários profundos</span> com <span className="text-gray-100 font-bold">scan técnico</span> em tempo real. Score híbrido 0-1000 com evidência auditável.
+              </p>
+              <div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row animate-fade-in-up delay-200">
                 <Link
                   href="/#agendar"
-                  className="rounded-lg bg-primary px-8 py-3.5 text-base font-semibold text-white shadow-lg transition-all hover:bg-primary-dark hover:shadow-xl"
+                  className="w-full sm:w-auto inline-flex items-center justify-center rounded-sm bg-accent px-10 py-4 text-base font-bold text-gray-900 shadow-[0_0_20px_rgba(0,173,232,0.1)] transition-smooth hover:scale-105 hover:shadow-[0_0_30px_rgba(0,173,232,0.3)] hover:brightness-110 uppercase tracking-widest"
                 >
-                  Agendar Demo Gratuita
+                  Solicitar Score Gratuito
                 </Link>
                 <Link
                   href="/trust/demo"
-                  className="rounded-lg border border-border px-8 py-3.5 text-base font-medium transition-colors hover:bg-card"
+                  className="w-full sm:w-auto inline-flex items-center justify-center rounded-sm border-[1px] border-accent/40 bg-transparent px-10 py-4 text-base font-bold text-accent transition-smooth hover:bg-accent/10 hover:border-accent uppercase tracking-widest"
                 >
-                  Ver Trust Center ao vivo
+                  Explorar Trust Center
                 </Link>
               </div>
-              <p className="mt-4 text-sm text-muted">
-                Setup em minutos. Sem cartao. Sem instalacao.
-              </p>
             </div>
           </div>
         </section>
