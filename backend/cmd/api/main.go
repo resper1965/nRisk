@@ -75,6 +75,14 @@ func main() {
 	ndaRepo := firestore.NewNDARepository(fsClient)
 	trustCenterCtrl := controller.NewTrustCenterController(trustCenterRepo, ndaRepo, snapshotRepo, scanRepo)
 
+	// TPRA Fase 5: Portfolio Dashboard
+	portfolioCtrl := controller.NewPortfolioController(supplierRepo, scanRepo, snapshotRepo, answerRepo)
+
+	// TPRA Fase 6: Monitoramento Continuo e Alertas
+	monitoringConfigRepo := firestore.NewMonitoringConfigRepository(fsClient)
+	alertRepo := firestore.NewAlertRepository(fsClient)
+	monitoringCtrl := controller.NewMonitoringController(monitoringConfigRepo, alertRepo, supplierRepo, scanRepo, snapshotRepo)
+
 	router := gin.New()
 	router.Use(gin.Recovery())
 	router.Use(middleware.SecurityHeaders())
@@ -124,6 +132,19 @@ func main() {
 		// TPRA Fase 4: NDA Management (autenticado)
 		v1.GET("/nda-requests", trustCenterCtrl.ListNDARequests)
 		v1.PATCH("/nda-requests/:id", trustCenterCtrl.ReviewNDARequest)
+
+		// TPRA Fase 5: Portfolio Dashboard
+		v1.GET("/portfolio/summary", portfolioCtrl.GetPortfolioSummary)
+		v1.GET("/portfolio/suppliers", portfolioCtrl.GetPortfolioSuppliers)
+		v1.GET("/portfolio/risk-distribution", portfolioCtrl.GetRiskDistribution)
+
+		// TPRA Fase 6: Monitoramento Continuo e Alertas
+		v1.GET("/monitoring/config", monitoringCtrl.GetMonitoringConfig)
+		v1.POST("/monitoring/config", monitoringCtrl.UpdateMonitoringConfig)
+		v1.POST("/monitoring/check", monitoringCtrl.CheckSupplierDeterioration)
+		v1.GET("/monitoring/status", monitoringCtrl.GetMonitoringStatus)
+		v1.GET("/alerts", monitoringCtrl.ListAlerts)
+		v1.PATCH("/alerts/:id", monitoringCtrl.UpdateAlert)
 	}
 
 	// Endpoints publicos (sem auth)
