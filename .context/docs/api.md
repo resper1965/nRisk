@@ -497,7 +497,53 @@ Metricas agregadas do portfolio de fornecedores.
 Lista de fornecedores com score, tendencia e criticidade para o dashboard.
 
 **Auth:** Obrigatorio
-**Query:** `sort_by` (score/criticality/name), `order` (asc/desc), `category` (A-F), `page`, `per_page`
+**Query:** `criticality` (critical/high/medium/low), `sort` (score_asc/score_desc/name/criticality)
+
+**Response:** `200 OK`
+
+```json
+{
+  "suppliers": [
+    {
+      "id": "uuid",
+      "name": "Fornecedor X",
+      "domain": "fornecedor.com",
+      "criticality": "high",
+      "status": "active",
+      "score": 742.5,
+      "score_category": "B",
+      "answer_count": 18,
+      "has_assessment": true,
+      "last_scored": "2026-02-10T..."
+    }
+  ],
+  "total": 45
+}
+```
+
+---
+
+### GET /api/v1/portfolio/risk-distribution
+
+Distribuicao de scores A-F do portfolio com heatmap por criticidade.
+
+**Auth:** Obrigatorio
+
+**Response:** `200 OK`
+
+```json
+{
+  "distribution": { "A": 8, "B": 15, "C": 10, "D": 3, "E": 1, "F": 1 },
+  "unscored": 7,
+  "total": 45,
+  "criticality_heatmap": {
+    "critical": { "A": 2, "B": 3, "C": 1, "D": 0, "E": 0, "F": 0, "unscored": 1 },
+    "high": { "A": 3, "B": 5, "C": 4, "D": 1, "E": 0, "F": 0, "unscored": 2 },
+    "medium": { "A": 2, "B": 5, "C": 3, "D": 1, "E": 1, "F": 0, "unscored": 3 },
+    "low": { "A": 1, "B": 2, "C": 2, "D": 1, "E": 0, "F": 1, "unscored": 1 }
+  }
+}
+```
 
 ---
 
@@ -566,6 +612,146 @@ Aprovar ou rejeitar solicitacao NDA.
 
 **Auth:** Obrigatorio (CISO)
 **Body:** `{ "status": "approved" }` ou `{ "status": "rejected" }`
+
+---
+
+## Endpoints TPRA — Monitoramento Continuo e Alertas (Fase 6)
+
+### GET /api/v1/monitoring/config
+
+Retorna configuracao de monitoramento do tenant (intervalos de re-scan, thresholds de alerta).
+
+**Auth:** Obrigatorio
+
+**Response:** `200 OK`
+
+```json
+{
+  "config": {
+    "critical_interval_days": 7,
+    "high_interval_days": 14,
+    "medium_interval_days": 30,
+    "low_interval_days": 90,
+    "score_drop_threshold": 100,
+    "category_change_alert": true,
+    "webhook_url": "",
+    "webhook_enabled": false
+  }
+}
+```
+
+---
+
+### POST /api/v1/monitoring/config
+
+Atualiza configuracao de monitoramento. Campos parciais (somente os enviados sao atualizados).
+
+**Auth:** Obrigatorio
+**Body:**
+
+```json
+{
+  "critical_interval_days": 3,
+  "score_drop_threshold": 150,
+  "webhook_url": "https://hooks.example.com/alerts",
+  "webhook_enabled": true
+}
+```
+
+---
+
+### POST /api/v1/monitoring/check
+
+Executa verificacao de deterioracao de todos os fornecedores. Compara score atual vs anterior e gera alertas.
+
+**Auth:** Obrigatorio
+
+**Response:** `200 OK`
+
+```json
+{
+  "suppliers_checked": 45,
+  "alerts_generated": 3,
+  "alerts": [
+    {
+      "id": "uuid",
+      "supplier_id": "uuid",
+      "type": "score_drop",
+      "severity": "high",
+      "title": "Score drop: Fornecedor X",
+      "detail": "Score caiu de B (742) para D (398)",
+      "status": "open"
+    }
+  ]
+}
+```
+
+Tipos de alerta: `score_drop`, `category_change`, `critical_finding`, `scan_overdue`.
+
+---
+
+### GET /api/v1/monitoring/status
+
+Resumo do monitoramento: config + alertas abertos + scans overdue.
+
+**Auth:** Obrigatorio
+
+**Response:** `200 OK`
+
+```json
+{
+  "config": { "..." },
+  "open_alerts": 5,
+  "overdue_scans": 3,
+  "total_suppliers": 45
+}
+```
+
+---
+
+### GET /api/v1/alerts
+
+Lista alertas do tenant.
+
+**Auth:** Obrigatorio
+**Query:** `status` (open/acknowledged/resolved)
+
+**Response:** `200 OK`
+
+```json
+{
+  "alerts": [
+    {
+      "id": "uuid",
+      "supplier_id": "uuid",
+      "type": "score_drop",
+      "severity": "high",
+      "title": "Score drop: Fornecedor X",
+      "status": "open",
+      "created_at": "2026-02-10T..."
+    }
+  ],
+  "total": 5,
+  "open_count": 3
+}
+```
+
+---
+
+### PATCH /api/v1/alerts/:id
+
+Atualiza status de um alerta (acknowledge ou resolve).
+
+**Auth:** Obrigatorio
+**Body:**
+
+```json
+{
+  "status": "acknowledged"
+}
+```
+
+**Response:** `200 OK` — Alerta atualizado.
 
 ---
 

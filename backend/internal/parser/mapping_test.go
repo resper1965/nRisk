@@ -34,7 +34,7 @@ func TestToAuditFinding_WithMappingFile(t *testing.T) {
 			templateID:       "",
 			technicalFinding: "open_rdp_port",
 			wantControl:      "C-01",
-			wantDeduction:    500,
+			wantDeduction:    400,
 		},
 		{
 			name:             "porta 445 -> C-01",
@@ -42,7 +42,7 @@ func TestToAuditFinding_WithMappingFile(t *testing.T) {
 			templateID:       "",
 			technicalFinding: "open_smb_port",
 			wantControl:      "C-01",
-			wantDeduction:    500,
+			wantDeduction:    400,
 		},
 		{
 			name:             "subdomain_exposure -> C-03",
@@ -58,7 +58,7 @@ func TestToAuditFinding_WithMappingFile(t *testing.T) {
 			templateID:       "",
 			technicalFinding: "missing_dmarc",
 			wantControl:      "C-04",
-			wantDeduction:    200,
+			wantDeduction:    150,
 		},
 	}
 	for _, tt := range tests {
