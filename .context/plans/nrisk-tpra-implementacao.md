@@ -1,5 +1,5 @@
 ---
-status: planned
+status: done
 generated: 2026-02-06
 source: TPRA Methodology + MVP Plan + Assessment Hibrido
 parentPlan: nrisk-mvp
@@ -25,22 +25,22 @@ docs:
 phases:
   - id: "fase-1"
     name: "Gestao de Fornecedores e Convites"
-    prevc: "P"
+    prevc: "D"
   - id: "fase-2"
     name: "Trilhas de Maturidade (Bronze/Prata/Ouro)"
-    prevc: "P"
+    prevc: "D"
   - id: "fase-3"
     name: "Cross-Check Engine TPRA"
-    prevc: "P"
+    prevc: "D"
   - id: "fase-4"
     name: "Trust Center e NDA Workflow"
-    prevc: "P"
+    prevc: "D"
   - id: "fase-5"
     name: "Portfolio Dashboard e Metricas TPRM"
-    prevc: "P"
+    prevc: "D"
   - id: "fase-6"
     name: "Monitoramento Continuo e Alertas"
-    prevc: "P"
+    prevc: "D"
 ---
 
 # Plano de Implementacao TPRA — n.Risk
@@ -419,13 +419,15 @@ phases:
 
 ## 7. Evidence & Follow-up
 
-- [ ] Criar migrations SQL para suppliers, invitations, trust_center
-- [ ] Implementar API CRUD de suppliers
-- [ ] Implementar fluxo de convites com token
-- [ ] Estender assessment_questions.json com perguntas Prata/Ouro
-- [ ] Estender mapping_logic.json com regras TPRA
-- [ ] Implementar Trust Center publico
-- [ ] Implementar NDA workflow
-- [ ] Dashboard de portfolio com metricas TPRM
-- [ ] Sistema de monitoramento continuo e alertas
+- [x] Criar migrations SQL para suppliers, invitations, trust_center, monitoring, alerts (003-007)
+- [x] Implementar API CRUD de suppliers (Fase 1 — commit 94f935a)
+- [x] Implementar fluxo de convites com token (Fase 1 — commit 94f935a)
+- [x] Estender assessment_questions.json com perguntas Prata/Ouro (commit 4ee54b5)
+- [x] Estender mapping_logic.json com regras TPRA (commit 4ee54b5)
+- [x] Trilhas de maturidade Bronze/Prata/Ouro (Fase 2 — commit d6d1e5e)
+- [x] Cross-Check Engine para TPRA + supplier score (Fase 3 — commit 3f19347)
+- [x] Implementar Trust Center publico (Fase 4 — commit 5c38b45)
+- [x] Implementar NDA workflow (Fase 4 — commit 5c38b45)
+- [x] Dashboard de portfolio com metricas TPRM (Fase 5 — commit e742deb)
+- [x] Sistema de monitoramento continuo e alertas (Fase 6 — commit e742deb)
 - [ ] Testes E2E do fluxo completo: cadastro → convite → assessment → score → portfolio

@@ -2,6 +2,8 @@ package firestore
 
 import (
 	"testing"
+
+	"github.com/nrisk/backend/internal/assessment"
 )
 
 func TestScoreToCategory(t *testing.T) {
@@ -23,9 +25,9 @@ func TestScoreToCategory(t *testing.T) {
 		{0, "F"},
 	}
 	for _, tt := range tests {
-		got := scoreToCategory(tt.score)
+		got := assessment.ScoreToCategory(tt.score)
 		if got != tt.want {
-			t.Errorf("scoreToCategory(%d) = %s, want %s", tt.score, got, tt.want)
+			t.Errorf("ScoreToCategory(%d) = %s, want %s", tt.score, got, tt.want)
 		}
 	}
 }
